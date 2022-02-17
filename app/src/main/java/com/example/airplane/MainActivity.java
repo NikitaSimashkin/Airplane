@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageView main_background = (ImageView) findViewById(R.id.imageView); //загружает гифку
-        Glide.with(this).load(R.drawable.krasivo2).into(main_background);
+        Glide.with(this).load(R.drawable.sun).into(main_background);
         /*
         В папке drawable лежат гифки, можно потом если что поменять
          */
