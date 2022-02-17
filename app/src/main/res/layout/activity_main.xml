@@ -37,11 +37,11 @@
             android:textSize="60sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/play_button"
             android:layout_width="300dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:text="Button" />
+            android:text="@string/play" />
 
         <Button
             android:id="@+id/button2"
