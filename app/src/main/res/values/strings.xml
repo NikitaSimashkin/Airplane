@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Airplane</string>
+    <string name="Title">Hello, world</string>
 </resources>
