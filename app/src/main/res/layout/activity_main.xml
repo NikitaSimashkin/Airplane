@@ -6,15 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:srcCompat="@drawable/space"
+        android:src="@drawable/krasivo"
         android:scaleType="centerCrop"/>
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -39,11 +37,11 @@
             android:textSize="60sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/play_button"
             android:layout_width="300dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:text="Button" />
+            android:text="@string/play" />
 
         <Button
             android:id="@+id/button2"
