@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide(); //убирает title_bar
         setContentView(R.layout.activity_main);
 
+
         { //обработчик кнопки, который вызывает вторую активити playactivity
             Button play_button = (Button) findViewById(R.id.play_button);
             play_button.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
 
     }
 }
