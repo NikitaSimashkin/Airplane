@@ -8,6 +8,7 @@
     tools:context=".PlayActivity">
 
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -18,10 +19,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="73dp"
+        android:layout_marginTop="336dp"
         android:background="#E12F2F"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="337dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gifImageView">
 
         <Button
             android:id="@+id/button7"
