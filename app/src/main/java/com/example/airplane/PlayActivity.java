@@ -13,6 +13,11 @@ import java.util.Objects;
 
 public class PlayActivity extends AppCompatActivity {
     @Override
+    public void finish() {
+        super.finish();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
@@ -35,6 +40,10 @@ public class PlayActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "456", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        Samolet samolet = new Samolet();
+
     }
 
     @Override
