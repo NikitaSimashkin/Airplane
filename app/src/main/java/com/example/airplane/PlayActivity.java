@@ -1,13 +1,19 @@
 package com.example.airplane;
 
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Objects;
 
@@ -41,8 +47,16 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
+        { //создание самолета и прорисовка его
+            Samolet samolet = new Samolet();
 
-        Samolet samolet = new Samolet();
+            ConstraintLayout play_layout = (ConstraintLayout) findViewById(R.id.play_layout); //делаем прозрачный фон
+            Play_field play_field = new Play_field(PlayActivity.this);
+
+            play_layout.addView(play_field);
+
+
+        }
 
     }
 
