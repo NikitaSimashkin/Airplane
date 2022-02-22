@@ -30,22 +30,15 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.playactivity);
 
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
-        up_button.setOnClickListener( new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "123", Toast.LENGTH_LONG).show();
-            }
-        });
-
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
-        down_button.setOnClickListener( new View.OnClickListener(){
 
+        up_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "456", Toast.LENGTH_SHORT).show();
+
             }
         });
+
 
         { //создание самолета и прорисовка его
             Samolet samolet = new Samolet();

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 
@@ -21,7 +22,10 @@ public class Play_field extends SurfaceView implements SurfaceHolder.Callback{
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
-        DrawThread drawThread = new DrawThread(getHolder(), getContext());
+        ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
+        ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
+
+        DrawThread drawThread = new DrawThread(getHolder(), getContext(), up_button, down_button);
         drawThread.start();
     }
 
