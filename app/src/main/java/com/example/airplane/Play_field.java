@@ -1,15 +1,19 @@
 package com.example.airplane;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 
 public class Play_field extends SurfaceView implements SurfaceHolder.Callback{
+    private DrawThread drawThread;
 
 
     public Play_field(Context context) {
@@ -22,11 +26,12 @@ public class Play_field extends SurfaceView implements SurfaceHolder.Callback{
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
-        ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
-        ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
-
-        DrawThread drawThread = new DrawThread(getHolder(), getContext(), up_button, down_button);
+        drawThread = new DrawThread(getHolder(), getContext());
         drawThread.start();
+    }
+
+    public void change_xy_ship(int top, int bottom){
+        drawThread.set_xy_ship(top, bottom);
     }
 
     @Override
