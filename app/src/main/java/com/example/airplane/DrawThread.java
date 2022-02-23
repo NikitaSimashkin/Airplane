@@ -22,7 +22,7 @@ public class DrawThread extends Thread{
     private Bitmap spaceship_picture;
     private Canvas canvas;
 
-    private Rect rect;
+    private Rect rect, last_rect;
 
     private int last_left, last_top, last_right, last_bottom, current_left, current_top, current_right, current_bottom;
 
@@ -48,22 +48,16 @@ public class DrawThread extends Thread{
         rect = new Rect (10, top_ship, 200, bottom_ship);
         canvas.drawBitmap(spaceship_picture, null, rect, null);
         surfaceHolder.unlockCanvasAndPost(canvas);
+        last_rect = rect;
     }
 
     @Override
     public void run() {
-        canvas = surfaceHolder.lockCanvas();  //рисуем картинку корабля
-        Paint spaceship = new Paint();
-
-        Rect test = new Rect(10, 10, 200, 200);
-        last_left = 10; last_top = 10; last_right = 200; last_bottom = 200;
-        canvas.drawBitmap(spaceship_picture, null, test, spaceship);
-        surfaceHolder.unlockCanvasAndPost(canvas);
 
         while (true){
             update();
             try {
-                Thread.sleep(33);
+                Thread.sleep(34);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
