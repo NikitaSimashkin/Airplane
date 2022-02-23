@@ -24,15 +24,21 @@ public class DrawThread extends Thread{
 
     private Rect rect, last_rect;
 
-    private int last_left, last_top, last_right, last_bottom, current_left, current_top, current_right, current_bottom;
+    private int width, height, left, right, top, bottom;
 
-    private int top_ship = 10, bottom_ship = 200;
+    private int top_ship, bottom_ship;
 
-    public DrawThread (SurfaceHolder surfaceHolder, Context context){
+    public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height){
         super();
         this.surfaceHolder = surfaceHolder;
         this.context = context;
         spaceship_picture = BitmapFactory.decodeResource(context.getResources(), R.drawable.spaceship);
+        this.width = width;
+        this.height = height;
+
+        top_ship = this.height/50;
+        bottom_ship = this.width/9;
+        left = this.height/50;
     }
 
     public void set_xy_ship(int a, int b){
@@ -45,7 +51,7 @@ public class DrawThread extends Thread{
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //очистка холста
 
         //самолет
-        rect = new Rect (10, top_ship, 200, bottom_ship);
+        rect = new Rect (left, top_ship, height/4, bottom_ship);
         canvas.drawBitmap(spaceship_picture, null, rect, null);
         surfaceHolder.unlockCanvasAndPost(canvas);
         last_rect = rect;

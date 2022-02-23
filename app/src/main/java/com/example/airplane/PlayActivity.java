@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class PlayActivity extends AppCompatActivity {
     private Play_field play_field;
+    private int width, height;
 
     @Override
     public void finish() {
@@ -29,29 +30,27 @@ public class PlayActivity extends AppCompatActivity {
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
 
-
-
-
          //создание самолета и прорисовка его
             Samolet samolet = new Samolet();
 
             ConstraintLayout play_layout = (ConstraintLayout) findViewById(R.id.play_layout); //делаем прозрачный фон
             play_field = new Play_field(PlayActivity.this); //добавляем surfaceview в лэйаут
-
             play_layout.addView(play_field);
+
+            System.out.println(play_layout.getWidth() + "  " + play_layout.getHeight());
 
         { //блок обработки кнопок
             down_button.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    change_xy_ship(20, 20);
+                    change_xy_ship(play_field.getHeight()/30, play_field.getHeight()/30);
                 }
             });
 
             up_button.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    change_xy_ship(-20, -20);
+                    change_xy_ship(-play_field.getHeight()/30, -play_field.getHeight()/30);
                 }
             });
         }

@@ -26,7 +26,7 @@ public class Play_field extends SurfaceView implements SurfaceHolder.Callback{
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
-        drawThread = new DrawThread(getHolder(), getContext());
+        drawThread = new DrawThread(getHolder(), getContext(), getWidth(), getHeight());
         drawThread.start();
     }
 
