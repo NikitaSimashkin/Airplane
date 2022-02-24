@@ -21,7 +21,7 @@ public class DrawThread extends Thread{
 
     private Bitmap spaceship_picture;
     private Bitmap buffer;
-    private Canvas canvas, buffer_canvas;
+    private Canvas canvas, buffer_canvas = null;
 
     private Rect rect;
 
@@ -43,6 +43,8 @@ public class DrawThread extends Thread{
 
         buffer = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888);
         buffer_canvas = new Canvas();
+
+
     }
 
     public void set_xy_ship(int a, int b){
@@ -51,16 +53,24 @@ public class DrawThread extends Thread{
     }
 
     public void update(){
+
         buffer_canvas.drawColor(Color.TRANSPARENT); //двойная буферизация
         rect = new Rect (left, top_ship, height/4, bottom_ship);
         buffer_canvas.drawBitmap(spaceship_picture, null, rect, null);
         buffer_canvas.setBitmap(buffer);
 
-        canvas = surfaceHolder.lockCanvas();
-        //самолет
         Rect rect2 = new Rect(0,0, width, height);
-        canvas.drawBitmap(buffer, null, rect2, null);
-        surfaceHolder.unlockCanvasAndPost(canvas);
+        try {
+            Thread.sleep(17);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //самолет
+        canvas = surfaceHolder.lockCanvas();
+        synchronized (surfaceHolder) {
+            canvas.drawBitmap(buffer, null, rect2, null);
+            surfaceHolder.unlockCanvasAndPost(canvas);
+        }
     }
 
     @Override
@@ -69,7 +79,7 @@ public class DrawThread extends Thread{
         while (true){
             update();
             try {
-                Thread.sleep(17);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
