@@ -20,9 +20,10 @@ public class DrawThread extends Thread{
     private Context context;
 
     private Bitmap spaceship_picture;
-    private Canvas canvas;
+    private Bitmap buffer;
+    private Canvas canvas, buffer_canvas;
 
-    private Rect rect, last_rect;
+    private Rect rect;
 
     private int width, height, left, right, top, bottom;
 
@@ -39,6 +40,9 @@ public class DrawThread extends Thread{
         top_ship = this.height/50;
         bottom_ship = this.width/9;
         left = this.height/50;
+
+        buffer = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888);
+        buffer_canvas = new Canvas();
     }
 
     public void set_xy_ship(int a, int b){
@@ -47,14 +51,16 @@ public class DrawThread extends Thread{
     }
 
     public void update(){
-        canvas = surfaceHolder.lockCanvas();
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //очистка холста
-
-        //самолет
+        buffer_canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //двойная буферизация
         rect = new Rect (left, top_ship, height/4, bottom_ship);
-        canvas.drawBitmap(spaceship_picture, null, rect, null);
+        buffer_canvas.drawBitmap(spaceship_picture, null, rect, null);
+        buffer_canvas.setBitmap(buffer);
+
+        canvas = surfaceHolder.lockCanvas();
+        //самолет
+        Rect rect2 = new Rect(0,0, width, height);
+        canvas.drawBitmap(buffer, null, rect2, null);
         surfaceHolder.unlockCanvasAndPost(canvas);
-        last_rect = rect;
     }
 
     @Override
@@ -63,7 +69,7 @@ public class DrawThread extends Thread{
         while (true){
             update();
             try {
-                Thread.sleep(34);
+                Thread.sleep(17);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

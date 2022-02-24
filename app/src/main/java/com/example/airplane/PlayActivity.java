@@ -14,7 +14,6 @@ import java.util.Objects;
 
 public class PlayActivity extends AppCompatActivity {
     private Play_field play_field;
-    private int width, height;
 
     @Override
     public void finish() {
@@ -36,8 +35,6 @@ public class PlayActivity extends AppCompatActivity {
             ConstraintLayout play_layout = (ConstraintLayout) findViewById(R.id.play_layout); //делаем прозрачный фон
             play_field = new Play_field(PlayActivity.this); //добавляем surfaceview в лэйаут
             play_layout.addView(play_field);
-
-            System.out.println(play_layout.getWidth() + "  " + play_layout.getHeight());
 
         { //блок обработки кнопок
             down_button.setOnClickListener(new View.OnClickListener(){
