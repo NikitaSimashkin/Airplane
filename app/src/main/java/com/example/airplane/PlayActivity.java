@@ -35,6 +35,7 @@ public class PlayActivity extends AppCompatActivity {
             ConstraintLayout play_layout = (ConstraintLayout) findViewById(R.id.play_layout); //делаем прозрачный фон
             play_field = new Play_field(PlayActivity.this); //добавляем surfaceview в лэйаут
             play_layout.addView(play_field);
+            play_field.setZOrderOnTop(true);
 
         { //блок обработки кнопок
             down_button.setOnClickListener(new View.OnClickListener(){

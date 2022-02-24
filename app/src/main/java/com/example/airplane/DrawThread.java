@@ -51,7 +51,7 @@ public class DrawThread extends Thread{
     }
 
     public void update(){
-        buffer_canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR); //двойная буферизация
+        buffer_canvas.drawColor(Color.TRANSPARENT); //двойная буферизация
         rect = new Rect (left, top_ship, height/4, bottom_ship);
         buffer_canvas.drawBitmap(spaceship_picture, null, rect, null);
         buffer_canvas.setBitmap(buffer);
