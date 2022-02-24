@@ -1,11 +1,20 @@
 package com.example.airplane;
 
 import android.annotation.SuppressLint;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,7 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import java.util.Objects;
 
 public class PlayActivity extends AppCompatActivity {
-    private Play_field play_field;
+    private DrawThread drawThread;
 
     @Override
     public void finish() {
@@ -29,32 +38,51 @@ public class PlayActivity extends AppCompatActivity {
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
 
-         //создание самолета и прорисовка его
-            Samolet samolet = new Samolet();
+        SurfaceView play_field = (SurfaceView) findViewById(R.id.play_field); //поле для рисования
 
-            ConstraintLayout play_layout = (ConstraintLayout) findViewById(R.id.play_layout); //делаем прозрачный фон
-            play_field = new Play_field(PlayActivity.this); //добавляем surfaceview в лэйаут
-            play_layout.addView(play_field);
 
-        { //блок обработки кнопок
-            down_button.setOnClickListener(new View.OnClickListener(){
+        play_field.setZOrderOnTop (true); // Установить фон холста прозрачным
+        play_field.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+
+        play_field.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(@NonNull SurfaceHolder holder) {
+                int width = play_field.getWidth();
+                int height = play_field.getHeight();
+                drawThread = new DrawThread(holder, getApplicationContext(), width, height);
+                drawThread.start();
+            }
+
+            @Override
+            public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+
+            }
+        });
+
+
+
+        { //обработка нажатий
+           down_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    change_xy_ship(play_field.getHeight()/30, play_field.getHeight()/30);
+                    drawThread.change_xy_ship(play_field.getHeight()/30, play_field.getHeight()/30);
                 }
             });
 
-            up_button.setOnClickListener(new View.OnClickListener(){
+            up_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    change_xy_ship(-play_field.getHeight()/30, -play_field.getHeight()/30);
+                    drawThread.change_xy_ship(-play_field.getHeight()/30, -play_field.getHeight()/30);
                 }
             });
         }
-    }
 
-    public void change_xy_ship(int top, int bottom){
-        play_field.change_xy_ship(top, bottom);
+
     }
 
     @Override

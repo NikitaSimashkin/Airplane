@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -47,30 +48,24 @@ public class DrawThread extends Thread{
 
     }
 
-    public void set_xy_ship(int a, int b){
+    public void change_xy_ship(int a, int b){
         top_ship += a;
         bottom_ship += b;
     }
 
     public void update(){
 
-        buffer_canvas.drawColor(Color.TRANSPARENT); //двойная буферизация
-        rect = new Rect (left, top_ship, height/4, bottom_ship);
-        buffer_canvas.drawBitmap(spaceship_picture, null, rect, null);
-        buffer_canvas.setBitmap(buffer);
-
-        Rect rect2 = new Rect(0,0, width, height);
-        try {
-            Thread.sleep(17);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //самолет
         canvas = surfaceHolder.lockCanvas();
-        synchronized (surfaceHolder) {
-            canvas.drawBitmap(buffer, null, rect2, null);
-            surfaceHolder.unlockCanvasAndPost(canvas);
-        }
+
+        Paint clearPaint = new Paint(); //очистка холста
+        clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+
+        canvas.drawRect(0, 0, width, height, clearPaint);
+        rect = new Rect (left, top_ship, height/4, bottom_ship);
+        canvas.drawBitmap(spaceship_picture, null, rect, null);
+        canvas.setBitmap(buffer);
+
+        surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
     @Override
@@ -79,7 +74,7 @@ public class DrawThread extends Thread{
         while (true){
             update();
             try {
-                Thread.sleep(100);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
