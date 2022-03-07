@@ -67,17 +67,33 @@ public class PlayActivity extends AppCompatActivity {
 
 
         { //обработка нажатий
-           down_button.setOnClickListener(new View.OnClickListener() {
+            up_button.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onClick(View v) {
-                    drawThread.change_xy_ship(play_field.getHeight()/30, play_field.getHeight()/30);
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()){
+                        case MotionEvent.ACTION_DOWN:
+                            drawThread.set_updown(true, -1);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            drawThread.set_updown(false, -1);
+                            break;
+                    }
+                    return true;
                 }
             });
 
-            up_button.setOnClickListener(new View.OnClickListener() {
+            down_button.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onClick(View v) {
-                    drawThread.change_xy_ship(-play_field.getHeight()/30, -play_field.getHeight()/30);
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()){
+                        case MotionEvent.ACTION_DOWN:
+                            drawThread.set_updown(true, 1);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            drawThread.set_updown(false, 1);
+                            break;
+                    }
+                    return true;
                 }
             });
         }

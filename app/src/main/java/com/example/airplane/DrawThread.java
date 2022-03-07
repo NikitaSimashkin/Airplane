@@ -30,6 +30,9 @@ public class DrawThread extends Thread{
 
     private int top_ship, bottom_ship;
 
+    private boolean updown = false;
+    private int up_or_down = 0;
+
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height){
         super();
         this.surfaceHolder = surfaceHolder;
@@ -48,10 +51,27 @@ public class DrawThread extends Thread{
 
     }
 
+
     public void change_xy_ship(int a, int b){
-        top_ship += a;
-        bottom_ship += b;
+        if (!(top_ship + a < this.height/50 || bottom_ship + b > height)) { //это условие проверяет выход за границы
+            top_ship += a;
+            bottom_ship += b;
+        }
     }
+
+    public void set_updown (boolean updown, int up_or_down){
+        this.updown = updown;
+        this.up_or_down = up_or_down;
+    }
+
+    public void up_down (){
+        if (updown){
+            change_xy_ship(height/120 * up_or_down, height/120 * up_or_down);
+        }
+
+    }
+
+
 
     public void update(){
 
@@ -72,12 +92,8 @@ public class DrawThread extends Thread{
     public void run() {
 
         while (true){
+            up_down();
             update();
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
