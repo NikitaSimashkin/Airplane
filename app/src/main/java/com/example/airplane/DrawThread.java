@@ -14,14 +14,7 @@ public class DrawThread extends Thread{
 
     private Canvas canvas;
 
-    private Rect rect;
-
-    private int width, height, left, right, top, bottom;
-
-    private int top_ship, bottom_ship;
-
-    private boolean updown = false;
-    private int up_or_down = 0;
+    private int width, height;
 
     private Samolet samolet;
 
