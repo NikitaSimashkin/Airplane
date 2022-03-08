@@ -72,10 +72,10 @@ public class PlayActivity extends AppCompatActivity {
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()){
                         case MotionEvent.ACTION_DOWN:
-                            drawThread.set_updown(true, -1);
+                            drawThread.get_Samolet().set_updown(true, -1);
                             break;
                         case MotionEvent.ACTION_UP:
-                            drawThread.set_updown(false, -1);
+                            drawThread.get_Samolet().set_updown(false, -1);
                             break;
                     }
                     return true;
@@ -87,10 +87,10 @@ public class PlayActivity extends AppCompatActivity {
                 public boolean onTouch(View v, MotionEvent event) {
                     switch (event.getAction()){
                         case MotionEvent.ACTION_DOWN:
-                            drawThread.set_updown(true, 1);
+                            drawThread.get_Samolet().set_updown(true, 1);
                             break;
                         case MotionEvent.ACTION_UP:
-                            drawThread.set_updown(false, 1);
+                            drawThread.get_Samolet().set_updown(false, 1);
                             break;
                     }
                     return true;
