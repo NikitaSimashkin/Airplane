@@ -9,7 +9,7 @@ public class Sprite {
     private Bitmap bitmap; // картинка
     private int up, down, left, right; //координаты квадрата где сейчас картинка()
 
-    public void set_koord(int up, int down, int left, int right){ //задаем координаты
+    public void set_koord(int up, int down, int left, int right){ //меняем координаты
         this.up = up;
         this.down = down;
         this.left = left;
@@ -21,7 +21,7 @@ public class Sprite {
     }
 
 
-    public Sprite(Bitmap bitmap, int up, int left, int down, int right){
+    public Sprite(Bitmap bitmap, int up, int left, int down, int right){ //создаем спрайт и задаем нач. координаты
         this.bitmap = bitmap;
         this.up = up;
         this.down = down;
@@ -29,11 +29,7 @@ public class Sprite {
         this.right = right;
     }
 
-    public Bitmap get_picture (){
-        return bitmap;
-    }
-
-    public Canvas draw (Canvas canvas, Paint paint){
+    public Canvas draw (Canvas canvas, Paint paint){ //рисуем картинку на холсте
         canvas.drawBitmap(bitmap, null, create_rect(), paint);
         return canvas;
     }

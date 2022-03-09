@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 public class Samolet extends Sprite{
     private Bitmap spaceship_picture;
     private int up, left, down, right, height;
+
     private int up_or_down;
     private boolean updown;
     private Context context;
@@ -39,7 +40,7 @@ public class Samolet extends Sprite{
 
     public void when_button_is_pressed(){ //умножаем на 1 если вниз, на -1 если вверх
         if (updown){
-            change_xy_ship(height/120 * up_or_down, height/120 * up_or_down);
+            change_xy_ship(height/100 * up_or_down, height/100 * up_or_down);
         }
     }
 }

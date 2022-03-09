@@ -8,6 +8,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
+import java.util.ArrayList;
+
 public class DrawThread extends Thread{
     private SurfaceHolder surfaceHolder;
     private Context context;
@@ -17,6 +19,10 @@ public class DrawThread extends Thread{
     private int width, height;
 
     private Samolet samolet;
+
+    private long time = System.nanoTime();
+
+    private ArrayList<Sprite> enemy_list = new ArrayList<>();
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height){
         super();
@@ -53,8 +59,21 @@ public class DrawThread extends Thread{
     public void run() {
 
         while (true){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
-            change_xy_samolet();
+            change_xy_samolet(); //обновляет координаты самолета
+            update_enemy(); //отрисовывает всех врагов
             draw_all();
+        }
+    }
+
+    private void update_enemy() {
+        if (System.nanoTime() - time > 5){ //каждые 5 секунд спавним врага
+            enemy_list.add(new Enemy());
+            time = System.nanoTime();
+        }
+        for (int i = 0; i < enemy_list.size(); i++){
+            enemy_list.get(i).update_koord(); //обновляет координаты
+            enemy_list.get(i).check(); //проверяет столкновение с самолетом или стеной
+            enemy_list.get(i).draw(); //рисует
         }
     }
 }
