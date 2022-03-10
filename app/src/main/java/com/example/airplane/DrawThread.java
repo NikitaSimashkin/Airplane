@@ -31,7 +31,7 @@ public class DrawThread extends Thread{
         this.width = width;
         this.height = height;
 
-        samolet = new Samolet(height/50, width/50, height/5, width/9, height, context);
+        samolet = new Samolet(height/50, width/50, height/3, width/6, height, context);
     }
 
     public Samolet get_Samolet(){
@@ -51,6 +51,7 @@ public class DrawThread extends Thread{
         canvas.drawRect(0, 0, width, height, clearPaint);
 
         samolet.draw(canvas, null);
+        //for (int i = 0; i = )
 
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
@@ -62,18 +63,23 @@ public class DrawThread extends Thread{
             change_xy_samolet(); //обновляет координаты самолета
             update_enemy(); //отрисовывает всех врагов
             draw_all();
+            try {
+                Thread.sleep(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void update_enemy() {
         if (System.nanoTime() - time > 5){ //каждые 5 секунд спавним врага
-            enemy_list.add(new Enemy());
+            //enemy_list.add(new Enemy());
             time = System.nanoTime();
         }
         for (int i = 0; i < enemy_list.size(); i++){
-            enemy_list.get(i).update_koord(); //обновляет координаты
-            enemy_list.get(i).check(); //проверяет столкновение с самолетом или стеной
-            enemy_list.get(i).draw(); //рисует
+           // enemy_list.get(i).update_koord(); //обновляет координаты
+           // enemy_list.get(i).check(); //проверяет столкновение с самолетом или стеной
+           // enemy_list.get(i).draw(); //рисует
         }
     }
 }

@@ -40,7 +40,7 @@ public class Samolet extends Sprite{
 
     public void when_button_is_pressed(){ //умножаем на 1 если вниз, на -1 если вверх
         if (updown){
-            change_xy_ship(height/100 * up_or_down, height/100 * up_or_down);
+            change_xy_ship(height/80 * up_or_down, height/80 * up_or_down);
         }
     }
 }
