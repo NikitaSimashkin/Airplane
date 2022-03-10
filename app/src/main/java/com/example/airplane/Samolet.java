@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class Samolet extends Sprite{
-    private Bitmap spaceship_picture;
     private int up, left, down, right, height;
 
     private int up_or_down;
@@ -14,7 +13,7 @@ public class Samolet extends Sprite{
     private Context context;
 
     public Samolet(int up, int left, int down, int right, int height, Context context) {
-        super(BitmapFactory.decodeResource(context.getResources(), R.drawable.spaceship), up, left, down, right);
+        super(BitmapFactory.decodeResource(context.getResources(), R.drawable.spaceship), up, left, down, right, context);
 
         this.up = up;
         this.left = left;

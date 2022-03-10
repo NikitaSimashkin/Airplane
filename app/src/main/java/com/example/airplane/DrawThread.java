@@ -20,9 +20,11 @@ public class DrawThread extends Thread{
 
     private Samolet samolet;
 
-    private long time = System.nanoTime();
+    private long time = System.currentTimeMillis()/1000000000;
 
-    private ArrayList<Sprite> enemy_list = new ArrayList<>();
+    private ArrayList<Enemy> enemy_list = new ArrayList<>();
+
+    private int enemys;
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height){
         super();
@@ -31,7 +33,7 @@ public class DrawThread extends Thread{
         this.width = width;
         this.height = height;
 
-        samolet = new Samolet(height/50, width/50, height/3, width/6, height, context);
+        samolet = new Samolet(height/50, width/50, (int)(height/5.5), width/7, height, context);
     }
 
     public Samolet get_Samolet(){
@@ -50,8 +52,10 @@ public class DrawThread extends Thread{
         clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         canvas.drawRect(0, 0, width, height, clearPaint);
 
-        samolet.draw(canvas, null);
-        //for (int i = 0; i = )
+        samolet.draw(canvas, null); //рисуем самолет
+        for (int i = 0; i < enemy_list.size(); i++){ //отрисовываем врагов
+            enemy_list.get(i).draw(canvas, null);
+        }
 
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
@@ -62,24 +66,19 @@ public class DrawThread extends Thread{
         while (true){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
             change_xy_samolet(); //обновляет координаты самолета
             update_enemy(); //отрисовывает всех врагов
-            draw_all();
-            try {
-                Thread.sleep(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            draw_all(); //рисует все
         }
     }
 
     private void update_enemy() {
-        if (System.nanoTime() - time > 5){ //каждые 5 секунд спавним врага
-            //enemy_list.add(new Enemy());
-            time = System.nanoTime();
+        enemys = (int)(Math.random()*7);
+        if (System.nanoTime()/1000000000 - time > 1){ //каждые 5 секунд спавним врага
+            enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width, 5*height/30 + enemys*(4 * height/30) , width*15/14, height, width, context));
+            time = System.nanoTime()/1000000000;
         }
         for (int i = 0; i < enemy_list.size(); i++){
-            enemy_list.get(i).update_koord(); //обновляет координаты
-            enemy_list.get(i).check(); //проверяет столкновение с самолетом или стеной
-            enemy_list.get(i).draw(); //рисует
+            enemy_list.get(i).update_koord(120); //обновляет координаты
+         //   enemy_list.get(i).check(); //проверяет столкновение с самолетом или стеной
         }
     }
 }
