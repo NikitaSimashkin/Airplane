@@ -76,11 +76,11 @@ public class DrawThread extends Thread{
             //enemy_list.add(new Enemy());
             time = System.nanoTime();
         }
-       // for (int i = 0; i < enemy_list.size(); i++){
-           // enemy_list.get(i).update_koord(); //обновляет координаты
-           // enemy_list.get(i).check(); //проверяет столкновение с самолетом или стеной
-           // enemy_list.get(i).draw(); //рисует
-      //  }
+        for (int i = 0; i < enemy_list.size(); i++){
+            enemy_list.get(i).update_koord(); //обновляет координаты
+            enemy_list.get(i).check(); //проверяет столкновение с самолетом или стеной
+            enemy_list.get(i).draw(); //рисует
+        }
     }
 }
 
