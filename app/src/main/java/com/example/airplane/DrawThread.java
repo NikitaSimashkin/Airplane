@@ -128,7 +128,8 @@ public class DrawThread extends Thread{
             }
             else {
                 for (int j = 0; j < bullet_list.size(); j++){
-                    if (Sprite.check(bullet_list.get(j), enemy_list.get(i))){
+                    if (Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
+                            width/100, 0, -width/100, 0})){
                         //добавить сюда картинку разрущения
                         enemy_list.remove(i);
                         bullet_list.remove(j);

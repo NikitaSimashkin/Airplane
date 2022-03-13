@@ -23,7 +23,7 @@ public class Sprite {
     }
 
     public Rect create_rect_minus(int a, int b, int c, int d){
-        return new Rect(left+=a, up+=b, right+=c, down+=d);
+        return new Rect(left+a, up+b, right+c, down+d);
     }
 
 
@@ -49,7 +49,7 @@ public class Sprite {
         return first.create_rect().intersect(second.create_rect());
     }
 
-    public static boolean check_two (Sprite first, Sprite second){
-        return first.create_rect_minus(-20, -20, -20, -20).intersect(second.create_rect_minus(-20, -20, -20, -20));
+    public static boolean check_two (Sprite first, Sprite second, int[] a){
+        return first.create_rect_minus(a[0], a[1], a[2], a[3]).intersect(second.create_rect_minus(a[4], a[5], a[6], a[7]));
     }
 }
