@@ -37,6 +37,7 @@ public class PlayActivity extends AppCompatActivity {
 
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
+        ImageButton shot = (ImageButton) findViewById(R.id.shot);
 
         SurfaceView play_field = (SurfaceView) findViewById(R.id.play_field); //поле для рисования
 
@@ -96,6 +97,19 @@ public class PlayActivity extends AppCompatActivity {
                     return true;
                 }
             });
+
+            shot.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()){
+                        case MotionEvent.ACTION_DOWN:
+                            drawThread.create_bullets();
+                            break;
+                        case MotionEvent.ACTION_UP:
+                    }
+                    return true;
+                }
+            });
         }
 
 
@@ -103,6 +117,7 @@ public class PlayActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        drawThread.interrupt();
         super.onStop();
     }
 

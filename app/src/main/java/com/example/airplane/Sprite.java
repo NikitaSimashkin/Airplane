@@ -8,7 +8,7 @@ import android.graphics.Rect;
 
 public class Sprite {
     private Bitmap bitmap; // картинка
-    private int up, down, left, right; //координаты квадрата где сейчас картинка()
+    protected int up, down, left, right; //координаты квадрата где сейчас картинка()
     private Context context;
 
     public void set_koord(int up, int down, int left, int right){ //меняем координаты
@@ -41,4 +41,7 @@ public class Sprite {
         return canvas;
     }
 
+    public static boolean check (Sprite first, Sprite second){
+        return first.create_rect().intersect(second.create_rect());
+    }
 }

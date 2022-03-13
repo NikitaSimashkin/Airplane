@@ -1,6 +1,8 @@
 package com.example.airplane;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -20,11 +22,16 @@ public class DrawThread extends Thread{
 
     private Samolet samolet;
 
-    private long time = System.currentTimeMillis()/1000000000;
+    private Bitmap bullet_1;
+
+    private long time = System.nanoTime()/1000000000;
 
     private ArrayList<Enemy> enemy_list = new ArrayList<>();
+    private ArrayList<Bullet> bullet_list = new ArrayList<>();
 
     private int enemys;
+
+    private long time_bullet = System.currentTimeMillis()/1000000000;
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height){
         super();
@@ -32,6 +39,8 @@ public class DrawThread extends Thread{
         this.context = context;
         this.width = width;
         this.height = height;
+
+        bullet_1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.bullet_1);
 
         samolet = new Samolet(height/50, width/50, (int)(height/5.5), width/7, height, context);
     }
@@ -46,39 +55,77 @@ public class DrawThread extends Thread{
 
     public void draw_all(){
 
-        canvas = surfaceHolder.lockCanvas();
+        try {
+            canvas = surfaceHolder.lockCanvas();
 
-        Paint clearPaint = new Paint(); //очистка холста
-        clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        canvas.drawRect(0, 0, width, height, clearPaint);
+            Paint clearPaint = new Paint(); //очистка холста
+            clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            canvas.drawRect(0, 0, width, height, clearPaint);
 
-        samolet.draw(canvas, null); //рисуем самолет
-        for (int i = 0; i < enemy_list.size(); i++){ //отрисовываем врагов
-            enemy_list.get(i).draw(canvas, null);
+            for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
+                enemy_list.get(i).draw(canvas, null);
+            }
+            for (int i = 0; i < bullet_list.size(); i++) { //отрисовываем пули
+                bullet_list.get(i).draw(canvas, null);
+            }
+
+            samolet.draw(canvas, null); //рисуем самолет
+
+            surfaceHolder.unlockCanvasAndPost(canvas);
         }
-
-        surfaceHolder.unlockCanvasAndPost(canvas);
+        catch (NullPointerException e){
+            enemy_list.removeAll(enemy_list);
+        }
     }
 
     @Override
     public void run() {
 
-        while (true){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
+        while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
             change_xy_samolet(); //обновляет координаты самолета
+            update_bullets();
             update_enemy(); //отрисовывает всех врагов
             draw_all(); //рисует все
+        }
+    }
+
+    public void update_bullets() {
+        for (int i = 0; i < bullet_list.size(); i++)
+            bullet_list.get(i).update_koord(); //обновляет координаты
+    }
+
+    public void create_bullets() {
+        if (System.nanoTime()/1000000000 - time_bullet > 3){
+            int[] koord_samolet = samolet.get_koord();
+            bullet_list.add(new Bullet(bullet_1,
+                    (koord_samolet[0] + koord_samolet[2])/2 - (koord_samolet[2] - koord_samolet[0])/6,
+                    (koord_samolet[1] + koord_samolet[3])/2,
+                    (koord_samolet[0] + koord_samolet[2])/2 + (koord_samolet[2] - koord_samolet[0])/6,
+                    koord_samolet[3],
+                    context, 5, 120, height, width));
+
+            time_bullet = System.nanoTime()/1000000000;
         }
     }
 
     private void update_enemy() {
         enemys = (int)(Math.random()*7);
         if (System.nanoTime()/1000000000 - time > 1){ //каждые 5 секунд спавним врага
-            enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width, 5*height/30 + enemys*(4 * height/30) , width*15/14, height, width, context));
+            enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width,
+                    5*height/30 + enemys*(4 * height/30) , width*15/14, height, width, context, 5));
             time = System.nanoTime()/1000000000;
         }
         for (int i = 0; i < enemy_list.size(); i++){
             enemy_list.get(i).update_koord(120); //обновляет координаты
-         //   enemy_list.get(i).check(); //проверяет столкновение с самолетом или стеной
+            if (Enemy.check(samolet, enemy_list.get(i)))  //проверяет столкновение с самолетом или стеной
+            {
+                enemy_list.remove(i);
+                //samolet.change_hp();
+            }
+            else if(enemy_list.get(i).get_koord()[1] <= 0){
+                enemy_list.remove(i);
+                //base.change_hp();
+            }
         }
     }
 }
