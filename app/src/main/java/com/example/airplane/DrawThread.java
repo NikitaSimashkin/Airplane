@@ -95,7 +95,7 @@ public class DrawThread extends Thread{
     }
 
     public void create_bullets() {
-        if (System.nanoTime()/1000000000 - time_bullet > 3){
+        if (System.nanoTime()/1000000000 - time_bullet > 1){
             int[] koord_samolet = samolet.get_koord();
             bullet_list.add(new Bullet(bullet_1,
                     (koord_samolet[0] + koord_samolet[2])/2 - (koord_samolet[2] - koord_samolet[0])/6,
@@ -116,7 +116,7 @@ public class DrawThread extends Thread{
             time = System.nanoTime()/1000000000;
         }
         for (int i = 0; i < enemy_list.size(); i++){
-            enemy_list.get(i).update_koord(120); //обновляет координаты
+            enemy_list.get(i).update_koord(300); //обновляет координаты
             if (Enemy.check(samolet, enemy_list.get(i)))  //проверяет столкновение с самолетом или стеной
             {
                 enemy_list.remove(i);
@@ -125,6 +125,16 @@ public class DrawThread extends Thread{
             else if(enemy_list.get(i).get_koord()[1] <= 0){
                 enemy_list.remove(i);
                 //base.change_hp();
+            }
+            else {
+                for (int j = 0; j < bullet_list.size(); j++){
+                    if (Sprite.check(bullet_list.get(j), enemy_list.get(i))){
+                        //добавить сюда картинку разрущения
+                        enemy_list.remove(i);
+                        bullet_list.remove(j);
+                        break;
+                    }
+                }
             }
         }
     }
