@@ -22,6 +22,10 @@ public class Sprite {
         return new Rect(left, up, right, down);
     }
 
+    public Rect create_rect_minus(int a, int b, int c, int d){
+        return new Rect(left+=a, up+=b, right+=c, down+=d);
+    }
+
 
     public Sprite(Bitmap bitmap, int up, int left, int down, int right, Context context){ //создаем спрайт и задаем нач. координаты
         this.bitmap = bitmap;
@@ -43,5 +47,9 @@ public class Sprite {
 
     public static boolean check (Sprite first, Sprite second){
         return first.create_rect().intersect(second.create_rect());
+    }
+
+    public static boolean check_two (Sprite first, Sprite second){
+        return first.create_rect_minus(-20, -20, -20, -20).intersect(second.create_rect_minus(-20, -20, -20, -20));
     }
 }
