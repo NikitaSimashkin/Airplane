@@ -10,7 +10,7 @@ public class Enemy extends Sprite{
     private Context context;
 
     private int alive = 1; //проверка жив или нет, 1 - yes, 1000000 - no
-    public long time_death = 0; //время смерти
+    private long time_death = 0; //время смерти
 
     public Enemy(Bitmap bitmap, int up, int left, int down, int right, int height, int width, Context context, int damage) {
         super(bitmap, up, left, down, right, context);
@@ -33,6 +33,9 @@ public class Enemy extends Sprite{
 
     public int getAlive() {
         return alive;
+    }
+    public long getTime_death() {
+        return time_death;
     }
 
     public void setDeath(Bitmap bitmap) { //ставим смерть
