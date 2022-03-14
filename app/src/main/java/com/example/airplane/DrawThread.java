@@ -122,7 +122,8 @@ public class DrawThread extends Thread{
         }
         for (int i = 0; i < enemy_list.size(); i++){
             enemy_list.get(i).update_koord(300 * enemy_list.get(i).getAlive()); //обновляет координаты
-            if (Enemy.check(samolet, enemy_list.get(i)))  //проверяет столкновение с самолетом или стеной
+            if (Enemy.check_two(samolet, enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
+                    width/100, 0, -width/100, 0}))  //проверяет столкновение с самолетом или стеной
             {
                 enemy_list.remove(i);
                 //samolet.change_hp();
