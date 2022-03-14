@@ -42,7 +42,7 @@ public class DrawThread extends Thread{
 
         bullet_1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.bullet_1);
 
-        samolet = new Samolet(height/50, width/50, (int)(height/5.5), width/7, height, context);
+        samolet = new Samolet(height/50, width/50, (int)(height/5), width/7, height, context);
     }
 
     public Samolet get_Samolet(){
@@ -63,7 +63,12 @@ public class DrawThread extends Thread{
             canvas.drawRect(0, 0, width, height, clearPaint);
 
             for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
-                enemy_list.get(i).draw(canvas, null);
+                if (enemy_list.get(i).time_death == 0 || System.nanoTime()/1000000000 - enemy_list.get(i).time_death <= 2) {
+                    enemy_list.get(i).draw(canvas, null);
+                } else {
+                    enemy_list.remove(i);
+                    i--;
+                }
             }
             for (int i = 0; i < bullet_list.size(); i++) { //отрисовываем пули
                 bullet_list.get(i).draw(canvas, null);
@@ -116,7 +121,7 @@ public class DrawThread extends Thread{
             time = System.nanoTime()/1000000000;
         }
         for (int i = 0; i < enemy_list.size(); i++){
-            enemy_list.get(i).update_koord(300); //обновляет координаты
+            enemy_list.get(i).update_koord(300 * enemy_list.get(i).getAlive()); //обновляет координаты
             if (Enemy.check(samolet, enemy_list.get(i)))  //проверяет столкновение с самолетом или стеной
             {
                 enemy_list.remove(i);
@@ -126,12 +131,12 @@ public class DrawThread extends Thread{
                 enemy_list.remove(i);
                 //base.change_hp();
             }
-            else {
+            else { //столкновение с пулей
                 for (int j = 0; j < bullet_list.size(); j++){
-                    if (Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
+                    if (enemy_list.get(i).getAlive() < 10 && Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
                             width/100, 0, -width/100, 0})){
                         //добавить сюда картинку разрущения
-                        enemy_list.remove(i);
+                        enemy_list.get(i).setDeath(BitmapFactory.decodeResource(context.getResources(), R.drawable.meteor_death));
                         bullet_list.remove(j);
                         break;
                     }

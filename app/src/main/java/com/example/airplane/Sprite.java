@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class Sprite {
-    private Bitmap bitmap; // картинка
+    protected Bitmap bitmap; // картинка
     protected int up, down, left, right; //координаты квадрата где сейчас картинка()
     private Context context;
 
