@@ -1,6 +1,8 @@
 package com.example.airplane;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -34,6 +36,16 @@ public class PlayActivity extends AppCompatActivity {
         super.onStart();
         Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
         setContentView(R.layout.playactivity);
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        SpaceshipControllerFragment spaceshipControllerFragment
+                = SpaceshipControllerFragment.newInstance("🪅🪅🪅🪅", downButtonState -> {
+                    downButtonChanged(downButtonState, 1);
+        });
+        fragmentTransaction.add(R.id.bottom_frame_container, spaceshipControllerFragment);
+        fragmentTransaction.commit();
+
 
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
@@ -83,20 +95,6 @@ public class PlayActivity extends AppCompatActivity {
                 }
             });
 
-            down_button.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()){
-                        case MotionEvent.ACTION_DOWN:
-                            drawThread.get_Samolet().set_updown(true, 1);
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            drawThread.get_Samolet().set_updown(false, 1);
-                            break;
-                    }
-                    return true;
-                }
-            });
 
             shot.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -113,6 +111,17 @@ public class PlayActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void downButtonChanged(SpaceshipControllerFragment.ButtonState state, int up_or_down) {
+        switch (state) {
+            case DOWN:
+                drawThread.get_Samolet().set_updown(true, up_or_down);
+                break;
+            case UP:
+                drawThread.get_Samolet().set_updown(false, up_or_down);
+                break;
+        }
     }
 
     @Override

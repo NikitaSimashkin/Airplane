@@ -36,11 +36,17 @@
             android:layout_weight="9"
             android:background="@null" />
 
-        <LinearLayout
+        <fragment
+            class="com.example.airplane.SpaceshipControllerFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
+
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_spaceship_controller" />
+        <FrameLayout
+            android:id="@+id/bottom_frame_container"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"/>
+
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -118,6 +124,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
+
                 <ImageButton
                     android:id="@+id/shot"
                     android:layout_width="64dp"
@@ -134,7 +141,7 @@
                     app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

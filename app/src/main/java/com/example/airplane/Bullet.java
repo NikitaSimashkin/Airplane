@@ -9,8 +9,8 @@ public class Bullet extends Sprite{
     private int damage, speed;
     private Bitmap bitmap;
 
-    public Bullet(Bitmap bitmap, int up, int left, int down, int right, Context context, int damage, int speed, int height, int width) {
-        super(bitmap, up, left, down, right, context);
+    public Bullet(int up, int left, int down, int right, Context context, int damage, int speed, int height, int width) {
+        super(ImageResource.BULLET, up, left, down, right, context);
         this.damage = damage;
         this.speed = speed;
         this.height = height;
