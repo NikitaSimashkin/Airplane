@@ -9,7 +9,10 @@ public class Enemy extends Sprite{
     protected int up, left, down, right, height, width, damage;
     private Context context;
 
-    private int alive = 1; //проверка жив или нет, 1 - yes, 1000000 - no
+    /**
+     * проверка жив или нет, 1 - yes, 1000000 - no
+     */
+    private int alive = 1;
     private long time_death = 0; //время смерти
 
     public Enemy(Bitmap bitmap, int up, int left, int down, int right, int height, int width, Context context, int damage) {
