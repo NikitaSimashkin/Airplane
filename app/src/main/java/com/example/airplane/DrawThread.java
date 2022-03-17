@@ -102,7 +102,7 @@ public class DrawThread extends Thread{
     public void create_bullets() {
         if (System.nanoTime()/1000000000 - time_bullet > 1){
             int[] koord_samolet = samolet.get_koord();
-            bullet_list.add(new Bullet(bullet_1,
+            bullet_list.add(new Bullet(
                     (koord_samolet[0] + koord_samolet[2])/2 - (koord_samolet[2] - koord_samolet[0])/6,
                     (koord_samolet[1] + koord_samolet[3])/2,
                     (koord_samolet[0] + koord_samolet[2])/2 + (koord_samolet[2] - koord_samolet[0])/6,
@@ -132,11 +132,11 @@ public class DrawThread extends Thread{
                 enemy_list.remove(i);
                 //base.change_hp();
             }
-            else { //столкновение с пулей
+            else { // столкновение с пулей
                 for (int j = 0; j < bullet_list.size(); j++){
                     if (enemy_list.get(i).getAlive() < 10 && Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
                             width/100, 0, -width/100, 0})){
-                        //добавить сюда картинку разрущения
+                        // TODO: добавить сюда картинку разрушения
                         enemy_list.get(i).setDeath(BitmapFactory.decodeResource(context.getResources(), R.drawable.meteor_death));
                         bullet_list.remove(j);
                         break;

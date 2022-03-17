@@ -2,8 +2,6 @@ package com.example.airplane;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 public class Enemy extends Sprite{
     protected int up, left, down, right, height, width, damage;
@@ -15,8 +13,8 @@ public class Enemy extends Sprite{
     private int alive = 1;
     private long time_death = 0; //время смерти
 
-    public Enemy(Bitmap bitmap, int up, int left, int down, int right, int height, int width, Context context, int damage) {
-        super(bitmap, up, left, down, right, context);
+    public Enemy(ImageResource imageResource, int up, int left, int down, int right, int height, int width, Context context, int damage) {
+        super(imageResource, up, left, down, right, context);
 
         this.up = up;
         this.left = left;

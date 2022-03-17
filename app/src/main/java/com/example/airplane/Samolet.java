@@ -13,7 +13,7 @@ public class Samolet extends Sprite{
     private Context context;
 
     public Samolet(int up, int left, int down, int right, int height, Context context) {
-        super(BitmapFactory.decodeResource(context.getResources(), R.drawable.spaceship), up, left, down, right, context);
+        super(ImageResource.SPACESHIP, up, left, down, right, context);
 
         this.up = up;
         this.left = left;
