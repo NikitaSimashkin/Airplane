@@ -24,14 +24,14 @@ public class DrawThread extends Thread{
 
     private Bitmap bullet_1;
 
-    private long time = System.currentTimeMillis()/1000;
+    private long time = System.currentTimeMillis();
 
     private ArrayList<Enemy> enemy_list = new ArrayList<>();
     private ArrayList<Bullet> bullet_list = new ArrayList<>();
 
     private int enemys;
 
-    private long time_bullet = System.currentTimeMillis()/1000;
+    private long time_bullet = System.currentTimeMillis();
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height){
         super();
@@ -63,7 +63,7 @@ public class DrawThread extends Thread{
             canvas.drawRect(0, 0, width, height, clearPaint);
 
             for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
-                if (enemy_list.get(i).getTime_death() == 0 || System.currentTimeMillis()/1000 - enemy_list.get(i).getTime_death() <= 2) {
+                if (enemy_list.get(i).getTime_death() == 0 || System.currentTimeMillis() - enemy_list.get(i).getTime_death() <= 2000) {
                     enemy_list.get(i).draw(canvas, null);
                 } else {
                     enemy_list.remove(i);
@@ -100,8 +100,8 @@ public class DrawThread extends Thread{
     }
 
     public void create_bullets() {
-        if (System.currentTimeMillis()/1000 - time_bullet >= 2) {
-            time_bullet = System.currentTimeMillis() / 1000;
+        if (System.currentTimeMillis() - time_bullet >= 2000) {
+            time_bullet = System.currentTimeMillis() ;
             int[] koord_samolet = samolet.get_koord();
             bullet_list.add(new Bullet(
                     (koord_samolet[0] + koord_samolet[2]) / 2 - (koord_samolet[2] - koord_samolet[0]) / 6,
@@ -115,10 +115,10 @@ public class DrawThread extends Thread{
 
     private void update_enemy() {
         enemys = (int)(Math.random()*7);
-        if (System.currentTimeMillis()/1000 - time >= 2){ //каждые 5 секунд спавним врага
+        if (System.currentTimeMillis() - time >= 2000){ //каждые 5 секунд спавним врага
             enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width,
                     5*height/30 + enemys*(4 * height/30) , width*15/14, height, width, context, 5));
-            time = System.currentTimeMillis()/1000;
+            time = System.currentTimeMillis();
         }
         for (int i = 0; i < enemy_list.size(); i++){
             enemy_list.get(i).update_koord(300 * enemy_list.get(i).getAlive()); //обновляет координаты

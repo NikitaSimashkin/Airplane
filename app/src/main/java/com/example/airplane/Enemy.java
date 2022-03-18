@@ -42,7 +42,7 @@ public class Enemy extends Sprite{
     public void setDeath(Bitmap bitmap) { //ставим смерть
         alive = 100000000;
         this.bitmap = bitmap;
-        time_death = System.currentTimeMillis()/1000;
+        time_death = System.currentTimeMillis();
     }
 
 }

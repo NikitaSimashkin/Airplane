@@ -14,6 +14,7 @@ public class Sprite {
     protected Bitmap bitmap;
     protected final ImageResource imageResource; // картинка
     protected int up, down, left, right; //координаты квадрата где сейчас картинка()
+    protected int height, width;
     private Context context;
 
     public void set_koord(int up, int down, int left, int right){ //меняем координаты
