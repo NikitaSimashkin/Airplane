@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class Samolet extends Sprite{
-    private int up, left, down, right, height;
+    private int  height;
 
     private int up_or_down;
     private boolean updown;
@@ -15,10 +15,6 @@ public class Samolet extends Sprite{
     public Samolet(int up, int left, int down, int right, int height, Context context) {
         super(ImageResource.SPACESHIP, up, left, down, right, context);
 
-        this.up = up;
-        this.left = left;
-        this.down = down;
-        this.right = right;
         this.height = height;
         this.context = context;
     }

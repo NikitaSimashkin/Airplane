@@ -64,7 +64,6 @@
                 android:layout_marginStart="42dp"
                 android:layout_marginTop="7dp"
                 android:layout_marginEnd="42dp"
-                android:layout_marginBottom="7dp"
                 android:indeterminate="false"
                 android:max="1000000000"
                 android:progress="1"

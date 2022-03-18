@@ -118,8 +118,10 @@ public class PlayActivity extends AppCompatActivity {
                     switch (event.getAction()){
                         case MotionEvent.ACTION_DOWN:
                             drawThread.create_bullets();
+                            System.out.println(123);
                             break;
                         case MotionEvent.ACTION_UP:
+                            break;
                     }
                     return true;
                 }

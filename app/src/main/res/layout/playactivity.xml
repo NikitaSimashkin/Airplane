@@ -39,7 +39,6 @@
         <fragment
             class="com.example.airplane.SpaceshipControllerFragment"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_spaceship_controller" />
 

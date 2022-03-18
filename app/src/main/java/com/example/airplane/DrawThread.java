@@ -24,14 +24,14 @@ public class DrawThread extends Thread{
 
     private Bitmap bullet_1;
 
-    private long time = System.nanoTime()/1000000000;
+    private long time = System.currentTimeMillis()/1000;
 
     private ArrayList<Enemy> enemy_list = new ArrayList<>();
     private ArrayList<Bullet> bullet_list = new ArrayList<>();
 
     private int enemys;
 
-    private long time_bullet = System.currentTimeMillis()/1000000000;
+    private long time_bullet = System.currentTimeMillis()/1000;
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height){
         super();
@@ -100,7 +100,7 @@ public class DrawThread extends Thread{
     }
 
     public void create_bullets() {
-        if (System.nanoTime()/1000000000 - time_bullet > 1){
+        if (System.currentTimeMillis()/1000 - time_bullet > 1){
             int[] koord_samolet = samolet.get_koord();
             bullet_list.add(new Bullet(
                     (koord_samolet[0] + koord_samolet[2])/2 - (koord_samolet[2] - koord_samolet[0])/6,
@@ -109,16 +109,16 @@ public class DrawThread extends Thread{
                     koord_samolet[3],
                     context, 5, 120, height, width));
 
-            time_bullet = System.nanoTime()/1000000000;
+            time_bullet = System.currentTimeMillis()/1000;
         }
     }
 
     private void update_enemy() {
         enemys = (int)(Math.random()*7);
-        if (System.nanoTime()/1000000000 - time > 1){ //каждые 5 секунд спавним врага
+        if (System.currentTimeMillis()/1000 - time > 1){ //каждые 5 секунд спавним врага
             enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width,
                     5*height/30 + enemys*(4 * height/30) , width*15/14, height, width, context, 5));
-            time = System.nanoTime()/1000000000;
+            time = System.currentTimeMillis()/1000;
         }
         for (int i = 0; i < enemy_list.size(); i++){
             enemy_list.get(i).update_koord(300 * enemy_list.get(i).getAlive()); //обновляет координаты
@@ -136,7 +136,6 @@ public class DrawThread extends Thread{
                 for (int j = 0; j < bullet_list.size(); j++){
                     if (enemy_list.get(i).getAlive() < 10 && Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
                             width/100, 0, -width/100, 0})){
-                        // TODO: добавить сюда картинку разрушения
                         enemy_list.get(i).setDeath(BitmapFactory.decodeResource(context.getResources(), R.drawable.meteor_death));
                         bullet_list.remove(j);
                         break;
