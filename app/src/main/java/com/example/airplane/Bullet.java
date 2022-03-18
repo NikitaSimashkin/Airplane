@@ -10,7 +10,6 @@ public class Bullet extends Sprite{
 
     public Bullet(int up, int left, int down, int right, Context context, int damage, int speed, int height, int width) {
         super(ImageResource.BULLET, up, left, down, right, context);
-        System.out.println(5);
         this.damage = damage;
         this.speed = speed;
         this.height = height;
