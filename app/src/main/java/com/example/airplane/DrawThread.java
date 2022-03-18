@@ -100,7 +100,7 @@ public class DrawThread extends Thread{
     }
 
     public void create_bullets() {
-        if (System.currentTimeMillis()/1000 - time_bullet > 1){
+        if (System.currentTimeMillis()/1000 - time_bullet > 0){
             int[] koord_samolet = samolet.get_koord();
             bullet_list.add(new Bullet(
                     (koord_samolet[0] + koord_samolet[2])/2 - (koord_samolet[2] - koord_samolet[0])/6,
@@ -115,7 +115,7 @@ public class DrawThread extends Thread{
 
     private void update_enemy() {
         enemys = (int)(Math.random()*7);
-        if (System.currentTimeMillis()/1000 - time > 1){ //каждые 5 секунд спавним врага
+        if (System.currentTimeMillis()/1000 - time > 0){ //каждые 5 секунд спавним врага
             enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width,
                     5*height/30 + enemys*(4 * height/30) , width*15/14, height, width, context, 5));
             time = System.currentTimeMillis()/1000;
