@@ -42,10 +42,6 @@
 
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_spaceship_controller" />
-        <FrameLayout
-            android:id="@+id/bottom_frame_container"
-            android:layout_width="match_parent"
-            android:layout_height="70sp"/>
 
 
     </LinearLayout>

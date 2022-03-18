@@ -37,6 +37,8 @@ public class PlayActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
         setContentView(R.layout.playactivity);
 
+
+        /* TODO: не забудь разобраться с этим
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         SpaceshipControllerFragment spaceshipControllerFragment
@@ -45,6 +47,7 @@ public class PlayActivity extends AppCompatActivity {
         });
         fragmentTransaction.add(R.id.bottom_frame_container, spaceshipControllerFragment);
         fragmentTransaction.commit();
+         */
 
 
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
@@ -77,9 +80,22 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
-
-
         { //обработка нажатий
+            down_button.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()){
+                        case MotionEvent.ACTION_DOWN:
+                            drawThread.get_Samolet().set_updown(true, 1);
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            drawThread.get_Samolet().set_updown(false, 1);
+                            break;
+                    }
+                    return true;
+                }
+            });
+
             up_button.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -112,7 +128,7 @@ public class PlayActivity extends AppCompatActivity {
 
 
     }
-
+  /*
     private void downButtonChanged(SpaceshipControllerFragment.ButtonState state, int up_or_down) {
         switch (state) {
             case DOWN:
@@ -123,6 +139,7 @@ public class PlayActivity extends AppCompatActivity {
                 break;
         }
     }
+  */
 
     @Override
     protected void onStop() {

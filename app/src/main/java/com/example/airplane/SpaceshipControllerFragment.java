@@ -64,29 +64,13 @@ public class SpaceshipControllerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d("Sorry for TAG", "" + mParam1);
         View layout = inflater.inflate(R.layout.fragment_spaceship_controller, container, false);
-        ImageButton btn = layout.findViewById(R.id.down_button);
-        btn.setOnTouchListener((v, e) -> {
-            Log.d("Sorry for TAG", "Button action");
-            if (downButtonHandler == null) {
-                return false;
-            }
-            switch (e.getAction()){
-                case MotionEvent.ACTION_DOWN:
-                    downButtonHandler.stateChanged(ButtonState.DOWN);
-                    break;
-                case MotionEvent.ACTION_UP:
-                    downButtonHandler.stateChanged(ButtonState.UP);
-                    break;
-            }
-            return true;
-        });
         return layout;
     }
     public interface ButtonStateChangedHandler{
         void stateChanged(ButtonState state);
     }
+
     public enum ButtonState{
         UP,
         DOWN
