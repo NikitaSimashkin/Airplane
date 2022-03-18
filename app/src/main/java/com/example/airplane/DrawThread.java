@@ -63,7 +63,7 @@ public class DrawThread extends Thread{
             canvas.drawRect(0, 0, width, height, clearPaint);
 
             for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
-                if (enemy_list.get(i).getTime_death() == 0 || System.nanoTime()/1000000000 - enemy_list.get(i).getTime_death() <= 2) {
+                if (enemy_list.get(i).getTime_death() == 0 || System.currentTimeMillis()/1000 - enemy_list.get(i).getTime_death() <= 2) {
                     enemy_list.get(i).draw(canvas, null);
                 } else {
                     enemy_list.remove(i);
