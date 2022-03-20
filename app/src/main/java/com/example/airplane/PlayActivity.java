@@ -39,18 +39,6 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.playactivity);
 
 
-        /* TODO: не забудь разобраться с этим
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        SpaceshipControllerFragment spaceshipControllerFragment
-                = SpaceshipControllerFragment.newInstance("🪅🪅🪅🪅", downButtonState -> {
-                    downButtonChanged(downButtonState, 1);
-        });
-        fragmentTransaction.add(R.id.bottom_frame_container, spaceshipControllerFragment);
-        fragmentTransaction.commit();
-         */
-
-
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
         ImageButton shot = (ImageButton) findViewById(R.id.shot);
@@ -131,18 +119,6 @@ public class PlayActivity extends AppCompatActivity {
 
 
     }
-  /*
-    private void downButtonChanged(SpaceshipControllerFragment.ButtonState state, int up_or_down) {
-        switch (state) {
-            case DOWN:
-                drawThread.get_Samolet().set_updown(true, up_or_down);
-                break;
-            case UP:
-                drawThread.get_Samolet().set_updown(false, up_or_down);
-                break;
-        }
-    }
-  */
 
     @Override
     protected void onStop() {

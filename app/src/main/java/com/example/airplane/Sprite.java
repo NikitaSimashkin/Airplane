@@ -7,10 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class Sprite {
-    /**
-     * bitmap должен меняться только изнутри класса
-     * setDeath(!)
-     */
+
     protected Bitmap bitmap;
     protected final ImageResource imageResource; // картинка
     protected int up, down, left, right; //координаты квадрата где сейчас картинка()
