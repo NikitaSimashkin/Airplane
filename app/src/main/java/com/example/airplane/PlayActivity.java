@@ -25,7 +25,6 @@ import java.util.Objects;
 
 public class PlayActivity extends AppCompatActivity {
     private DrawThread drawThread;
-    private long time_bullet;
 
     @Override
     public void finish() {
@@ -116,8 +115,6 @@ public class PlayActivity extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
     @Override

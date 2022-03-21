@@ -1,26 +1,16 @@
 package com.example.airplane;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 public class Samolet extends Sprite{
-    private int  height;
 
-    private int up_or_down;
+    private int up_or_down, speed = height/120;
     private boolean updown;
-    private Context context;
 
-    public Samolet(int up, int left, int down, int right, int height, Context context) {
+    public Samolet(int up, int left, int down, int right, Context context) {
         super(ImageResource.SPACESHIP, up, left, down, right, context);
-
-        this.height = height;
-        this.context = context;
     }
-
-
-    public void change_xy_ship(int a, int b){ //метод меняет координаты самолета
+    public void update_koord(int a, int b){ //метод меняет координаты самолета
         if (!(up + a < height/50 || down + b > height)) { //это условие проверяет выход за границы
             this.set_koord(up + a, down + b, left, right);
             up += a;
@@ -33,9 +23,9 @@ public class Samolet extends Sprite{
         this.up_or_down = up_or_down;
     }
 
-    public void when_button_is_pressed(){ //умножаем на 1 если вниз, на -1 если вверх
+    public void buttons(){ //умножаем на 1 если вниз, на -1 если вверх
         if (updown){
-            change_xy_ship(height/120 * up_or_down, height/120 * up_or_down);
+            update_koord(speed * up_or_down, speed * up_or_down);
         }
     }
 }

@@ -5,15 +5,12 @@ import android.graphics.Bitmap;
 
 public class Bullet extends Sprite{
 
-    private int width, height;
     private int damage, speed;
 
-    public Bullet(int up, int left, int down, int right, Context context, int damage, int speed, int height, int width) {
+    public Bullet(int up, int left, int down, int right, Context context, int damage, int speed) {
         super(ImageResource.BULLET, up, left, down, right, context);
         this.damage = damage;
         this.speed = speed;
-        this.height = height;
-        this.width = width;
     }
 
     public void update_koord(){

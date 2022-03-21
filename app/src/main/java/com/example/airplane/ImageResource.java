@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 
 public enum ImageResource {
     METEOR(R.drawable.meteor),
-    //METEOR_DIED(R.drawable.meteor_death),
+    METEOR_DIED(R.drawable.meteor_death),
     SPACESHIP(R.drawable.spaceship),
     BULLET(R.drawable.bullet_1);
 
