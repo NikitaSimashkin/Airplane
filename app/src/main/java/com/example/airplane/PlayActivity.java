@@ -11,6 +11,9 @@ import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -46,10 +49,19 @@ public class PlayActivity extends AppCompatActivity {
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
         ImageButton shot = (ImageButton) findViewById(R.id.shot);
 
-        ImageView hp_samolet = findViewById(R.id.imageView);
-        Bitmap hp = ImageResource.HP_SAMOLET.getBitmap(getApplicationContext());
-        Bitmap n = Bitmap.createBitmap(hp, 0, 0, hp.getWidth()/2, hp.getHeight());
-        hp_samolet.setImageBitmap(n);
+
+
+        Looper looper = Looper.myLooper();
+        Handler handler = new Handler(looper) {
+
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                ImageView hp_samolet_image = findViewById(R.id.imageView);
+                Bitmap hp_samolet_bitmap = ImageResource.HP_SAMOLET.getBitmap(getApplicationContext());
+                Bitmap new_hp = Bitmap.createBitmap(hp_samolet_bitmap, 0, 0, hp_samolet_bitmap.getWidth()/msg.what, hp_samolet_bitmap.getHeight());
+                hp_samolet_image.setImageBitmap(new_hp);
+            }
+        };
 
         SurfaceView play_field = (SurfaceView) findViewById(R.id.play_field); //поле для рисования
 
@@ -62,7 +74,7 @@ public class PlayActivity extends AppCompatActivity {
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
                 int width = play_field.getWidth();
                 int height = play_field.getHeight();
-                drawThread = new DrawThread(holder, getApplicationContext(), width, height);
+                drawThread = new DrawThread(holder, getApplicationContext(), width, height, handler);
                 drawThread.start();
             }
 
@@ -129,6 +141,7 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         drawThread.interrupt();
+        Looper.myLooper().quitSafely();
         super.onStop();
     }
 

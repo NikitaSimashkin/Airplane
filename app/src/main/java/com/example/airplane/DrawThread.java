@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ClipDrawable;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class DrawThread extends Thread{
     private SurfaceHolder surfaceHolder;
     private Context context;
+    private Handler handler;
 
     private Canvas canvas;
 
@@ -30,10 +32,11 @@ public class DrawThread extends Thread{
 
     private int enemys;
 
-    public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height){
+    public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler){
         super();
         this.surfaceHolder = surfaceHolder;
         this.context = context;
+        this.handler = handler;
         DrawThread.width = width;
         DrawThread.height = height;
 
@@ -93,7 +96,7 @@ public class DrawThread extends Thread{
             {
                 enemy_list.remove(i);
                 i--;
-                //samolet.change_hp();
+                handler.sendEmptyMessage(10);
             }
             else if(enemy_list.get(i).get_koord()[1] <= 0){
                 enemy_list.remove(i);
