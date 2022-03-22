@@ -1,12 +1,14 @@
 package com.example.airplane;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.ClipDrawable;
+import android.view.Gravity;
 import android.view.SurfaceHolder;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -55,7 +57,12 @@ public class DrawThread extends Thread{
 
     public void update_bullets() {
         for (int i = 0; i < bullet_list.size(); i++)
-            bullet_list.get(i).update_koord(); //обновляет координаты
+            if (bullet_list.get(i).get_koord()[1] <= width)
+                bullet_list.get(i).update_koord(); //обновляет координаты
+            else {
+                bullet_list.remove(i);
+                i--;
+            }
     }
 
     public void create_bullets() {

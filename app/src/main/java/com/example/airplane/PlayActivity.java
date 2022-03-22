@@ -3,17 +3,21 @@ package com.example.airplane;
 import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +45,11 @@ public class PlayActivity extends AppCompatActivity {
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
         ImageButton shot = (ImageButton) findViewById(R.id.shot);
+
+        ImageView hp_samolet = findViewById(R.id.imageView);
+        Bitmap hp = ImageResource.HP_SAMOLET.getBitmap(getApplicationContext());
+        Bitmap n = Bitmap.createBitmap(hp, 0, 0, hp.getWidth()/2, hp.getHeight());
+        hp_samolet.setImageBitmap(n);
 
         SurfaceView play_field = (SurfaceView) findViewById(R.id.play_field); //поле для рисования
 

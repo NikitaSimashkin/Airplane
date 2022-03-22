@@ -14,8 +14,8 @@ public class Bullet extends Sprite{
     }
 
     public void update_koord(){
-        this.set_koord(up, down, left+width/speed, right+width/speed);
-        left = left+width/speed;
-        right = right+width/speed;
+            this.set_koord(up, down, left + width / speed, right + width / speed);
+            left = left + width / speed;
+            right = right + width / speed;
     }
 }
