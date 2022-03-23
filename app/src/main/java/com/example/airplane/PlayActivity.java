@@ -50,8 +50,7 @@ public class PlayActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 switch (msg.what){
                     case 1:
-                        Bitmap new_hp = Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth()*msg.arg1/1000, hp_bitmap.getHeight());
-                        hp_samolet_image.setImageBitmap(new_hp);
+                        hp_samolet_image.setImageBitmap(Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth()*msg.arg1/1000, hp_bitmap.getHeight()));
                         break;
                     case 2:
                         Bitmap new_hp1 = Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth()*msg.arg1/1000, hp_bitmap.getHeight());
