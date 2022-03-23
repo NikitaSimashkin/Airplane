@@ -69,11 +69,11 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/samolet_hp"
                 android:layout_width="match_parent"
-                android:layout_height="23dp"
+                android:layout_height="24dp"
                 android:scaleType="fitStart"
-                android:src="@drawable/health2" />
+                 />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -82,11 +82,11 @@
             </FrameLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/base_hp"
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
+                android:layout_height="24dp"
                 android:scaleType="fitStart"
-                android:src="@drawable/health2" />
+                 />
         </LinearLayout>
 
         <LinearLayout

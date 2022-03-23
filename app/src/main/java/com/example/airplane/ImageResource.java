@@ -9,7 +9,7 @@ public enum ImageResource {
     METEOR_DIED(R.drawable.meteor_death),
     SPACESHIP(R.drawable.spaceship),
     BULLET(R.drawable.bullet_1),
-    HP_SAMOLET(R.drawable.health2);
+    HP(R.drawable.health2);
 
     private final int resourceId;
     private ImageResource(int resourceId){

@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.widget.ImageView;
@@ -86,7 +87,7 @@ public class DrawThread extends Thread{
         enemys = (int)(Math.random()*7);
         if (System.currentTimeMillis() - time >= 2000){ //каждые 5 секунд спавним врага
             enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width,
-                    5*height/30 + enemys*(4 * height/30) , width*15/14, context, 5, 600));
+                    5*height/30 + enemys*(4 * height/30) , width*15/14, context, 100, 600));
             time = System.currentTimeMillis();
         }
         for (int i = 0; i < enemy_list.size(); i++){
@@ -94,13 +95,19 @@ public class DrawThread extends Thread{
             if (Enemy.check_two(samolet, enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
                     width/100, 0, -width/100, 0}))  //проверяет столкновение с самолетом или стеной
             {
+                samolet.change_hp(-enemy_list.get(i).get_damage());
                 enemy_list.remove(i);
                 i--;
-                handler.sendEmptyMessage(10);
+                if (samolet.get_hp() > 0)
+                    handler.sendMessage(Message.obtain(handler, 1, samolet.get_hp(), 0));
+                // можем передать 3 аргумента: 1 - что меняем; 2 и 3 - как меняем
+                // what: 1 - хп самолета, 2 - хп базы
+                // agr1 - сколько хп нужно установить
             }
             else if(enemy_list.get(i).get_koord()[1] <= 0){
                 enemy_list.remove(i);
                 i--;
+                //handler.sendMessage(Message.obtain(handler, 2, base.get_hp()-enemy_list.get(i).get_damage(), 0));
                 //base.change_hp();
             }
             else { // столкновение с пулей

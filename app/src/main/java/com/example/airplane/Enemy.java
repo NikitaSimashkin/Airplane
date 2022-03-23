@@ -29,6 +29,9 @@ public class Enemy extends Sprite{
     public boolean get_alive() {
         return alive;
     }
+    public int get_damage(){
+        return damage;
+    }
 
     public void setDeath() { //ставим смерть
         alive = false;

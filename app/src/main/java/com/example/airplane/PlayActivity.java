@@ -1,32 +1,21 @@
 package com.example.airplane;
 
-import android.annotation.SuppressLint;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.Objects;
 
@@ -49,17 +38,26 @@ public class PlayActivity extends AppCompatActivity {
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
         ImageButton shot = (ImageButton) findViewById(R.id.shot);
 
-
+        ImageView hp_samolet_image = findViewById(R.id.samolet_hp);
+        ImageView hp_base_image = findViewById(R.id.base_hp);
+        Bitmap hp_bitmap = ImageResource.HP.getBitmap(getApplicationContext()); //хп самолета и базы
+        hp_samolet_image.setImageBitmap(Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth(), hp_bitmap.getHeight()));
+        hp_base_image.setImageBitmap(Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth(), hp_bitmap.getHeight()));
 
         Looper looper = Looper.myLooper();
         Handler handler = new Handler(looper) {
-
             @Override
-            public void handleMessage(@NonNull Message msg) {
-                ImageView hp_samolet_image = findViewById(R.id.imageView);
-                Bitmap hp_samolet_bitmap = ImageResource.HP_SAMOLET.getBitmap(getApplicationContext());
-                Bitmap new_hp = Bitmap.createBitmap(hp_samolet_bitmap, 0, 0, hp_samolet_bitmap.getWidth()/msg.what, hp_samolet_bitmap.getHeight());
-                hp_samolet_image.setImageBitmap(new_hp);
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 1:
+                        Bitmap new_hp = Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth()*msg.arg1/1000, hp_bitmap.getHeight());
+                        hp_samolet_image.setImageBitmap(new_hp);
+                        break;
+                    case 2:
+                        Bitmap new_hp1 = Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth()*msg.arg1/1000, hp_bitmap.getHeight());
+                        hp_base_image.setImageBitmap(new_hp1);
+                        break;
+                }
             }
         };
 
