@@ -27,6 +27,7 @@ public class DrawThread extends Thread{
 
     private long time = System.currentTimeMillis();
     private long time_bullet = System.currentTimeMillis();
+    private long lastFrame = System.currentTimeMillis();
 
     private ArrayList<Enemy> enemy_list = new ArrayList<>();
     private ArrayList<Bullet> bullet_list = new ArrayList<>();
@@ -159,7 +160,7 @@ public class DrawThread extends Thread{
             update_samolet(); //обновляет координаты самолета
             update_bullets(); //обновляет координаты самолета
             update_enemy(); //отрисовывает всех врагов
-            draw_all(); //рисует все
+            draw_all();
         }
     }
 }

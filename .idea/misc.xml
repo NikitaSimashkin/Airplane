@@ -4,10 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/arrow_up.xml" value="0.1" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/corners.xml" value="0.147" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/progressbar.xml" value="0.1" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/customprogressbar.xml" value="0.1" />
-        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/fragment_spaceship_controller.xml" value="0.536" />
-        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/playactivity.xml" value="0.264" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/fragment_spaceship_controller.xml" value="0.264" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/gradient.xml" value="0.25" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/playactivity.xml" value="0.2" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/progressbar.xml" value="0.25" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/test_activity.xml" value="0.536" />
         <entry key="..\:/Users/nikit/Desktop/Android/Airplane/app/src/main/res/layout/activity_main.xml" value="0.2" />
       </map>
     </option>

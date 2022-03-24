@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,23 +39,21 @@ public class PlayActivity extends AppCompatActivity {
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
         ImageButton shot = (ImageButton) findViewById(R.id.shot);
 
-        ImageView hp_samolet_image = findViewById(R.id.samolet_hp);
-        ImageView hp_base_image = findViewById(R.id.base_hp);
-        Bitmap hp_bitmap = ImageResource.HP.getBitmap(getApplicationContext()); //хп самолета и базы
-        hp_samolet_image.setImageBitmap(Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth(), hp_bitmap.getHeight()));
-        hp_base_image.setImageBitmap(Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth(), hp_bitmap.getHeight()));
+        ProgressBar hp_samolet = findViewById(R.id.samolet_hp);
+        ProgressBar hp_base = findViewById(R.id.base_hp);
 
+       // Looper.prepare();
         Looper looper = Looper.myLooper();
         Handler handler = new Handler(looper) {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what){
                     case 1:
-                        hp_samolet_image.setImageBitmap(Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth()*msg.arg1/1000, hp_bitmap.getHeight()));
+                        System.out.println(1);
+                        hp_samolet.setProgress(msg.arg1);
                         break;
                     case 2:
-                        Bitmap new_hp1 = Bitmap.createBitmap(hp_bitmap, 0, 0, hp_bitmap.getWidth()*msg.arg1/1000, hp_bitmap.getHeight());
-                        hp_base_image.setImageBitmap(new_hp1);
+                        hp_base.setProgress(msg.arg1);
                         break;
                 }
             }
@@ -137,8 +136,8 @@ public class PlayActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        //Looper.myLooper().quitSafely();
         drawThread.interrupt();
-        Looper.myLooper().quitSafely();
         super.onStop();
     }
 

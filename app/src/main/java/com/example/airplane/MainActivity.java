@@ -30,6 +30,15 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(i);
                 }
             });
+
+            Button test = (Button) findViewById(R.id.button4);
+            test.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(MainActivity.this, TestActivity.class);
+                    startActivity(i);
+                }
+            });
         }
 
 
