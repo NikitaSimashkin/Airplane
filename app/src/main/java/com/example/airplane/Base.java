@@ -3,8 +3,17 @@ package com.example.airplane;
 import android.content.Context;
 
 // TODO: не забыть реализовать этот класс
-public class Base extends Sprite{
-    public Base(ImageResource imageResource, int up, int left, int down, int right, Context context) {
-        super(imageResource, up, left, down, right, context);
+public class Base{
+    private int hp = 1000;
+
+    public Base() {
+    }
+
+    public void change_hp(int a){
+        hp+=a;
+    }
+
+    public int get_hp(){
+        return hp;
     }
 }

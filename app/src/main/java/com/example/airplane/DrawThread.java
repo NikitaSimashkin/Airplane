@@ -1,5 +1,6 @@
 package com.example.airplane;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -24,6 +25,7 @@ public class DrawThread extends Thread{
     private static int width, height;
 
     private Samolet samolet;
+    private Base base;
 
     private long time = System.currentTimeMillis();
     private long time_bullet = System.currentTimeMillis();
@@ -32,7 +34,7 @@ public class DrawThread extends Thread{
     private ArrayList<Enemy> enemy_list = new ArrayList<>();
     private ArrayList<Bullet> bullet_list = new ArrayList<>();
 
-    private int enemys;
+    private int enemys, points;
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler){
         super();
@@ -42,7 +44,8 @@ public class DrawThread extends Thread{
         DrawThread.width = width;
         DrawThread.height = height;
 
-        samolet = new Samolet(height/50, width/50, (int)(height/5), width/7, context);
+        samolet = new Samolet(height/50, 0, (int)(height/5), width/7, context);
+        base = new Base();
     }
     public static int get_height(){
         return height;
@@ -54,6 +57,10 @@ public class DrawThread extends Thread{
 
     public Samolet get_Samolet(){
         return samolet;
+    }
+
+    public Base get_base(){
+        return base;
     }
 
     public void update_samolet(){
@@ -75,9 +82,9 @@ public class DrawThread extends Thread{
             time_bullet = System.currentTimeMillis() ;
             int[] koord_samolet = samolet.get_koord();
             bullet_list.add(new Bullet(
-                    (koord_samolet[0] + koord_samolet[2]) / 2 - (koord_samolet[2] - koord_samolet[0]) / 6,
+                    (koord_samolet[0] + koord_samolet[2]) / 2 - (koord_samolet[2] - koord_samolet[0]) / 4,
                     (koord_samolet[1] + koord_samolet[3]) / 2,
-                    (koord_samolet[0] + koord_samolet[2]) / 2 + (koord_samolet[2] - koord_samolet[0]) / 6,
+                    (koord_samolet[0] + koord_samolet[2]) / 2 + (koord_samolet[2] - koord_samolet[0]) / 4,
                     koord_samolet[3],
                     context, 5, 120));
 
@@ -101,15 +108,19 @@ public class DrawThread extends Thread{
                 i--;
                 if (samolet.get_hp() > 0)
                     handler.sendMessage(Message.obtain(handler, 1, samolet.get_hp(), 0));
+                else
+                    handler.sendMessage(Message.obtain(handler,0,100, 0));
+                //TODO: второй аргумент - кол-во волн если бесконечный режим и кол-во очков если уровень
+
                 // можем передать 3 аргумента: 1 - что меняем; 2 и 3 - как меняем
                 // what: 1 - хп самолета, 2 - хп базы
                 // agr1 - сколько хп нужно установить
             }
             else if(enemy_list.get(i).get_koord()[1] <= 0){
+                base.change_hp(-enemy_list.get(i).get_damage());
                 enemy_list.remove(i);
                 i--;
-                //handler.sendMessage(Message.obtain(handler, 2, base.get_hp()-enemy_list.get(i).get_damage(), 0));
-                //base.change_hp();
+                handler.sendMessage(Message.obtain(handler, 2, base.get_hp(), 0));
             }
             else { // столкновение с пулей
                 for (int j = 0; j < bullet_list.size(); j++){

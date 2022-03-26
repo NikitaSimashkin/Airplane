@@ -1,6 +1,7 @@
 package com.example.airplane;
 
-import android.graphics.Bitmap;
+import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,9 +11,10 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +24,7 @@ import java.util.Objects;
 
 public class PlayActivity extends AppCompatActivity {
     private DrawThread drawThread;
+    private Dialog loose;
 
     @Override
     public void finish() {
@@ -42,14 +45,24 @@ public class PlayActivity extends AppCompatActivity {
         ProgressBar hp_samolet = findViewById(R.id.samolet_hp);
         ProgressBar hp_base = findViewById(R.id.base_hp);
 
+        Dialog loose = new Dialog(this);
+        loose.setContentView(R.layout.looser);
+
+        TextView haha = loose.findViewById(R.id.haha);
+        TextView points = loose.findViewById(R.id.points);
+        Button menu = loose.findViewById(R.id.menu);
+        Button retry = loose.findViewById(R.id.retry);
+
        // Looper.prepare();
         Looper looper = Looper.myLooper();
         Handler handler = new Handler(looper) {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what){
+                    case 0:
+                        drawThread.interrupt();
+                        loose.show();
                     case 1:
-                        System.out.println(1);
                         hp_samolet.setProgress(msg.arg1);
                         break;
                     case 2:
@@ -60,7 +73,6 @@ public class PlayActivity extends AppCompatActivity {
         };
 
         SurfaceView play_field = (SurfaceView) findViewById(R.id.play_field); //поле для рисования
-
 
         play_field.setZOrderOnTop (true); // Установить фон холста прозрачным
         play_field.getHolder().setFormat(PixelFormat.TRANSLUCENT);
@@ -132,7 +144,28 @@ public class PlayActivity extends AppCompatActivity {
                 }
             });
         }
+
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawThread = new DrawThread(play_field.getHolder(), getApplicationContext(), DrawThread.get_width(), DrawThread.get_height(), handler);
+                hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
+                hp_base.setProgress(drawThread.get_base().get_hp());
+                drawThread.start();
+                loose.hide();
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loose.hide();
+                Intent i = new Intent(PlayActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
+
 
     @Override
     protected void onStop() {

@@ -73,8 +73,8 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:max="1000"
-                android:progress="1000"
+                android:max="500"
+                android:progress="500"
                 android:progressDrawable="@drawable/progressbar" />
 
             <FrameLayout

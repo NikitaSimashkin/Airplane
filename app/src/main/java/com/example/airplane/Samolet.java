@@ -4,7 +4,7 @@ import android.content.Context;
 
 public class Samolet extends Sprite{
 
-    private int up_or_down, speed = height/120, hp = 1000;
+    private int up_or_down, speed = height/120, hp = 500;
     private boolean updown;
 
     public Samolet(int up, int left, int down, int right, Context context) {

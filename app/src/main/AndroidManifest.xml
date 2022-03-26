@@ -30,6 +30,10 @@
             android:name=".TestActivity"
             android:label="TestActivity"
             android:screenOrientation="landscape"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
