@@ -12,7 +12,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="369dp"
         android:layout_height="208dp"
-        android:background="@drawable/progressbar"
+        android:background="@drawable/background_dialog"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/black_ops_one"
             android:gravity="center"
-            android:text="@string/lose"
+
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="30sp" />
 

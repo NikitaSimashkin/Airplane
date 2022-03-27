@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Airplane">
-
+        <activity
+            android:name=".Levels_activity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -20,16 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".PlayActivity"
             android:label="PlayActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".TestActivity"
             android:label="TestActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
 
         <meta-data
             android:name="preloaded_fonts"

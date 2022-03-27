@@ -106,7 +106,7 @@ public class DrawThread extends Thread{
                 samolet.change_hp(-enemy_list.get(i).get_damage());
                 enemy_list.remove(i);
                 i--;
-                if (samolet.get_hp() > 0)
+                if (samolet.get_hp() > 0) // снимаем хп у самолета
                     handler.sendMessage(Message.obtain(handler, 1, samolet.get_hp(), 0));
                 else
                     handler.sendMessage(Message.obtain(handler,0,100, 0));
@@ -120,8 +120,12 @@ public class DrawThread extends Thread{
                 base.change_hp(-enemy_list.get(i).get_damage());
                 enemy_list.remove(i);
                 i--;
-                handler.sendMessage(Message.obtain(handler, 2, base.get_hp(), 0));
+                if (base.get_hp() > 0)
+                    handler.sendMessage(Message.obtain(handler, 2, base.get_hp(), 0));
+                else
+                    handler.sendMessage(Message.obtain(handler,0,100, 0));
             }
+
             else { // столкновение с пулей
                 for (int j = 0; j < bullet_list.size(); j++){
                     if (enemy_list.get(i).get_alive() && Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,

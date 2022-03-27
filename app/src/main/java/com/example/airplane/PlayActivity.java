@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -46,6 +47,8 @@ public class PlayActivity extends AppCompatActivity {
         ProgressBar hp_base = findViewById(R.id.base_hp);
 
         Dialog loose = new Dialog(this);
+        loose.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
+        loose.setCancelable(false); // нельзя закрыто окно кнопкой назад
         loose.setContentView(R.layout.looser);
 
         TextView haha = loose.findViewById(R.id.haha);
