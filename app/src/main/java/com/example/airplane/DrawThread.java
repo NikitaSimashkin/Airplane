@@ -142,6 +142,7 @@ public class DrawThread extends Thread{
             }
         }
     }
+
     public void draw_all(){
 
         try {
@@ -173,9 +174,12 @@ public class DrawThread extends Thread{
         }
     }
 
+    public void level(){} // в каждом уровне нужно переопределять этот метод
+
     @Override
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
+            level();
             update_samolet(); //обновляет координаты самолета
             update_bullets(); //обновляет координаты самолета
             update_enemy(); //отрисовывает всех врагов
