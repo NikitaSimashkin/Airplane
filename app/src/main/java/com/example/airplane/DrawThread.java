@@ -91,13 +91,17 @@ public class DrawThread extends Thread{
         }
     }
 
-    private void update_enemy() {
+    public void create_meteor(){
         enemys = (int)(Math.random()*7);
         if (System.currentTimeMillis() - time >= 2000){ //каждые 5 секунд спавним врага
             enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width,
                     5*height/30 + enemys*(4 * height/30) , width*15/14, context, 100, 600));
             time = System.currentTimeMillis();
         }
+    }
+
+    public void update_enemy() {
+        create_meteor();
         for (int i = 0; i < enemy_list.size(); i++){
             enemy_list.get(i).update_koord(); //обновляет координаты
             if (Enemy.check_two(samolet, enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,

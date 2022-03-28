@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">Airplane</string>
     <string name="Title">Hello, world</string>
-    <string name="play">ИГРАТЬ</string>
-    <string name="lose">You are loser, haha</string>>
-    <string name="menu">Menu</string>>
-    <string name="retru">Retry</string>>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="play">PLAY</string>
+    <string name="lose"></string>>
+    <string name="menu">MENU</string>>
+    <string name="retru">RETRY</string>>
+    <string name="infinity_text">INFINITY \n MODE</string>>
 </resources>

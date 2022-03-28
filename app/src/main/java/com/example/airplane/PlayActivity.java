@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -26,6 +27,10 @@ import java.util.Objects;
 public class PlayActivity extends AppCompatActivity {
     private DrawThread drawThread;
     private Dialog loose;
+    private SurfaceView play_field;
+    private Handler handler;
+
+    private int width, height;
 
     @Override
     public void finish() {
@@ -37,11 +42,12 @@ public class PlayActivity extends AppCompatActivity {
         super.onStart();
         Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
         setContentView(R.layout.playactivity);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
-        ImageButton shot = (ImageButton) findViewById(R.id.shot);
+        ImageButton shot = (ImageButton) findViewById(R.id.shot2);
 
         ProgressBar hp_samolet = findViewById(R.id.samolet_hp);
         ProgressBar hp_base = findViewById(R.id.base_hp);
@@ -58,7 +64,7 @@ public class PlayActivity extends AppCompatActivity {
 
        // Looper.prepare();
         Looper looper = Looper.myLooper();
-        Handler handler = new Handler(looper) {
+        handler = new Handler(looper) {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what){
@@ -75,7 +81,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         };
 
-        SurfaceView play_field = (SurfaceView) findViewById(R.id.play_field); //поле для рисования
+        play_field = (SurfaceView) findViewById(R.id.play_field); //поле для рисования
 
         play_field.setZOrderOnTop (true); // Установить фон холста прозрачным
         play_field.getHolder().setFormat(PixelFormat.TRANSLUCENT);
@@ -83,9 +89,9 @@ public class PlayActivity extends AppCompatActivity {
         play_field.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
-                int width = play_field.getWidth();
-                int height = play_field.getHeight();
-                drawThread = new DrawThread(holder, getApplicationContext(), width, height, handler);
+                width = play_field.getWidth();
+                height = play_field.getHeight();
+                drawThread = create_new_thread(width, height);
                 drawThread.start();
             }
 
@@ -151,7 +157,7 @@ public class PlayActivity extends AppCompatActivity {
         retry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawThread = new DrawThread(play_field.getHolder(), getApplicationContext(), DrawThread.get_width(), DrawThread.get_height(), handler);
+                drawThread = create_new_thread(width, height);
                 hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
                 hp_base.setProgress(drawThread.get_base().get_hp());
                 drawThread.start();
@@ -169,6 +175,11 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
+    public void win_dialog(){} //не забыть переопределить в каждом уровне
+
+    public DrawThread create_new_thread(int width, int height){
+        return new DrawThread(play_field.getHolder(), getApplicationContext(), width, height, handler);
+    }
 
     @Override
     protected void onStop() {
