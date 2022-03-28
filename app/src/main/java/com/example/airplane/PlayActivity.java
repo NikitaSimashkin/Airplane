@@ -27,8 +27,9 @@ import java.util.Objects;
 public class PlayActivity extends AppCompatActivity {
     private DrawThread drawThread;
     private Dialog loose;
-    private SurfaceView play_field;
-    private Handler handler;
+    protected SurfaceView play_field;
+    protected Handler handler;
+    private int number;
 
     private int width, height;
 
@@ -43,7 +44,7 @@ public class PlayActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
         setContentView(R.layout.playactivity);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        number = getIntent().getExtras().getInt("number");
 
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
         ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
@@ -175,10 +176,8 @@ public class PlayActivity extends AppCompatActivity {
         });
     }
 
-    public void win_dialog(){} //не забыть переопределить в каждом уровне
-
     public DrawThread create_new_thread(int width, int height){
-        return new DrawThread(play_field.getHolder(), getApplicationContext(), width, height, handler);
+        return new DrawThread(play_field.getHolder(), getApplicationContext(), width, height, handler, number);
     }
 
     @Override
@@ -196,5 +195,9 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    private void Levels(int number){ // а - номер уровня; в зависимости от уровня делаем что то
+
     }
 }

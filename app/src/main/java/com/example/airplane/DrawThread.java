@@ -1,17 +1,13 @@
 package com.example.airplane;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.ClipDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.SurfaceHolder;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -19,6 +15,9 @@ public class DrawThread extends Thread{
     private SurfaceHolder surfaceHolder;
     private Context context;
     private Handler handler;
+    private int number; //номер уровня
+
+    private int count_meteor = 0; // переменный для уровней
 
     private Canvas canvas;
 
@@ -28,24 +27,28 @@ public class DrawThread extends Thread{
     private Base base;
 
     private long time = System.currentTimeMillis();
-    private long time_bullet = System.currentTimeMillis();
+    private long time_bullet_last = System.currentTimeMillis();
     private long lastFrame = System.currentTimeMillis();
 
-    private ArrayList<Enemy> enemy_list = new ArrayList<>();
-    private ArrayList<Bullet> bullet_list = new ArrayList<>();
+    protected ArrayList<Enemy> enemy_list = new ArrayList<>();
+    protected ArrayList<Bullet> bullet_list = new ArrayList<>();
 
     private int enemys, points;
 
-    public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler){
+    private int time_bullet, time_meteor;
+
+    public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
         this.surfaceHolder = surfaceHolder;
         this.context = context;
         this.handler = handler;
+        this.number = number;
         DrawThread.width = width;
         DrawThread.height = height;
 
         samolet = new Samolet(height/50, 0, (int)(height/5), width/7, context);
         base = new Base();
+        start_options(number);
     }
     public static int get_height(){
         return height;
@@ -67,6 +70,32 @@ public class DrawThread extends Thread{
         samolet.buttons();
     }
 
+    public void start_options(int number) { //стартовые установки для разных уровней
+        switch (number) {
+            case 1:
+                time_meteor = 2000;
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+        }
+    }
+
     public void update_bullets() {
         for (int i = 0; i < bullet_list.size(); i++)
             if (bullet_list.get(i).get_koord()[1] <= width)
@@ -78,8 +107,8 @@ public class DrawThread extends Thread{
     }
 
     public void create_bullets() {
-        if (System.currentTimeMillis() - time_bullet >= 2000) {
-            time_bullet = System.currentTimeMillis() ;
+        if (System.currentTimeMillis() - time_bullet_last >= 2000) {
+            time_bullet_last = System.currentTimeMillis() ;
             int[] koord_samolet = samolet.get_koord();
             bullet_list.add(new Bullet(
                     (koord_samolet[0] + koord_samolet[2]) / 2 - (koord_samolet[2] - koord_samolet[0]) / 4,
@@ -91,17 +120,18 @@ public class DrawThread extends Thread{
         }
     }
 
-    public void create_meteor(){
+    public boolean create_meteor(){
         enemys = (int)(Math.random()*7);
-        if (System.currentTimeMillis() - time >= 2000){ //каждые 5 секунд спавним врага
+        if (System.currentTimeMillis() - time >= time_meteor){ //каждые 5 секунд спавним врага
             enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width,
                     5*height/30 + enemys*(4 * height/30) , width*15/14, context, 100, 600));
             time = System.currentTimeMillis();
+            return true;
         }
+        return false;
     }
 
     public void update_enemy() {
-        create_meteor();
         for (int i = 0; i < enemy_list.size(); i++){
             enemy_list.get(i).update_koord(); //обновляет координаты
             if (Enemy.check_two(samolet, enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
@@ -174,16 +204,45 @@ public class DrawThread extends Thread{
         }
     }
 
-    public void level(){} // в каждом уровне нужно переопределять этот метод
-
     @Override
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
-            level();
+            level(number);
             update_samolet(); //обновляет координаты самолета
             update_bullets(); //обновляет координаты самолета
             update_enemy(); //отрисовывает всех врагов
             draw_all();
+        }
+    }
+
+    public void level(int number){
+        switch (number){
+            case 1:
+                if (count_meteor < 50 && create_meteor()){
+                    count_meteor++;
+                }
+                if (count_meteor == 50 && enemy_list.isEmpty()){
+                    System.out.println("YouWin");
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
         }
     }
 }
