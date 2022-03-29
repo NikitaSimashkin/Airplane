@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -56,6 +57,7 @@ public class PlayActivity extends AppCompatActivity {
         Dialog loose = new Dialog(this);
         loose.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
         loose.setCancelable(false); // нельзя закрыто окно кнопкой назад
+        loose.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         loose.setContentView(R.layout.looser);
 
         TextView haha = loose.findViewById(R.id.haha);

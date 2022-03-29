@@ -5,14 +5,15 @@ import android.graphics.Bitmap;
 
 public class Enemy extends Sprite{
 
-    private int damage, speed;
-    private boolean alive = true;
-    private long time_death = 0; //время смерти
+    protected int damage, speed, hp;
+    protected boolean alive = true;
+    protected long time_death = 0; //время смерти
 
-    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed) {
+    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed, int hp) {
         super(imageResource, up, left, down, right, context);
         this.damage = damage;
         this.speed = speed;
+        this.hp = hp;
     }
 
     public void update_koord(){
@@ -31,6 +32,12 @@ public class Enemy extends Sprite{
     }
     public int get_damage(){
         return damage;
+    }
+
+    public void change_hp(int a){
+        hp += a;
+        if (hp <= 0)
+            setDeath();
     }
 
     public void setDeath() { //ставим смерть

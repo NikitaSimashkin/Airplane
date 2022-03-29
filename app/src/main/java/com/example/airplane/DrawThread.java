@@ -17,7 +17,7 @@ public class DrawThread extends Thread{
     private Handler handler;
     private int number; //номер уровня
 
-    private int count_meteor = 0; // переменный для уровней
+    private int count_meteor = 0; // переменные для уровней
 
     private Canvas canvas;
 
@@ -35,7 +35,7 @@ public class DrawThread extends Thread{
 
     private int enemys, points;
 
-    private int time_bullet, time_meteor;
+    private int time_bullet, time_meteor, time_alien;
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
@@ -76,6 +76,8 @@ public class DrawThread extends Thread{
                 time_meteor = 2000;
                 break;
             case 2:
+                time_meteor = 4000;
+                time_alien = 3000;
                 break;
             case 3:
                 break;
@@ -112,10 +114,10 @@ public class DrawThread extends Thread{
             int[] koord_samolet = samolet.get_koord();
             bullet_list.add(new Bullet(
                     (koord_samolet[0] + koord_samolet[2]) / 2 - (koord_samolet[2] - koord_samolet[0]) / 4,
-                    (koord_samolet[1] + koord_samolet[3]) / 2,
+                    2 * (koord_samolet[1] + koord_samolet[3]) / 3,
                     (koord_samolet[0] + koord_samolet[2]) / 2 + (koord_samolet[2] - koord_samolet[0]) / 4,
                     koord_samolet[3],
-                    context, 5, 120));
+                    context));
 
         }
     }
@@ -124,11 +126,15 @@ public class DrawThread extends Thread{
         enemys = (int)(Math.random()*7);
         if (System.currentTimeMillis() - time >= time_meteor){ //каждые 5 секунд спавним врага
             enemy_list.add(new Meteor(height/30 + enemys*(4 * height/30), width,
-                    5*height/30 + enemys*(4 * height/30) , width*15/14, context, 100, 600));
+                    5*height/30 + enemys*(4 * height/30) , width*15/14, context));
             time = System.currentTimeMillis();
             return true;
         }
         return false;
+    }
+
+    public boolean create_alien(){
+        return true;
     }
 
     public void update_enemy() {
@@ -164,7 +170,7 @@ public class DrawThread extends Thread{
                 for (int j = 0; j < bullet_list.size(); j++){
                     if (enemy_list.get(i).get_alive() && Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
                             width/100, 0, -width/100, 0})){
-                        enemy_list.get(i).setDeath();
+                        enemy_list.get(i).change_hp(-bullet_list.get(j).get_damage());
                         bullet_list.remove(j);
                         break;
                     }

@@ -1,0 +1,4 @@
+Name    Damage  Speed   Hp
+Bullet 100 200 -
+Meteor 100 1000 100
+Alien 200 800 300
