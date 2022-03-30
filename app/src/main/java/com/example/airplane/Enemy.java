@@ -7,13 +7,16 @@ public class Enemy extends Sprite{
 
     protected int damage, speed, hp;
     protected boolean alive = true;
-    protected long time_death = 0; //время смерти
+    protected int start, end; // занятые линии; нужно, чтобы в некоторых ситуациях определить свободные линии
+    protected long time_death = 0; // время смерти
 
-    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed, int hp) {
+    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed, int hp, int start, int end) {
         super(imageResource, up, left, down, right, context);
         this.damage = damage;
         this.speed = speed;
         this.hp = hp;
+        this.start = start;
+        this.end = end;
     }
 
     public void update_koord(){
@@ -33,6 +36,7 @@ public class Enemy extends Sprite{
     public int get_damage(){
         return damage;
     }
+    public int get_start_end(){return start*100+end;} // - колво сотен это начало, оставлееся это конец
 
     public void change_hp(int a){
         hp += a;
@@ -42,7 +46,6 @@ public class Enemy extends Sprite{
 
     public void setDeath() { //ставим смерть
         alive = false;
-        bitmap = ImageResource.METEOR_DIED.getBitmap(context);
         time_death = System.currentTimeMillis();
     }
 
