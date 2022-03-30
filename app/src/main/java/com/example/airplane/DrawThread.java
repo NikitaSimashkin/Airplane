@@ -133,7 +133,7 @@ public class DrawThread extends Thread{
             enemys = (int)(Math.random()*7);
             enemy_list.add(new Meteor(height/32 + enemys*(4 * height/32), width,
                     5*height/32 + enemys*(4 * height/32) , width*15/14, context, enemys*4, enemys*4+4));
-            lock_lines(enemys*4, enemys*4+4);
+           // lock_lines(enemys*4, enemys*4+4);
             time = System.currentTimeMillis();
             return true;
         }
@@ -179,15 +179,15 @@ public class DrawThread extends Thread{
 
     public boolean create_alien(){
         if (System.currentTimeMillis() - time >= time_alien){
-            if (fill_lines_alien) {
-                enemys = find_clear_lines(6);
-                if (enemys > 0) {
-                    enemy_list.add(new Alien(height / 32 + enemys * (height / 32), width,
-                            7 * height / 32 + enemys * (height / 32), width * 14 / 13, context, enemys, enemys + 6));
-                    time = System.currentTimeMillis();
-                    return true;
-                }
-            }
+//            if (fill_lines_alien) { // этот кусок кода спавнит алиенов на разных линиях, если это возможно
+//               // enemys = find_clear_lines(6);
+//                if (enemys > 0) {
+//                    enemy_list.add(new Alien(height / 32 + enemys * (height / 32), width,
+//                            7 * height / 32 + enemys * (height / 32), width * 14 / 13, context, enemys, enemys + 6));
+//                    time = System.currentTimeMillis();
+//                    return true;
+//                }
+//            }
             enemys = (int)(Math.random()*9); //если свободных нет, то спавним хоть где нибудь
             enemy_list.add(new Alien(height/32 + enemys*(3 * height/32), width,
                     7*height/32 + enemys*(3 * height/32) , width*14/13, context, enemys*3, enemys*3+6));
@@ -204,8 +204,8 @@ public class DrawThread extends Thread{
                     width/100, 0, -width/100, 0}))  //проверяет столкновение с самолетом или стеной
             {
                 samolet.change_hp(-enemy_list.get(i).get_damage());
-                temp = enemy_list.get(i).get_start_end();
-                unlock_lines(temp/100, temp%100);
+              //  temp = enemy_list.get(i).get_start_end();
+               // unlock_lines(temp/100, temp%100);
                 enemy_list.remove(i);
                 i--;
                 if (samolet.get_hp() > 0) // снимаем хп у самолета
@@ -220,8 +220,8 @@ public class DrawThread extends Thread{
             }
             else if(enemy_list.get(i).get_koord()[1] <= 0){
                 base.change_hp(-enemy_list.get(i).get_damage());
-                temp = enemy_list.get(i).get_start_end();
-                unlock_lines(temp/100, temp%100);
+              //  temp = enemy_list.get(i).get_start_end();
+             //   unlock_lines(temp/100, temp%100);
                 enemy_list.remove(i);
                 i--;
                 if (base.get_hp() > 0)
@@ -255,11 +255,11 @@ public class DrawThread extends Thread{
             for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
                 if (enemy_list.get(i).getTime_death() == 0 || System.currentTimeMillis() - enemy_list.get(i).getTime_death() <= 2000) {
                     enemy_list.get(i).draw(canvas, null);
-                    if (enemy_list.get(i).getTime_death() == 0)
-                        lock_lines(enemy_list.get(i).get_start_end() / 100, enemy_list.get(i).get_start_end() % 100);
+                   // if (enemy_list.get(i).getTime_death() == 0) пока отказываемся от этой идеи
+                     //   lock_lines(enemy_list.get(i).get_start_end() / 100, enemy_list.get(i).get_start_end() % 100);
                 } else {
-                    temp = enemy_list.get(i).get_start_end();
-                    unlock_lines(temp/100, temp%100);
+                  //  temp = enemy_list.get(i).get_start_end();
+                //    unlock_lines(temp/100, temp%100);
                     enemy_list.remove(i);
                     i--;
                 }
