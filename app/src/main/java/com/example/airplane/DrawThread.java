@@ -11,14 +11,13 @@ import android.view.SurfaceHolder;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 public class DrawThread extends Thread{
     private SurfaceHolder surfaceHolder;
     private Context context;
     private Handler handler;
     private int number; //номер уровня
-
-    private int count_meteor = 0; // переменные для уровней
 
     private Canvas canvas;
 
@@ -31,14 +30,11 @@ public class DrawThread extends Thread{
     private long time_bullet_last = System.currentTimeMillis();
     private long lastFrame = System.currentTimeMillis();
 
-    protected ArrayList<Enemy> enemy_list = new ArrayList<>();
-    protected ArrayList<Bullet> bullet_list = new ArrayList<>();
+    protected List<Enemy> enemy_list = new ArrayList<>();
+    protected List<Bullet> bullet_list = new ArrayList<>();
 
     private int enemys, points, temp;
-    private boolean[] lines = new boolean[30]; //массив занятых линий
-
-    private int time_bullet, time_meteor, time_alien;
-    private boolean fill_lines_alien; // переменные, которые показывают должны ли мобы спавниться на свободных линиях
+    //private byte[] lines = new byte[30]; //массив занятых линий
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
@@ -71,37 +67,6 @@ public class DrawThread extends Thread{
 
     public void update_samolet(){
         samolet.buttons();
-    }
-
-    public void start_options(int number) { //стартовые установки для разных уровней
-        switch (number) {
-            case 1:
-                time_meteor = 2000;
-                time_alien = 1000;
-                fill_lines_alien = false;
-                break;
-            case 2:
-                time_meteor = 4000;
-                time_alien = 3000;
-                fill_lines_alien = true;
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-        }
     }
 
     public void update_bullets() {
@@ -140,57 +105,59 @@ public class DrawThread extends Thread{
         return false;
     }
 
-    public void lock_lines(int start, int end){ // два метода для отметки занятых линий
-        for (int i = start; i < end; i++){
-            lines[i] = true;
-        }
-    }
-
-    public void unlock_lines(int start, int end){
-        for (int i = start; i < end; i++){
-            lines[i] = false;
-        }
-    }
-
-    public int find_clear_lines(int lenght){
-        if (System.currentTimeMillis() % 2 == 0){
-            for (int i = 0; i < 30; i++){
-                temp = 0;
-                while (i <30 && !lines[i]){
-                    temp++;
-                    if (temp == lenght)
-                        return i-lenght+1;
-                    i++;
-                }
-            }
-        } else {
-            for (int i = 29; i >=0; i--){
-                temp = 0;
-                while (i >= 0 && !lines[i]){
-                    temp++;
-                    if (temp == lenght)
-                        return i;
-                    i--;
-                }
-            }
-        }
-        return -1;
-    }
+//    public void lock_lines(int start, int end){ // два метода для отметки занятых линий
+//        for (int i = start; i < end; i++){
+//            lines[i]++;
+//        }
+//    }
+//
+//    public void unlock_lines(int start, int end){
+//        for (int i = start; i < end; i++){
+//            lines[i]--;
+//        }
+//    }
+//
+//    public int find_clear_lines(int lenght){ //иногда с конца ищем линии, иногда с начала
+//        if (System.currentTimeMillis() % 2 == 0){
+//            for (int i = 0; i < 30; i++){
+//                temp = 0;
+//                while (i <30 && lines[i] == 0){
+//                    temp++;
+//                    if (temp == lenght)
+//                        return i-lenght+1;
+//                    i++;
+//                }
+//            }
+//        } else {
+//            for (int i = 29; i >=0; i--){
+//                temp = 0;
+//                while (i >= 0 && lines[i] == 0){
+//                    temp++;
+//                    if (temp == lenght)
+//                        return i;
+//                    i--;
+//                }
+//            }
+//        }
+//        return -1;
+//    }
 
     public boolean create_alien(){
         if (System.currentTimeMillis() - time >= time_alien){
 //            if (fill_lines_alien) { // этот кусок кода спавнит алиенов на разных линиях, если это возможно
-//               // enemys = find_clear_lines(6);
-//                if (enemys > 0) {
+//                enemys = find_clear_lines(6);
+//                if (enemys >= 0) {
 //                    enemy_list.add(new Alien(height / 32 + enemys * (height / 32), width,
 //                            7 * height / 32 + enemys * (height / 32), width * 14 / 13, context, enemys, enemys + 6));
 //                    time = System.currentTimeMillis();
+//                    lock_lines(enemys, enemys+6);
 //                    return true;
 //                }
 //            }
             enemys = (int)(Math.random()*9); //если свободных нет, то спавним хоть где нибудь
             enemy_list.add(new Alien(height/32 + enemys*(3 * height/32), width,
                     7*height/32 + enemys*(3 * height/32) , width*14/13, context, enemys*3, enemys*3+6));
+            //lock_lines(enemys*3, enemys*3+6);
             time = System.currentTimeMillis();
             return true;
         }
@@ -204,8 +171,8 @@ public class DrawThread extends Thread{
                     width/100, 0, -width/100, 0}))  //проверяет столкновение с самолетом или стеной
             {
                 samolet.change_hp(-enemy_list.get(i).get_damage());
-              //  temp = enemy_list.get(i).get_start_end();
-               // unlock_lines(temp/100, temp%100);
+//                temp = enemy_list.get(i).get_start_end();
+//                unlock_lines(temp/100, temp%100);
                 enemy_list.remove(i);
                 i--;
                 if (samolet.get_hp() > 0) // снимаем хп у самолета
@@ -220,8 +187,8 @@ public class DrawThread extends Thread{
             }
             else if(enemy_list.get(i).get_koord()[1] <= 0){
                 base.change_hp(-enemy_list.get(i).get_damage());
-              //  temp = enemy_list.get(i).get_start_end();
-             //   unlock_lines(temp/100, temp%100);
+                //temp = enemy_list.get(i).get_start_end();
+                //unlock_lines(temp/100, temp%100);
                 enemy_list.remove(i);
                 i--;
                 if (base.get_hp() > 0)
@@ -255,11 +222,9 @@ public class DrawThread extends Thread{
             for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
                 if (enemy_list.get(i).getTime_death() == 0 || System.currentTimeMillis() - enemy_list.get(i).getTime_death() <= 2000) {
                     enemy_list.get(i).draw(canvas, null);
-                   // if (enemy_list.get(i).getTime_death() == 0) пока отказываемся от этой идеи
-                     //   lock_lines(enemy_list.get(i).get_start_end() / 100, enemy_list.get(i).get_start_end() % 100);
                 } else {
-                  //  temp = enemy_list.get(i).get_start_end();
-                //    unlock_lines(temp/100, temp%100);
+                    //temp = enemy_list.get(i).get_start_end();
+                    //unlock_lines(temp/100, temp%100);
                     enemy_list.remove(i);
                     i--;
                 }
@@ -278,16 +243,22 @@ public class DrawThread extends Thread{
         }
     }
 
+    private long last_frame = System.currentTimeMillis();
+
     @Override
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
-            level(number);
-            update_samolet(); //обновляет координаты самолета
-            update_bullets(); //обновляет координаты самолета
-            update_enemy(); //отрисовывает всех врагов
-            draw_all();
+            if (System.currentTimeMillis() - last_frame > 16)
+                last_frame = System.currentTimeMillis();
+                level(number);
+                update_samolet(); //обновляет координаты самолета
+                update_bullets(); //обновляет координаты самолета
+                update_enemy(); //отрисовывает всех врагов
+                draw_all();
         }
     }
+
+    private int count_meteor = 0; // переменные для уровней
 
     public void level(int number){
         switch (number){
@@ -300,6 +271,58 @@ public class DrawThread extends Thread{
                 }
                 break;
             case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+        }
+    }
+
+    List<Byte> mobs= new ArrayList<Byte>();
+    /*
+    1 - meteor
+    2 - alien
+    3 -
+    4 -
+    5 -
+    6 -
+    7 -
+    8 -
+    9 -
+    10 - final boss
+    11 - heart
+    12 - coin
+     */
+    private int time_bullet, time_meteor, time_alien;
+    private boolean fill_lines_alien; // переменные, которые показывают должны ли мобы спавниться на свободных линиях
+
+    public void start_options(int number) { //стартовые установки для разных уровней
+        switch (number) {
+            case 1:
+                time_meteor = 2000;
+                time_alien = 1000;
+                fill_lines_alien = false;
+                for(int i = 0; i < 50; i++){
+                    mobs.add((byte) 1);
+                }
+                break;
+            case 2:
+                time_meteor = 4000;
+                time_alien = 3000;
+                fill_lines_alien = true;
                 break;
             case 3:
                 break;
