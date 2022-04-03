@@ -129,7 +129,7 @@ public class DrawThread extends Thread{
         if (System.currentTimeMillis() - time >= time_packman){
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Packman(height/32 + enemys*(2 * height/32), width,
-                    6*height/32 + enemys*(2 * height/32) , width*13/12, context));
+                    6*height/32 + enemys*(2 * height/32) , width*13/12, context, this));
             time = System.currentTimeMillis();
             return true;
         }
@@ -327,7 +327,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 50 && create_heart()){
+                if (count_meteor < 50 && create_packman()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){

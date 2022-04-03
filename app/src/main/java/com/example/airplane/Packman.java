@@ -3,14 +3,32 @@ package com.example.airplane;
 import android.content.Context;
 
 public class Packman extends Enemy{
-    public Packman(int up, int left, int down, int right, Context context) {
+    private long meteor_time = 5000, last_time;
+    private DrawThread drawThread;
+
+    public Packman(int up, int left, int down, int right, Context context, DrawThread drawThread) {
         super(ImageResource.PACKMAN, up, left, down, right, context, Params.packman_damage, Params.packman_speed,
                 Params.packman_hp, 3);
+        last_time = System.currentTimeMillis();
+        this.drawThread = drawThread;
     }
 
     @Override
     public void setDeath() {
         super.setDeath();
         bitmap = ImageResource.PACKMAN_DEATH.getBitmap(context);
+    }
+
+    @Override
+    public void update_koord() {
+        if (left > width/2)
+            super.update_koord();
+        if (System.currentTimeMillis() - last_time > meteor_time && alive) {
+            int center = (up + down)/2;
+            int center_2 = (left + right)/2;
+            drawThread.enemy_list.add(new Meteor(center - 2 * height/32, left,
+                    center + 2 * height/32, left + width/14 , context, (int) (Math.random() * 4 + 1)));
+            last_time = System.currentTimeMillis();
+        }
     }
 }
