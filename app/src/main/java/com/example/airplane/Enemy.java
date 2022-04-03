@@ -56,7 +56,7 @@ public class Enemy extends Sprite{
     }
 
 
-    public boolean collision(Bullet two, DrawThread drawThread){ //возвращает тру сли пулю надо удалять после столкновения
+    public void collision(Bullet two, DrawThread drawThread){ //возвращает тру сли пулю надо удалять после столкновения
         if (color == two.getColor()){
             change_hp(-2*two.get_damage());
         }
@@ -66,6 +66,5 @@ public class Enemy extends Sprite{
         else {
             change_hp(-two.get_damage());
         }
-        return true;
     };
 }
