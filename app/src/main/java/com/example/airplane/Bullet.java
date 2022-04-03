@@ -5,10 +5,19 @@ import android.graphics.Bitmap;
 
 public class Bullet extends Sprite{
 
-    private int damage = 100, speed = 200;
+    private int damage = Params.bullet_damage, speed = Params.bullet_speed, color;
 
-    public Bullet(int up, int left, int down, int right, Context context) {
+    public Bullet(int up, int left, int down, int right, Context context, int color) {
         super(ImageResource.BULLET, up, left, down, right, context);
+        this.color = color;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public void update_koord(){

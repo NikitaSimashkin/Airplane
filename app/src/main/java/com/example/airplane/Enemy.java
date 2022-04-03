@@ -7,16 +7,15 @@ public class Enemy extends Sprite{
 
     protected int damage, speed, hp;
     protected boolean alive = true;
-    protected int start, end; // занятые линии; нужно, чтобы в некоторых ситуациях определить свободные линии
     protected long time_death = 0; // время смерти
+    protected int color;
 
-    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed, int hp, int start, int end) {
+    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed, int hp, int color) {
         super(imageResource, up, left, down, right, context);
         this.damage = damage;
         this.speed = speed;
         this.hp = hp;
-        this.start = start;
-        this.end = end;
+        this.color = color;
     }
 
     public void update_koord(){
@@ -36,7 +35,6 @@ public class Enemy extends Sprite{
     public int get_damage(){
         return damage;
     }
-    public int get_start_end(){return start*100+end;} // - колво сотен это начало, оставлееся это конец
 
     public void change_hp(int a){
         hp += a;
@@ -49,4 +47,25 @@ public class Enemy extends Sprite{
         time_death = System.currentTimeMillis();
     }
 
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+
+    public boolean collision(Bullet two, DrawThread drawThread){ //возвращает тру сли пулю надо удалять после столкновения
+        if (color == two.getColor()){
+            change_hp(-2*two.get_damage());
+        }
+        else if (color + two.getColor() == 5){
+            change_hp((int)(-0.5*two.get_damage()));
+        }
+        else {
+            change_hp(-two.get_damage());
+        }
+        return true;
+    };
 }

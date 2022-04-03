@@ -10,13 +10,20 @@ import android.graphics.drawable.Drawable;
 import androidx.core.content.res.ResourcesCompat;
 
 public enum ImageResource {
-    METEOR(R.drawable.meteor),
+    METEOR_RED(R.drawable.meteor_red),
+    METEOR_GREEN(R.drawable.meteor_green),
+    METEOR_BLUE(R.drawable.meteor_blue),
+    METEOR_YELLOW(R.drawable.meteor_yellow),
     METEOR_DIED(R.drawable.meteor_death),
+
     SPACESHIP(R.drawable.spaceship),
     BULLET(R.drawable.bullet_one),
-    HP(R.drawable.health2),
+
     ALIEN(R.drawable.alien),
-    ALIEN_DEATH(R.drawable.alien_death);
+    ALIEN_DEATH(R.drawable.alien_death),
+
+    ALIEN_TWO(R.drawable.alien_two),
+    ALIEN_TWO_WITHOUT_CAP(R.drawable.angry_alien_without_cap);
 
     private final int resourceId;
     private ImageResource(int resourceId){

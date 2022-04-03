@@ -3,8 +3,9 @@ package com.example.airplane;
 import android.content.Context;
 
 public class Alien extends Enemy{
-    public Alien(int up, int left, int down, int right, Context context, int start, int end) {
-        super(ImageResource.ALIEN, up, left, down, right, context, 150, 800, 200, start, end);
+    public Alien(int up, int left, int down, int right, Context context) {
+        super(ImageResource.ALIEN, up, left, down, right, context,
+                Params.alien_damage, Params.alien_speed, Params.alien_hp, 1);
     }
 
     @Override

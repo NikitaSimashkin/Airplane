@@ -47,11 +47,11 @@ public class TestActivity extends AppCompatActivity {
 
         Button b = findViewById(R.id.button);
         ImageView image = findViewById(R.id.imageView);
-        Bitmap hp = ImageResource.HP.getBitmap(this);
+        //Bitmap hp = ImageResource.HP.getBitmap(this);
         ImageView image2 = findViewById(R.id.imageView2);
 
         image.setScaleType(ImageView.ScaleType.FIT_START);
-        image.setImageBitmap(ImageResource.HP.getBitmap(this));
+        //image.setImageBitmap(ImageResource.HP.getBitmap(this));
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(100);
         progressBar.setProgress(100);

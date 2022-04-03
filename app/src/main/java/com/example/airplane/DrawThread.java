@@ -34,7 +34,6 @@ public class DrawThread extends Thread{
     protected List<Bullet> bullet_list = new ArrayList<>();
 
     private int enemys, points, temp;
-    //private byte[] lines = new byte[30]; //массив занятых линий
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
@@ -88,7 +87,7 @@ public class DrawThread extends Thread{
                     2 * (koord_samolet[1] + koord_samolet[3]) / 3,
                     (koord_samolet[0] + koord_samolet[2]) / 2 + (koord_samolet[2] - koord_samolet[0]) / 4,
                     koord_samolet[3],
-                    context));
+                    context, 1));
 
         }
     }
@@ -97,72 +96,36 @@ public class DrawThread extends Thread{
         if (System.currentTimeMillis() - time >= time_meteor){
             enemys = (int)(Math.random()*7);
             enemy_list.add(new Meteor(height/32 + enemys*(4 * height/32), width,
-                    5*height/32 + enemys*(4 * height/32) , width*15/14, context, enemys*4, enemys*4+4));
-           // lock_lines(enemys*4, enemys*4+4);
+                    5*height/32 + enemys*(4 * height/32) , width*15/14, context, (int)(Math.random()*4 + 1)));
             time = System.currentTimeMillis();
             return true;
         }
         return false;
     }
-
-//    public void lock_lines(int start, int end){ // два метода для отметки занятых линий
-//        for (int i = start; i < end; i++){
-//            lines[i]++;
-//        }
-//    }
-//
-//    public void unlock_lines(int start, int end){
-//        for (int i = start; i < end; i++){
-//            lines[i]--;
-//        }
-//    }
-//
-//    public int find_clear_lines(int lenght){ //иногда с конца ищем линии, иногда с начала
-//        if (System.currentTimeMillis() % 2 == 0){
-//            for (int i = 0; i < 30; i++){
-//                temp = 0;
-//                while (i <30 && lines[i] == 0){
-//                    temp++;
-//                    if (temp == lenght)
-//                        return i-lenght+1;
-//                    i++;
-//                }
-//            }
-//        } else {
-//            for (int i = 29; i >=0; i--){
-//                temp = 0;
-//                while (i >= 0 && lines[i] == 0){
-//                    temp++;
-//                    if (temp == lenght)
-//                        return i;
-//                    i--;
-//                }
-//            }
-//        }
-//        return -1;
-//    }
 
     public boolean create_alien(){
         if (System.currentTimeMillis() - time >= time_alien){
-//            if (fill_lines_alien) { // этот кусок кода спавнит алиенов на разных линиях, если это возможно
-//                enemys = find_clear_lines(6);
-//                if (enemys >= 0) {
-//                    enemy_list.add(new Alien(height / 32 + enemys * (height / 32), width,
-//                            7 * height / 32 + enemys * (height / 32), width * 14 / 13, context, enemys, enemys + 6));
-//                    time = System.currentTimeMillis();
-//                    lock_lines(enemys, enemys+6);
-//                    return true;
-//                }
-//            }
-            enemys = (int)(Math.random()*9); //если свободных нет, то спавним хоть где нибудь
+            enemys = (int)(Math.random()*9);
             enemy_list.add(new Alien(height/32 + enemys*(3 * height/32), width,
-                    7*height/32 + enemys*(3 * height/32) , width*14/13, context, enemys*3, enemys*3+6));
-            //lock_lines(enemys*3, enemys*3+6);
+                    7*height/32 + enemys*(3 * height/32) , width*14/13, context));
             time = System.currentTimeMillis();
             return true;
         }
         return false;
     }
+
+    public boolean create_alien_two(){
+        if (System.currentTimeMillis() - time >= time_alien_two){
+            enemys = (int)(Math.random()*9);
+            enemy_list.add(new Alien_two(height/32 + enemys*(3 * height/32), width,
+                    7*height/32 + enemys*(3 * height/32) , width*14/13, context));
+            time = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
+
 
     public void update_enemy() {
         for (int i = 0; i < enemy_list.size(); i++){
@@ -171,8 +134,6 @@ public class DrawThread extends Thread{
                     width/100, 0, -width/100, 0}))  //проверяет столкновение с самолетом или стеной
             {
                 samolet.change_hp(-enemy_list.get(i).get_damage());
-//                temp = enemy_list.get(i).get_start_end();
-//                unlock_lines(temp/100, temp%100);
                 enemy_list.remove(i);
                 i--;
                 if (samolet.get_hp() > 0) // снимаем хп у самолета
@@ -187,8 +148,6 @@ public class DrawThread extends Thread{
             }
             else if(enemy_list.get(i).get_koord()[1] <= 0){
                 base.change_hp(-enemy_list.get(i).get_damage());
-                //temp = enemy_list.get(i).get_start_end();
-                //unlock_lines(temp/100, temp%100);
                 enemy_list.remove(i);
                 i--;
                 if (base.get_hp() > 0)
@@ -201,8 +160,8 @@ public class DrawThread extends Thread{
                 for (int j = 0; j < bullet_list.size(); j++){
                     if (enemy_list.get(i).get_alive() && Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
                             width/100, 0, -width/100, 0})){
-                        enemy_list.get(i).change_hp(-bullet_list.get(j).get_damage());
-                        bullet_list.remove(j);
+                        if(enemy_list.get(i).collision(bullet_list.get(j), this));
+                            bullet_list.remove(j);
                         break;
                     }
                 }
@@ -223,8 +182,6 @@ public class DrawThread extends Thread{
                 if (enemy_list.get(i).getTime_death() == 0 || System.currentTimeMillis() - enemy_list.get(i).getTime_death() <= 2000) {
                     enemy_list.get(i).draw(canvas, null);
                 } else {
-                    //temp = enemy_list.get(i).get_start_end();
-                    //unlock_lines(temp/100, temp%100);
                     enemy_list.remove(i);
                     i--;
                 }
@@ -263,7 +220,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 50 && create_alien()){
+                if (count_meteor < 50 && create_meteor()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){
@@ -304,9 +261,8 @@ public class DrawThread extends Thread{
     9 -
     10 - final boss
     11 - heart
-    12 - coin
      */
-    private int time_bullet, time_meteor, time_alien;
+    private int time_bullet, time_meteor, time_alien, time_alien_two;
     private boolean fill_lines_alien; // переменные, которые показывают должны ли мобы спавниться на свободных линиях
 
     public void start_options(int number) { //стартовые установки для разных уровней
@@ -314,6 +270,7 @@ public class DrawThread extends Thread{
             case 1:
                 time_meteor = 2000;
                 time_alien = 1000;
+                time_alien_two = 2000;
                 fill_lines_alien = false;
                 for(int i = 0; i < 50; i++){
                     mobs.add((byte) 1);
