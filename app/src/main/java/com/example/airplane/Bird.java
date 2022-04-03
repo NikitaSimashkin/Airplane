@@ -12,4 +12,35 @@ public class Bird extends Enemy{
         super.setDeath();
         bitmap = ImageResource.BIRD_DEATH.getBitmap(context);
     }
+
+    @Override
+    public void collision(Bullet two, DrawThread drawThread) {
+        if (color != two.getColor()){
+            if (System.currentTimeMillis() % 2 == 0){
+                if (up - 4 * height/32 > 0){
+                    up -= 4 * height/32;
+                    down -= 4 * height/32;
+                }
+                else {
+                    up += 4 * height/32;
+                    down += 4 * height/32;
+                }
+            } else {
+                if (down + 4 * height/32 < height){
+                    up += 4 * height/32;
+                    down += 4 * height/32;
+                }
+                else {
+                    up -= 4 * height/32;
+                    down -= 4 * height/32;
+                }
+            }
+        } else{
+            change_hp(-2 * two.get_damage());
+        }
+    }
+
+    public void change_line(){
+
+    }
 }

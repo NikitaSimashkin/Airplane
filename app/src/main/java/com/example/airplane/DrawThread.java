@@ -327,7 +327,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 50 && create_packman()){
+                if (count_meteor < 50 && create_yellow()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){
