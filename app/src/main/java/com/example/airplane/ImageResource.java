@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
 public enum ImageResource {
@@ -16,7 +17,10 @@ public enum ImageResource {
     METEOR_DIED(R.drawable.meteor_death),
 
     SPACESHIP(R.drawable.spaceship),
-    BULLET(R.drawable.bullet_one),
+    BULLET_GREEN(R.drawable.bullet_green),
+    BULLET_RED(R.drawable.bullet_red),
+    BULLET_YELLOW(R.drawable.bullet_yellow),
+    BULLET_BLUE(R.drawable.bullet_blue),
 
     ALIEN(R.drawable.alien),
     ALIEN_DEATH(R.drawable.alien_death),
@@ -49,7 +53,7 @@ public enum ImageResource {
     private ImageResource(int resourceId){
         this.resourceId = resourceId;
     }
-    public Bitmap getBitmap(Context context){
+    public Bitmap getBitmap(@NonNull Context context){
         //return BitmapFactory.decodeResource(context.getResources(), resourceId);
         return drawableToBitmap(ResourcesCompat.getDrawable(context.getResources(),resourceId, null));
     }
@@ -64,7 +68,6 @@ public enum ImageResource {
             }
         }
         bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);

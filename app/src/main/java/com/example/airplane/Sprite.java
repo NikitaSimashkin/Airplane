@@ -30,8 +30,8 @@ public class Sprite {
     }
 
 
-    public Sprite(ImageResource imageResource, int up, int left, int down, int right, Context context){ //создаем спрайт и задаем нач. координаты
-        this.bitmap = imageResource.getBitmap(context);
+    public Sprite(Bitmap bitmap, int up, int left, int down, int right, Context context){ //создаем спрайт и задаем нач. координаты
+        this.bitmap = bitmap;
         this.up = up;
         this.down = down;
         this.left = left;

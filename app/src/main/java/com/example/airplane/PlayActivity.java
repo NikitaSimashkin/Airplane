@@ -1,8 +1,11 @@
 package com.example.airplane;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,15 +25,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import java.util.Objects;
 
 public class PlayActivity extends AppCompatActivity {
+
     private DrawThread drawThread;
     private Dialog loose;
+
     protected SurfaceView play_field;
     protected Handler handler;
+
     private int number;
+
+    private Context context;
+
+    private int button_pressed = 1;
+    private Drawable green_pressed, green_not_pressed,
+            red_pressed, red_not_pressed,
+            yellow_pressed, yellow_not_pressed,
+            blue_pressed, blue_not_pressed;
+
 
     private int width, height;
 
@@ -42,9 +60,11 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        new Params(getApplicationContext());
         Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
         setContentView(R.layout.playactivity);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        context = getApplicationContext();
         number = getIntent().getExtras().getInt("number");
 
         ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
@@ -64,6 +84,25 @@ public class PlayActivity extends AppCompatActivity {
         TextView points = loose.findViewById(R.id.points);
         Button menu = loose.findViewById(R.id.menu);
         Button retry = loose.findViewById(R.id.retry);
+
+        ImageButton green = findViewById(R.id.green);
+        ImageButton red = findViewById(R.id.red);
+        ImageButton yellow = findViewById(R.id.yellow);
+        ImageButton blue = findViewById(R.id.blue);
+
+        green_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.green_pressed);
+        green_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.green_not_pressed);
+        red_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.red_pressed);
+        red_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.red_not_pressed);
+        yellow_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.yellow_pressed);
+        yellow_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.yellow_not_pressed);
+        blue_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_pressed);
+        blue_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_not_pressed);
+
+        green.setImageDrawable(green_pressed);
+        red.setBackground(red_not_pressed);
+        blue.setBackground(blue_not_pressed);
+        yellow.setBackground(yellow_not_pressed);
 
        // Looper.prepare();
         Looper looper = Looper.myLooper();
@@ -176,6 +215,55 @@ public class PlayActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        View.OnClickListener Colors_b = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()){
+                    case R.id.green:
+                        drawThread.change_bullet_mode(1);
+                        green.setImageDrawable(green_pressed);
+                        red.setImageDrawable(red_not_pressed);
+                        yellow.setImageDrawable(yellow_not_pressed);
+                        blue.setImageDrawable(blue_not_pressed);
+                        break;
+                    case R.id.red:
+                        drawThread.change_bullet_mode(2);
+                        green.setImageDrawable(green_not_pressed);
+                        red.setImageDrawable(red_pressed);
+                        yellow.setImageDrawable(yellow_not_pressed);
+                        blue.setImageDrawable(blue_not_pressed);
+                        break;
+                    case R.id.yellow:
+                        drawThread.change_bullet_mode(3);
+                        green.setImageDrawable(green_not_pressed);
+                        red.setImageDrawable(red_not_pressed);
+                        yellow.setImageDrawable(yellow_pressed);
+                        blue.setImageDrawable(blue_not_pressed);
+                        break;
+                    case R.id.blue:
+                        drawThread.change_bullet_mode(4);
+                        green.setImageDrawable(green_not_pressed);
+                        red.setImageDrawable(red_not_pressed);
+                        yellow.setImageDrawable(yellow_not_pressed);
+                        blue.setImageDrawable(blue_pressed);
+                        break;
+                }
+            }
+        };
+
+        green.setOnClickListener(Colors_b);
+        red.setOnClickListener(Colors_b);
+        yellow.setOnClickListener(Colors_b);
+        blue.setOnClickListener(Colors_b);
+
+    }
+
+    public static Drawable getTintedDrawable(Context context, int drawableRes, int colorRes) {
+        Drawable d = ContextCompat.getDrawable(context, drawableRes);
+        d = DrawableCompat.wrap(d);
+        DrawableCompat.setTint(d.mutate(), ContextCompat.getColor(context, colorRes));
+        return d;
     }
 
     public DrawThread create_new_thread(int width, int height){

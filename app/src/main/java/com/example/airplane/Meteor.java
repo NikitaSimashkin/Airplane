@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 
 public class Meteor extends Enemy {
     public Meteor(int line_v, int line_h, Context context, int color) {
-        super(ImageResource.METEOR_DIED, line_v, width + line_h,
+        super(Params.Meteors[color], line_v, width + line_h,
                 line_v + 4*height/32, width*15/14 + line_h, context,
                 Params.meteor_damage, Params.meteor_speed, Params.meteor_hp, color);
         change_bitmap(color);
@@ -16,24 +16,11 @@ public class Meteor extends Enemy {
     @Override
     public void setDeath() {
         super.setDeath();
-        bitmap = ImageResource.METEOR_DIED.getBitmap(context);
+        bitmap = Params.Meteors[4];
     }
 
     public void change_bitmap(int color){
-        switch(color){
-            case 1:
-                bitmap = ImageResource.METEOR_GREEN.getBitmap(context);
-                break;
-            case 2:
-                bitmap = ImageResource.METEOR_RED.getBitmap(context);
-                break;
-            case 3:
-                bitmap = ImageResource.METEOR_YELLOW.getBitmap(context);
-                break;
-            case 4:
-                bitmap = ImageResource.METEOR_BLUE.getBitmap(context);
-                break;
-        }
+        bitmap = Params.Meteors[color-1];
     }
 
 }

@@ -3,6 +3,8 @@ package com.example.airplane;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import androidx.annotation.NonNull;
+
 public class Enemy extends Sprite{
 
     protected int damage, speed, hp;
@@ -10,8 +12,8 @@ public class Enemy extends Sprite{
     protected long time_death = 0; // время смерти
     protected int color;
 
-    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed, int hp, int color) {
-        super(imageResource, up, left, down, right, context);
+    public Enemy(Bitmap bitmap, int up, int left, int down, int right, Context context, int damage, int speed, int hp, int color) {
+        super(bitmap, up, left, down, right, context);
         this.damage = damage;
         this.speed = speed;
         this.hp = hp;
@@ -56,7 +58,7 @@ public class Enemy extends Sprite{
     }
 
 
-    public void collision(Bullet two, DrawThread drawThread){ //возвращает тру сли пулю надо удалять после столкновения
+    public void collision(@NonNull Bullet two, DrawThread drawThread){ //возвращает тру сли пулю надо удалять после столкновения
         if (color == two.getColor()){
             change_hp(-2*two.get_damage());
         }

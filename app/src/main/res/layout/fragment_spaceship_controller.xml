@@ -90,10 +90,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/circle_button"
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/green"
                 style="@android:style/Widget.ImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -102,11 +103,10 @@
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="#00FF00"
-                android:scaleType="fitStart" />
+                android:scaleType="fitXY" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/blue"
                 style="@android:style/Widget.ImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -115,8 +115,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="#0000FF"
-                android:scaleType="fitStart" />
+                android:scaleType="fitXY" />
 
         </LinearLayout>
 
@@ -127,7 +126,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/red"
                 style="@android:style/Widget.ImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -136,11 +135,10 @@
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="#FF0000"
-                android:scaleType="fitStart" />
+                android:scaleType="fitXY" />
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/yellow"
                 style="@android:style/Widget.ImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -149,8 +147,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/circle_button"
-                android:backgroundTint="#FFFF00"
-                android:scaleType="fitStart" />
+                android:scaleType="fitXY" />
         </LinearLayout>
 
     </LinearLayout>

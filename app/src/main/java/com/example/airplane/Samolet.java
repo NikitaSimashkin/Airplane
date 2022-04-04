@@ -8,7 +8,7 @@ public class Samolet extends Sprite{
     private boolean updown;
 
     public Samolet(Context context) {
-        super(ImageResource.SPACESHIP, height/32, 0, (int)(height/5), width/7, context);
+        super(Params.SPACESHIP, height/32, 0, (int)(height/5), width/7, context);
     }
     public void update_koord(int a, int b){ //метод меняет координаты самолета
         if (!(up + a < height/32 || down + b > 31*height/32)) { //это условие проверяет выход за границы

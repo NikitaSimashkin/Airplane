@@ -33,7 +33,7 @@ public class DrawThread extends Thread{
     protected List<Enemy> enemy_list = new ArrayList<>();
     protected List<Bullet> bullet_list = new ArrayList<>();
 
-    private int enemys, points, temp;
+    private int enemys, bullet_mode = 1;
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
@@ -78,11 +78,15 @@ public class DrawThread extends Thread{
             }
     }
 
+    public void change_bullet_mode(int mode){
+        bullet_mode = mode;
+    }
+
     public void create_bullets() {
         if (System.currentTimeMillis() - time_bullet_last >= 2000) {
             time_bullet_last = System.currentTimeMillis() ;
             int[] koord_samolet = samolet.get_koord();
-            bullet_list.add(new Bullet(samolet.get_koord(), context, 1));
+            bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_mode));
 
         }
     }
@@ -97,13 +101,11 @@ public class DrawThread extends Thread{
         return false;
     }
 
-    int t = 0;
     public boolean create_alien(){
         if (System.currentTimeMillis() - time >= time_alien){
             enemys = (int)(Math.random()*9);
             enemy_list.add(new Alien(height/32 + enemys*(3 * height/32), 0, context));
             time = System.currentTimeMillis();
-            t++;
             return true;
         }
         return false;
@@ -114,7 +116,6 @@ public class DrawThread extends Thread{
             enemys = (int)(Math.random()*9);
             enemy_list.add(new Alien_two(height/32 + enemys*(3 * height/32), 0, context));
             time = System.currentTimeMillis();
-            t++;
             return true;
         }
         return false;
@@ -125,7 +126,6 @@ public class DrawThread extends Thread{
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Packman(height/32 +enemys*(2 * height/32),0, context, this));
             time = System.currentTimeMillis();
-            t++;
             return true;
         }
         return false;
@@ -183,9 +183,8 @@ public class DrawThread extends Thread{
     public boolean create_heart(){
         if (System.currentTimeMillis() - time >= time_heart){
             enemys = (int)(Math.random()*14);
-            enemy_list.add(new Heart(height/32 + t*(2 * height/32), 0, context));
+            enemy_list.add(new Heart(height/32 + enemys*(2 * height/32), 0, context));
             time = System.currentTimeMillis();
-            t++;
             return true;
         }
         return false;
@@ -317,7 +316,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 14 && create_heart()){
+                if (count_meteor < 50 && create_yellow()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){
@@ -365,15 +364,15 @@ public class DrawThread extends Thread{
     public void start_options(int number) { //стартовые установки для разных уровней
         switch (number) {
             case 1:
-                time_meteor = 500;
+                time_meteor = 1000;
                 time_alien = 500;
                 time_alien_two = 500;
                 time_packman = 500;
                 time_bird = 500;
-                time_sun = 500;
+                time_sun = 2000;
                 time_megasun = 500;
                 time_cat = 500;
-                time_yellow = 500;
+                time_yellow = 5000;
                 time_heart = 500;
                 for(int i = 0; i < 50; i++){
                     mobs.add((byte) 1);
