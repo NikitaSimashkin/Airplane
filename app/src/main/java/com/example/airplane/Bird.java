@@ -3,8 +3,9 @@ package com.example.airplane;
 import android.content.Context;
 
 public class Bird extends Enemy{
-    public Bird(int up, int left, int down, int right, Context context) {
-        super(ImageResource.BIRD, up, left, down, right, context, Params.bird_damage, Params.bird_speed, Params.bird_hp, 4);
+    public Bird(int line_v, int line_h, Context context) {
+        super(ImageResource.BIRD, line_v, width + line_h, 2*height/32 + line_v,
+                width*14/13 + line_h, context, Params.bird_damage, Params.bird_speed, Params.bird_hp, 4);
     }
 
     @Override

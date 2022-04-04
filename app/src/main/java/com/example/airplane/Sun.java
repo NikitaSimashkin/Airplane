@@ -4,8 +4,9 @@ import android.content.Context;
 
 public class Sun extends Enemy{
 
-    public Sun(int up, int left, int down, int right, Context context) {
-        super(ImageResource.SUN, up, left, down, right, context, Params.sun_damage, Params.sun_speed, Params.sun_hp, 2);
+    public Sun(int line_v, int line_h, Context context) {
+        super(ImageResource.SUN, line_v, width + line_h, 6*height/32 + line_v,
+                width*12/11 + line_h, context, Params.sun_damage, Params.sun_speed, Params.sun_hp, 2);
     }
 
     @Override

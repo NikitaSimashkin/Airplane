@@ -6,9 +6,9 @@ public class Packman extends Enemy{
     private long meteor_time = 5000, last_time;
     private DrawThread drawThread;
 
-    public Packman(int up, int left, int down, int right, Context context, DrawThread drawThread) {
-        super(ImageResource.PACKMAN, up, left, down, right, context, Params.packman_damage, Params.packman_speed,
-                Params.packman_hp, 3);
+    public Packman(int line_v, int line_h, Context context, DrawThread drawThread) {
+        super(ImageResource.PACKMAN, line_v, width + line_h, 5*height/32 + line_v,
+                width*13/12 + line_h, context, Params.packman_damage, Params.packman_speed, Params.packman_hp, 3);
         last_time = System.currentTimeMillis();
         this.drawThread = drawThread;
     }
@@ -26,8 +26,7 @@ public class Packman extends Enemy{
         if (System.currentTimeMillis() - last_time > meteor_time && alive) {
             int center = (up + down)/2;
             int center_2 = (left + right)/2;
-            drawThread.enemy_list.add(new Meteor(center - 2 * height/32, left,
-                    center + 2 * height/32, left + width/14 , context, (int) (Math.random() * 4 + 1)));
+            drawThread.enemy_list.add(new Meteor((center-2 * height/32), -(center_2), context, (int) (Math.random() * 4 + 1)));
             last_time = System.currentTimeMillis();
         }
     }

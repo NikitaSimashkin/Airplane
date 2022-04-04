@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class Meteor extends Enemy {
-    public Meteor(int up, int left, int down, int right, Context context, int color) {
-        super(ImageResource.METEOR_DIED, up, left, down, right, context,
+    public Meteor(int line_v, int line_h, Context context, int color) {
+        super(ImageResource.METEOR_DIED, line_v, width + line_h,
+                line_v + 4*height/32, width*15/14 + line_h, context,
                 Params.meteor_damage, Params.meteor_speed, Params.meteor_hp, color);
         change_bitmap(color);
         }
+
 
     @Override
     public void setDeath() {

@@ -7,8 +7,11 @@ public class Bullet extends Sprite{
 
     private int damage = Params.bullet_damage, speed = Params.bullet_speed, color;
 
-    public Bullet(int up, int left, int down, int right, Context context, int color) {
-        super(ImageResource.BULLET, up, left, down, right, context);
+    public Bullet(int[] koord_samolet, Context context, int color) {
+        super(ImageResource.BULLET, (koord_samolet[0] + koord_samolet[2]) / 2 - (koord_samolet[2] - koord_samolet[0]) / 4,
+                2 * (koord_samolet[1] + koord_samolet[3]) / 3,
+                (koord_samolet[0] + koord_samolet[2]) / 2 + (koord_samolet[2] - koord_samolet[0]) / 4,
+                koord_samolet[3], context);
         this.color = color;
     }
 

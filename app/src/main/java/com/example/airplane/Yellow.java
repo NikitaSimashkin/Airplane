@@ -3,8 +3,9 @@ package com.example.airplane;
 import android.content.Context;
 
 public class Yellow extends Enemy{
-    public Yellow(int up, int left, int down, int right, Context context) {
-        super(ImageResource.YELLOW, up, left, down, right, context, Params.yellow_damage,
+    public Yellow(int line_v, int line_h, Context context) {
+        super(ImageResource.YELLOW, line_v, width+line_h, line_v + 15*height/32,
+                width*15/10 + line_h, context, Params.yellow_damage,
                 Params.yellow_speed, Params.yellow_hp, 3);
     }
 

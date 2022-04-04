@@ -7,11 +7,11 @@ public class Samolet extends Sprite{
     private int up_or_down, speed = height/Params.samolet_speed, hp = Params.samolet_hp;
     private boolean updown;
 
-    public Samolet(int up, int left, int down, int right, Context context) {
-        super(ImageResource.SPACESHIP, up, left, down, right, context);
+    public Samolet(Context context) {
+        super(ImageResource.SPACESHIP, height/32, 0, (int)(height/5), width/7, context);
     }
     public void update_koord(int a, int b){ //метод меняет координаты самолета
-        if (!(up + a < height/50 || down + b > height)) { //это условие проверяет выход за границы
+        if (!(up + a < height/32 || down + b > 31*height/32)) { //это условие проверяет выход за границы
             this.set_koord(up + a, down + b, left, right);
             up += a;
             down += b;
