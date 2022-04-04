@@ -68,5 +68,5 @@ public class Enemy extends Sprite{
         else {
             change_hp(-two.get_damage());
         }
-    };
+    }
 }

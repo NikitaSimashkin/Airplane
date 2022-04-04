@@ -160,6 +160,10 @@ public class DrawThread extends Thread{
         return false;
     }
 
+    public static void megasun_death(){
+
+    }
+
     public boolean create_cat(){
         if (System.currentTimeMillis() - time >= time_cat){
             enemys = (int)(Math.random()*6);
@@ -316,7 +320,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 50 && create_yellow()){
+                if (count_meteor < 2 && create_megasun()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){
@@ -370,7 +374,7 @@ public class DrawThread extends Thread{
                 time_packman = 500;
                 time_bird = 500;
                 time_sun = 2000;
-                time_megasun = 500;
+                time_megasun = 10000;
                 time_cat = 500;
                 time_yellow = 5000;
                 time_heart = 500;
