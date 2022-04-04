@@ -8,7 +8,7 @@ public class Alien_two extends Enemy{
     // изначально создается с 150 хп, потом перерождается уже с картинкой без каски и 200 хп
 
     public Alien_two(int line_v, int line_h, Context context) {
-        super(Params.ALIEN_TWO, line_v, width + line_h,
+        super(ImageResource.ALIEN_TWO, line_v, width + line_h,
                 6*height/32 + line_v, width*14/13 + line_h, context,
                 Params.alien_two_damage, Params.alien_two_speed, Params.alien_two_hp, 1);
     }
@@ -22,11 +22,11 @@ public class Alien_two extends Enemy{
         }
         else{
             super.setDeath();
-            bitmap = Params.ALIEN_DEATH;
+            bitmap = ImageResource.ALIEN_DEATH.getBitmap(context);
         }
     }
 
     public void change_bitmap(){
-        bitmap = Params.ALIEN_TWO_WITHOUT_CAP;
+        bitmap = ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(context);
     }
 }

@@ -20,6 +20,14 @@ public class Enemy extends Sprite{
         this.color = color;
     }
 
+    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed, int hp, int color) {
+        super(imageResource, up, left, down, right, context);
+        this.damage = damage;
+        this.speed = speed;
+        this.hp = hp;
+        this.color = color;
+    }
+
     public void update_koord(){
         if (alive) {
             this.set_koord(up, down, left - width / speed, right - width / speed);

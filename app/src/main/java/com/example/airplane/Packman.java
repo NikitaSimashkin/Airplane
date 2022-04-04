@@ -7,7 +7,7 @@ public class Packman extends Enemy{
     private DrawThread drawThread;
 
     public Packman(int line_v, int line_h, Context context, DrawThread drawThread) {
-        super(Params.PACKMAN, line_v, width + line_h, 5*height/32 + line_v,
+        super(ImageResource.PACKMAN, line_v, width + line_h, 5*height/32 + line_v,
                 width*13/12 + line_h, context, Params.packman_damage, Params.packman_speed, Params.packman_hp, 3);
         last_time = System.currentTimeMillis();
         this.drawThread = drawThread;
@@ -16,7 +16,7 @@ public class Packman extends Enemy{
     @Override
     public void setDeath() {
         super.setDeath();
-        bitmap = Params.PACKMAN_DEATH;
+        bitmap = ImageResource.PACKMAN_DEATH.getBitmap(context);
     }
 
     @Override

@@ -19,9 +19,9 @@ public class Params {
     static int yellow_damage = 100, yellow_speed = 700, yellow_hp = 100;
     static int heart_damage = -100, heart_speed = 1500, heart_hp = 100;
 
-    static Bitmap SPACESHIP, ALIEN, ALIEN_DEATH, ALIEN_TWO,
-    ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,
-    YELLOW_DEATH, CAT_ONE, CAT_TWO, CAT_DEATH, HEART, BREAKING_HEART, MEGASUN;
+//    static ALIEN, ALIEN_DEATH, ALIEN_TWO,
+//    ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,
+//    YELLOW_DEATH, CAT_ONE, CAT_TWO, CAT_DEATH, HEART, BREAKING_HEART, MEGASUN;
 
     static Bitmap[] Meteors = new Bitmap[5];
     static Bitmap[] Bullets = new Bitmap[4];
@@ -33,35 +33,36 @@ public class Params {
         Meteors[2] = ImageResource.METEOR_YELLOW.getBitmap(context);
         Meteors[4] = ImageResource.METEOR_DIED.getBitmap(context);
 
-        SPACESHIP = ImageResource.SPACESHIP.getBitmap(context);
+
         Bullets[0] = ImageResource.BULLET_GREEN.getBitmap(context);
         Bullets[1] = ImageResource.BULLET_RED.getBitmap(context);
         Bullets[2] = ImageResource.BULLET_YELLOW.getBitmap(context);
         Bullets[3] = ImageResource.BULLET_BLUE.getBitmap(context);
-
-        ALIEN = ImageResource.ALIEN.getBitmap(context);
-        ALIEN_DEATH = ImageResource.ALIEN_DEATH.getBitmap(context);
-        ALIEN_TWO = ImageResource.ALIEN_TWO.getBitmap(context);
-        ALIEN_TWO_WITHOUT_CAP = ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(context);
-
-        PACKMAN = ImageResource.PACKMAN.getBitmap(context);
-        PACKMAN_DEATH = ImageResource.PACKMAN_DEATH.getBitmap(context);
-
-        BIRD = ImageResource.BIRD.getBitmap(context);
-        BIRD_DEATH = ImageResource.BIRD_DEATH.getBitmap(context);
-
-        SUN = ImageResource.SUN.getBitmap(context);
-        SUN_DEATH = ImageResource.SUN_DEATH.getBitmap(context);
-        MEGASUN = ImageResource.MEGASUN.getBitmap(context);
-
-        YELLOW = ImageResource.YELLOW.getBitmap(context);
-        YELLOW_DEATH = ImageResource.YELLOW_DEATH.getBitmap(context);
-
-        CAT_ONE = ImageResource.CAT_ONE.getBitmap(context);
-        CAT_TWO = ImageResource.CAT_TWO.getBitmap(context);
-        CAT_DEATH = ImageResource.CAT_DEATH.getBitmap(context);
-
-        HEART = ImageResource.HEART.getBitmap(context);
-        BREAKING_HEART = ImageResource.BREAKING_HEART.getBitmap(context);
+//        SPACESHIP = ImageResource.SPACESHIP.getBitmap(context);
+//
+//        ALIEN = ImageResource.ALIEN.getBitmap(context);
+//        ALIEN_DEATH = ImageResource.ALIEN_DEATH.getBitmap(context);
+//        ALIEN_TWO = ImageResource.ALIEN_TWO.getBitmap(context);
+//        ALIEN_TWO_WITHOUT_CAP = ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(context);
+//
+//        PACKMAN = ImageResource.PACKMAN.getBitmap(context);
+//        PACKMAN_DEATH = ImageResource.PACKMAN_DEATH.getBitmap(context);
+//
+//        BIRD = ImageResource.BIRD.getBitmap(context);
+//        BIRD_DEATH = ImageResource.BIRD_DEATH.getBitmap(context);
+//
+//        SUN = ImageResource.SUN.getBitmap(context);
+//        SUN_DEATH = ImageResource.SUN_DEATH.getBitmap(context);
+//        MEGASUN = ImageResource.MEGASUN.getBitmap(context);
+//
+//        YELLOW = ImageResource.YELLOW.getBitmap(context);
+//        YELLOW_DEATH = ImageResource.YELLOW_DEATH.getBitmap(context);
+//
+//        CAT_ONE = ImageResource.CAT_ONE.getBitmap(context);
+//        CAT_TWO = ImageResource.CAT_TWO.getBitmap(context);
+//        CAT_DEATH = ImageResource.CAT_DEATH.getBitmap(context);
+//
+//        HEART = ImageResource.HEART.getBitmap(context);
+//        BREAKING_HEART = ImageResource.BREAKING_HEART.getBitmap(context);
     }
 }

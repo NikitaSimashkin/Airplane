@@ -34,13 +34,58 @@
             android:layout_weight="9"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageView4"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/base2" />
+                android:background="@drawable/base2"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    style="@android:style/Widget.Holo.Light.ImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/alien" />
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    style="@android:style/Widget.Holo.Light.ImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/alien" />
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    style="@android:style/Widget.Holo.Light.ImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/angry_alien_without_cap" />
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    style="@android:style/Widget.Holo.Light.ImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/bird" />
+
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    style="@android:style/Widget.Holo.Light.ImageButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@drawable/breaking_heart" />
+            </LinearLayout>
 
             <SurfaceView
                 android:id="@+id/play_field"

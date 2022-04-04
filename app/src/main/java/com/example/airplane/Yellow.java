@@ -5,7 +5,7 @@ import android.graphics.Rect;
 
 public class Yellow extends Enemy{
     public Yellow(int line_v, int line_h, Context context) {
-        super(Params.YELLOW, line_v, width+line_h, line_v + 15*height/32,
+        super(ImageResource.YELLOW, line_v, width+line_h, line_v + 15*height/32,
                 width*15/10 + line_h, context, Params.yellow_damage,
                 Params.yellow_speed, Params.yellow_hp, 3);
     }
@@ -18,7 +18,7 @@ public class Yellow extends Enemy{
     @Override
     public void setDeath() {
         super.setDeath();
-        bitmap = Params.YELLOW_DEATH;
+        bitmap = ImageResource.YELLOW_DEATH.getBitmap(context);
     }
 
 }

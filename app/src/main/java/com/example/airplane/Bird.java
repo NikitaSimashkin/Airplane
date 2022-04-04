@@ -4,14 +4,14 @@ import android.content.Context;
 
 public class Bird extends Enemy{
     public Bird(int line_v, int line_h, Context context) {
-        super(Params.BIRD, line_v, width + line_h, 2*height/32 + line_v,
+        super(ImageResource.BIRD, line_v, width + line_h, 2*height/32 + line_v,
                 width*14/13 + line_h, context, Params.bird_damage, Params.bird_speed, Params.bird_hp, 4);
     }
 
     @Override
     public void setDeath() {
         super.setDeath();
-        bitmap = Params.BIRD_DEATH;
+        bitmap = ImageResource.BIRD_DEATH.getBitmap(context);
     }
 
     @Override
@@ -39,9 +39,5 @@ public class Bird extends Enemy{
         } else{
             change_hp(-2 * two.get_damage());
         }
-    }
-
-    public void change_line(){
-
     }
 }

@@ -8,7 +8,7 @@ import com.example.airplane.Params;
 
 public class Heart extends Enemy {
     public Heart(int line_v, int line_h, Context context) {
-        super(Params.HEART, line_v, width+line_h, line_v + 4*height/32,
+        super(ImageResource.HEART, line_v, width+line_h, line_v + 4*height/32,
                 width*15/14 + line_h, context, Params.heart_damage,
                 Params.heart_speed, Params.heart_hp, 5);
     }
@@ -16,6 +16,6 @@ public class Heart extends Enemy {
     @Override
     public void setDeath() {
         super.setDeath();
-        bitmap = Params.BREAKING_HEART;
+        bitmap = ImageResource.BREAKING_HEART.getBitmap(context);
     }
 }

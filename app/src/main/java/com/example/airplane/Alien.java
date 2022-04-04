@@ -4,7 +4,7 @@ import android.content.Context;
 
 public class Alien extends Enemy{
     public Alien(int line_v, int line_h, Context context) {
-        super(Params.ALIEN, line_v, width + line_h,
+        super(ImageResource.ALIEN, line_v, width + line_h,
                 6*height/32 + line_v, width*14/13 + line_h, context,
                 Params.alien_damage, Params.alien_speed, Params.alien_hp, 1);
     }
@@ -12,6 +12,6 @@ public class Alien extends Enemy{
     @Override
     public void setDeath() {
         super.setDeath();
-        bitmap = Params.ALIEN_DEATH;
+        bitmap = ImageResource.ALIEN_DEATH.getBitmap(context);
     }
 }
