@@ -1,11 +1,12 @@
-package com.example.airplane;
+package com.example.airplane.Sprites;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
+import com.example.airplane.Params;
+import com.example.airplane.Sprites.Enemy;
 
 public class Meteor extends Enemy {
-    public Meteor(int line_v, int line_h, Context context, int color) {
+    public Meteor(double line_v, double line_h, Context context, int color) {
         super(Params.Meteors[color], line_v, width + line_h,
                 line_v + 4*height/32, width*15/14 + line_h, context,
                 Params.meteor_damage, Params.meteor_speed, Params.meteor_hp, color);

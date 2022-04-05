@@ -4,27 +4,28 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 public class Params {
-    static int samolet_speed = 120, samolet_hp = 500;
-    static int base_hp = 1000;
-    static int bullet_damage = 100, bullet_speed = 200, bullet_hp = 100;
+    public static int samolet_speed = 120, samolet_hp = 500;
+    public static int base_hp = 1000;
+    public static int bullet_damage = 100, bullet_speed = 200, bullet_hp = 100;
+    public static int turret_damage = 200, turret_hp = 201;
 
-    static int meteor_damage = 100, meteor_speed = 1000, meteor_hp = 100;
-    static int alien_damage = 150, alien_speed = 800, alien_hp = 200;
-    static int alien_two_damage = 200, alien_two_speed = 800, alien_two_hp = 150, alien_two_hp_two = 200;
-    static int packman_damage = 50, packman_speed = 800, packman_hp = 100;
-    static int bird_damage = 100, bird_speed = 700, bird_hp = 100;
-    static int sun_damage = 100, sun_speed = 1500, sun_hp = 100;
-    static int megasun_damage = 100, megasun_speed = 700, megasun_hp = 100;
-    static int cat_damage = 100, cat_speed = 700, cat_hp = 100, cat_speed_two = 400, cat_hp_two = 100;
-    static int yellow_damage = 100, yellow_speed = 700, yellow_hp = 100;
-    static int heart_damage = -100, heart_speed = 1500, heart_hp = 100;
+    public static int meteor_damage = 100, meteor_speed = 1000, meteor_hp = 100;
+    public static int alien_damage = 150, alien_speed = 10000, alien_hp = 200;
+    public static int alien_two_damage = 200, alien_two_speed = 810, alien_two_hp = 150, alien_two_hp_two = 200;
+    public static int packman_damage = 50, packman_speed = 800, packman_hp = 100;
+    public static int bird_damage = 100, bird_speed = 700, bird_hp = 100;
+    public static int sun_damage = 100, sun_speed = 1500, sun_hp = 100;
+    public static int megasun_damage = 100, megasun_speed = 700, megasun_hp = 100;
+    public static int cat_damage = 100, cat_speed = 700, cat_hp = 100, cat_speed_two = 400, cat_hp_two = 100;
+    public static int yellow_damage = 100, yellow_speed = 700, yellow_hp = 100;
+    public static int heart_damage = -100, heart_speed = 1500, heart_hp = 100;
 
 //    static ALIEN, ALIEN_DEATH, ALIEN_TWO,
 //    ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,
 //    YELLOW_DEATH, CAT_ONE, CAT_TWO, CAT_DEATH, HEART, BREAKING_HEART, MEGASUN;
 
-    static Bitmap[] Meteors = new Bitmap[5];
-    static Bitmap[] Bullets = new Bitmap[4];
+    public static Bitmap[] Meteors = new Bitmap[5];
+    public static Bitmap[] Bullets = new Bitmap[4];
 
     public Params(Context context){
         Meteors[1] = ImageResource.METEOR_RED.getBitmap(context);

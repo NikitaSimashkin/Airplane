@@ -1,18 +1,22 @@
-package com.example.airplane;
+package com.example.airplane.Sprites;
 
 import android.content.Context;
 import android.graphics.Rect;
 
-public class Yellow extends Enemy{
-    public Yellow(int line_v, int line_h, Context context) {
+import com.example.airplane.ImageResource;
+import com.example.airplane.Params;
+import com.example.airplane.Sprites.Enemy;
+
+public class Yellow extends Enemy {
+    public Yellow(double line_v, double line_h, Context context) {
         super(ImageResource.YELLOW, line_v, width+line_h, line_v + 15*height/32,
                 width*15/10 + line_h, context, Params.yellow_damage,
                 Params.yellow_speed, Params.yellow_hp, 3);
     }
 
     @Override
-    public Rect create_rect_minus(int a, int b, int c, int d) {
-        return super.create_rect_minus(a + 3*(right-left)/5, b, c, d);
+    public Rect create_rect_minus(double a, double b, double c, double d) {
+        return super.create_rect_minus((a + 3*(right-left)/5), b, c, d);
     }
 
     @Override

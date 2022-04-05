@@ -42,7 +42,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/imageButton5"
+                    android:id="@+id/fdfd"
                     style="@android:style/Widget.Holo.Light.ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -51,13 +51,16 @@
                     app:srcCompat="@drawable/alien" />
 
                 <ImageButton
-                    android:id="@+id/imageButton"
+                    android:id="@+id/turret"
                     style="@android:style/Widget.Holo.Light.ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:scaleType="fitStart"
-                    app:srcCompat="@drawable/alien" />
+                    android:clickable="true"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/turret" />
 
                 <ImageButton
                     android:id="@+id/imageButton2"

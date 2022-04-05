@@ -1,18 +1,23 @@
-package com.example.airplane;
+package com.example.airplane.Sprites;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
-public class Enemy extends Sprite{
+import com.example.airplane.DrawThread;
+import com.example.airplane.ImageResource;
+
+import java.util.List;
+
+public class Enemy extends Sprite {
 
     protected int damage, speed, hp;
     protected boolean alive = true;
     protected long time_death = 0; // время смерти
     protected int color;
 
-    public Enemy(Bitmap bitmap, int up, int left, int down, int right, Context context, int damage, int speed, int hp, int color) {
+    public Enemy(Bitmap bitmap, double up, double left, double down, double right, Context context, int damage, int speed, int hp, int color) {
         super(bitmap, up, left, down, right, context);
         this.damage = damage;
         this.speed = speed;
@@ -20,7 +25,7 @@ public class Enemy extends Sprite{
         this.color = color;
     }
 
-    public Enemy(ImageResource imageResource, int up, int left, int down, int right, Context context, int damage, int speed, int hp, int color) {
+    public Enemy(ImageResource imageResource, double up, double left, double down, double right, Context context, int damage, int speed, int hp, int color) {
         super(imageResource, up, left, down, right, context);
         this.damage = damage;
         this.speed = speed;
@@ -30,9 +35,8 @@ public class Enemy extends Sprite{
 
     public void update_koord(){
         if (alive) {
-            this.set_koord(up, down, left - width / speed, right - width / speed);
-            left = left - width / speed;
-            right = right - width / speed;
+            left = left - (width / speed);
+            right = right - (width / speed);
         }
     }
 
@@ -66,7 +70,7 @@ public class Enemy extends Sprite{
     }
 
 
-    public void collision(@NonNull Bullet two, DrawThread drawThread){ //возвращает тру сли пулю надо удалять после столкновения
+    public void collision(@NonNull Bullet two, List<Enemy> enemy_list){ //возвращает тру сли пулю надо удалять после столкновения
         if (color == two.getColor()){
             change_hp(-2*two.get_damage());
         }

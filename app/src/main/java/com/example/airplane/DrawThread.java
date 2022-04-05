@@ -9,8 +9,22 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.SurfaceHolder;
 
+import com.example.airplane.Sprites.Alien;
+import com.example.airplane.Sprites.Alien_two;
+import com.example.airplane.Sprites.Bird;
+import com.example.airplane.Sprites.Bullet;
+import com.example.airplane.Sprites.Cat;
+import com.example.airplane.Sprites.Enemy;
+import com.example.airplane.Sprites.Heart;
+import com.example.airplane.Sprites.Megasun;
+import com.example.airplane.Sprites.Meteor;
+import com.example.airplane.Sprites.Packman;
+import com.example.airplane.Sprites.Samolet;
+import com.example.airplane.Sprites.Sprite;
+import com.example.airplane.Sprites.Sun;
+import com.example.airplane.Sprites.Yellow;
+
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class DrawThread extends Thread{
@@ -21,7 +35,7 @@ public class DrawThread extends Thread{
 
     private Canvas canvas;
 
-    private static int width, height;
+    private static double width, height;
 
     private Samolet samolet;
     private Base base;
@@ -48,11 +62,11 @@ public class DrawThread extends Thread{
         base = new Base();
         start_options(number);
     }
-    public static int get_height(){
+    public static double get_height(){
         return height;
     }
 
-    public static int get_width(){
+    public static double get_width(){
         return width;
     }
 
@@ -85,7 +99,7 @@ public class DrawThread extends Thread{
     public void create_bullets() {
         if (System.currentTimeMillis() - time_bullet_last >= 2000) {
             time_bullet_last = System.currentTimeMillis() ;
-            int[] koord_samolet = samolet.get_koord();
+            double[] koord_samolet = samolet.get_koord();
             bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_mode));
 
         }
@@ -94,7 +108,7 @@ public class DrawThread extends Thread{
     public boolean create_meteor(){
         if (System.currentTimeMillis() - time >= time_meteor){
             enemys = (int)(Math.random()*14);
-            enemy_list.add(new Meteor(height/32 + enemys*(2 * height/32),0, context, (int)(Math.random()*4 + 1)));
+            enemy_list.add(new Meteor((height/32 + enemys*(2 * height/32)),0, context, (int)(Math.random()*4 + 1)));
             time = System.currentTimeMillis();
             return true;
         }
@@ -124,7 +138,7 @@ public class DrawThread extends Thread{
     public boolean create_packman(){
         if (System.currentTimeMillis() - time >= time_packman){
             enemys = (int)(Math.random()*14);
-            enemy_list.add(new Packman(height/32 +enemys*(2 * height/32),0, context, this));
+            enemy_list.add(new Packman(height/32 +enemys*(2 * height/32),0, context, enemy_list));
             time = System.currentTimeMillis();
             return true;
         }
@@ -160,10 +174,6 @@ public class DrawThread extends Thread{
         return false;
     }
 
-    public static void megasun_death(){
-
-    }
-
     public boolean create_cat(){
         if (System.currentTimeMillis() - time >= time_cat){
             enemys = (int)(Math.random()*6);
@@ -189,6 +199,14 @@ public class DrawThread extends Thread{
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Heart(height/32 + enemys*(2 * height/32), 0, context));
             time = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean create_turret(){
+        if (!samolet.turret_exist()){
+            samolet.new Turret(bullet_mode, bullet_list, time_bullet);
             return true;
         }
         return false;
@@ -230,8 +248,8 @@ public class DrawThread extends Thread{
     public void update_enemy() {
         for (int i = 0; i < enemy_list.size(); i++){
             enemy_list.get(i).update_koord(); //обновляет координаты
-            if (Enemy.check_two(samolet, enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
-                    width/100, 0, -width/100, 0}))  //проверяет столкновение с самолетом или стеной
+            if (Enemy.check_two(samolet, enemy_list.get(i), new double[]{(width/100), (height/150), -(width/100),
+                    -(height/150), (width/100), 0, -(width/100), 0}))  //проверяет столкновение с самолетом или стеной
             {
                 samolet.change_hp(-enemy_list.get(i).get_damage());
                 enemy_list.remove(i);
@@ -246,6 +264,15 @@ public class DrawThread extends Thread{
                 // what: 1 - хп самолета, 2 - хп базы
                 // agr1 - сколько хп нужно установить
             }
+            else if (samolet.turret_exist()){ //если турель есть, то проверяем столкновение с ней
+                if (Enemy.check_two(samolet.get_turret(), enemy_list.get(i), new double[]{(width/100), (height/150), -(width/100),
+                        -(height/150), (width/100), 0, -(width/100), 0}))  //проверяет столкновение с турелью
+                    {
+                        samolet.get_turret().change_hp(-enemy_list.get(i).get_damage());
+                        enemy_list.remove(i);
+                        i--;
+                    }
+                }
             else if(enemy_list.get(i).get_koord()[1] <= 0){
                 base.change_hp(-enemy_list.get(i).get_damage());
                 enemy_list.remove(i);
@@ -258,10 +285,10 @@ public class DrawThread extends Thread{
 
             else { // столкновение с пулей
                 for (int j = 0; j < bullet_list.size(); j++){
-                    if (enemy_list.get(i).get_alive() && Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new int[]{width/100, height/150, -width/100, -height/150,
-                            width/100, 0, -width/100, 0})){
-                        enemy_list.get(i).collision(bullet_list.get(j), this);
-                        bullet_list.remove(j);
+                    if (enemy_list.get(i).get_alive() && Sprite.check_two(bullet_list.get(j), enemy_list.get(i), new double[]{(width/100), (height/150), -(width/100),
+                            -(height/150), (width/100), 0, -(width/100), 0})){
+                        enemy_list.get(i).collision(bullet_list.get(j), enemy_list);
+                        bullet_list.get(j).collision(bullet_list);
                         break;
                     }
                 }
@@ -276,7 +303,7 @@ public class DrawThread extends Thread{
 
             Paint clearPaint = new Paint(); //очистка холста
             clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-            canvas.drawRect(0, 0, width, height, clearPaint);
+            canvas.drawRect(0, 0, (int)width, (int)height, clearPaint);
 
             for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
                 if (enemy_list.get(i).getTime_death() == 0 || System.currentTimeMillis() - enemy_list.get(i).getTime_death() <= 2000) {
@@ -290,6 +317,11 @@ public class DrawThread extends Thread{
                 bullet_list.get(i).draw(canvas, null);
             }
 
+            if (samolet.turret_exist()) // рисуем турель
+                {
+                    System.out.println(1);
+                    samolet.get_turret().draw(canvas, null);
+                }
             samolet.draw(canvas, null); //рисуем самолет
 
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -320,7 +352,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 2 && create_megasun()){
+                if (count_meteor < 10 && create_alien_two()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){
@@ -369,12 +401,12 @@ public class DrawThread extends Thread{
         switch (number) {
             case 1:
                 time_meteor = 1000;
-                time_alien = 500;
+                time_alien = 0;
                 time_alien_two = 500;
-                time_packman = 500;
+                time_packman = 0;
                 time_bird = 500;
                 time_sun = 2000;
-                time_megasun = 10000;
+                time_megasun = 500;
                 time_cat = 500;
                 time_yellow = 5000;
                 time_heart = 500;

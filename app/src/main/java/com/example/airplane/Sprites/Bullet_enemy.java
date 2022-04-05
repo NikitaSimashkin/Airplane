@@ -1,9 +1,13 @@
-package com.example.airplane;
+package com.example.airplane.Sprites;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
+
+import com.example.airplane.DrawThread;
+import com.example.airplane.Params;
+
+import java.util.List;
 
 public class Bullet_enemy extends Enemy{
     public Bullet_enemy(Bullet bullet, Context context) {
@@ -12,9 +16,9 @@ public class Bullet_enemy extends Enemy{
     }
 
     @Override
-    public void collision(@NonNull Bullet two, DrawThread drawThread) {
-        super.collision(two, drawThread);
+    public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
+        super.collision(two, enemy_list);
         if (!alive)
-            drawThread.enemy_list.remove(this);
+            enemy_list.remove(this);
     }
 }

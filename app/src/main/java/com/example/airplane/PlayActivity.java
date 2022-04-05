@@ -3,14 +3,12 @@ package com.example.airplane;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,7 +23,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
@@ -213,6 +210,15 @@ public class PlayActivity extends AppCompatActivity {
                 loose.hide();
                 Intent i = new Intent(PlayActivity.this, MainActivity.class);
                 startActivity(i);
+            }
+        });
+
+        ImageButton turret = findViewById(R.id.turret);
+
+        turret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawThread.create_turret();
             }
         });
 

@@ -1,13 +1,15 @@
-package com.example.airplane;
+package com.example.airplane.Sprites;
 
 import android.content.Context;
-import android.media.Image;
 
-public class Alien_two extends Enemy{
+import com.example.airplane.ImageResource;
+import com.example.airplane.Params;
+
+public class Alien_two extends Enemy {
     int i = 0; // он один раз "умирает", меняя картинку, а после второго раза по-настоящему умирает
     // изначально создается с 150 хп, потом перерождается уже с картинкой без каски и 200 хп
 
-    public Alien_two(int line_v, int line_h, Context context) {
+    public Alien_two(double line_v, double line_h, Context context) {
         super(ImageResource.ALIEN_TWO, line_v, width + line_h,
                 6*height/32 + line_v, width*14/13 + line_h, context,
                 Params.alien_two_damage, Params.alien_two_speed, Params.alien_two_hp, 1);
