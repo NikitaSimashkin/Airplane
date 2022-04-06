@@ -16,6 +16,7 @@ import com.example.airplane.Sprites.Bullet;
 import com.example.airplane.Sprites.Cat;
 import com.example.airplane.Sprites.Enemy;
 import com.example.airplane.Sprites.Heart;
+import com.example.airplane.Sprites.Many_bullets;
 import com.example.airplane.Sprites.Megasun;
 import com.example.airplane.Sprites.Meteor;
 import com.example.airplane.Sprites.Packman;
@@ -41,6 +42,8 @@ public class DrawThread extends Thread{
     private Base base;
     private int turret_number_bullet = 10; //кол-во пуль в туреле
 
+    private Many_bullets many_bullets;
+
     private long time = System.currentTimeMillis();
     private long time_bullet_last = System.currentTimeMillis();
     private long last_frame = System.currentTimeMillis();
@@ -58,6 +61,7 @@ public class DrawThread extends Thread{
         this.number = number;
         DrawThread.width = width;
         DrawThread.height = height;
+        Many_bullets.alive = false;
         handler.sendMessage(Message.obtain(handler, 3, 0, 0)); // меняем отображение размера пули
 
         samolet = new Samolet(context);
@@ -96,6 +100,10 @@ public class DrawThread extends Thread{
             if(samolet.turret_exist()){
                 samolet.get_turret().create_bullet();
             }
+
+            if (Many_bullets.alive){
+                many_bullets.create_bullets();
+            }
     }
 
     public void set_bullet_mode(int mode){
@@ -103,6 +111,9 @@ public class DrawThread extends Thread{
     }
     public void set_bullet_size(int size) {
         this.size = size;
+    }
+    public void change_bullet_time(double m) {
+        time_bullet *= m;
     }
 
     public void create_bullets() {
@@ -214,11 +225,18 @@ public class DrawThread extends Thread{
 
     public boolean create_turret(){
         if (!samolet.turret_exist()){
-            samolet.new Turret(bullet_mode, bullet_list, time_bullet, turret_number_bullet, size);
+            samolet.new Turret(bullet_mode, bullet_list, size);
             return true;
         }
         return false;
     }
+
+    public boolean create_many_bullet(){
+        many_bullets = new Many_bullets(bullet_mode, size, this, bullet_list, context);
+        return true;
+    }
+
+    private int counter = 0;
 
     public void create_enemy(int enemy_number){
         switch (enemy_number){
@@ -347,12 +365,16 @@ public class DrawThread extends Thread{
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
             if (System.currentTimeMillis() - last_frame > 16)
-                last_frame = System.currentTimeMillis();
-                level(number);
-                update_samolet(); //обновляет координаты самолета
-                update_bullets(); //обновляет координаты самолета
-                update_enemy(); //отрисовывает всех врагов
-                draw_all();
+                try {
+                    last_frame = System.currentTimeMillis();
+                    level(number);
+                    update_samolet(); //обновляет координаты самолета
+                    update_bullets(); //обновляет координаты пуль
+                    update_enemy(); //отрисовывает всех врагов
+                    draw_all();
+                } catch (Exception e){
+                    handler.sendMessage(Message.obtain(handler,0,100, 0));
+                }
         }
     }
 
@@ -361,7 +383,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 10 && create_packman()){
+                if (count_meteor < 20 && create_packman()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){
@@ -413,12 +435,12 @@ public class DrawThread extends Thread{
                 time_meteor = 1000;
                 time_alien = 0;
                 time_alien_two = 500;
-                time_packman = 1000;
+                time_packman = 500;
                 time_bird = 500;
-                time_sun = 2000;
+                time_sun = 1000;
                 time_megasun = 500;
                 time_cat = 500;
-                time_yellow = 5000;
+                time_yellow = 1000;
                 time_heart = 500;
                 for(int i = 0; i < 50; i++){
                     mobs.add((byte) 1);

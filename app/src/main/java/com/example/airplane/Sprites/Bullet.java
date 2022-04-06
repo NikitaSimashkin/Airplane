@@ -1,6 +1,7 @@
 package com.example.airplane.Sprites;
 
 import android.content.Context;
+import android.graphics.Rect;
 
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
@@ -36,6 +37,14 @@ public class Bullet extends Sprite {
         switch (size) {
             case 0:
         }
+    }
+
+    @Override
+    public Rect create_rect_minus(double a, double b, double c, double d) {
+        if (size != 2)
+            return super.create_rect_minus(a, b, c, d);
+        else
+            return new Rect((int)left, (int)up, (int)(right), (int)down);
     }
 
     public void update_koord(){

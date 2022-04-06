@@ -95,7 +95,7 @@ public class PlayActivity extends AppCompatActivity {
         blue_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_pressed);
         blue_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_not_pressed);
 
-        green.setImageDrawable(green_pressed);
+        green.setBackground(green_pressed);
         red.setBackground(red_not_pressed);
         blue.setBackground(blue_not_pressed);
         yellow.setBackground(yellow_not_pressed);
@@ -212,9 +212,9 @@ public class PlayActivity extends AppCompatActivity {
                 hp_base.setProgress(drawThread.get_base().get_hp());
                 drawThread.start();
                 green.setImageDrawable(green_pressed);
-                red.setBackground(red_not_pressed);
-                blue.setBackground(blue_not_pressed);
-                yellow.setBackground(yellow_not_pressed);
+                red.setImageDrawable(red_not_pressed);
+                blue.setImageDrawable(blue_not_pressed);
+                yellow.setImageDrawable(yellow_not_pressed);
                 size.setImageBitmap(Params.Bullets[0]);
                 loose.hide();
             }
@@ -298,6 +298,15 @@ public class PlayActivity extends AppCompatActivity {
                         break;
                 }
                 drawThread.set_bullet_size(current_size);
+            }
+        });
+
+        ImageButton many_bullets = findViewById(R.id.many_bullets);
+
+        many_bullets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawThread.create_many_bullet();
             }
         });
 
