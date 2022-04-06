@@ -8,6 +8,7 @@ public class Params {
     public static int base_hp = 1000;
     public static int turret_damage = 200, turret_hp = 201;
     public static int[] bullet_stats = new int[]{300, 600, 300, 100, 200, 100, 50, 100, 50};
+    public static int megabullet_damage = 10000;
     // дамаг - скорость - хп
 
     public static int meteor_damage = 100, meteor_speed = 1000, meteor_hp = 100;

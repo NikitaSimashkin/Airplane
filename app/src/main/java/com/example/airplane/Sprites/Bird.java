@@ -22,7 +22,7 @@ public class Bird extends Enemy {
 
     @Override
     public void collision(Bullet two, List<Enemy> enemy_list) {
-        if (color != two.getColor()){
+        if (color != two.getColor() && two.getColor() != 5){
             if (System.currentTimeMillis() % 2 == 0){
                 if (up - 4 * height/32 > 0){
                     up -= 4 * height/32;

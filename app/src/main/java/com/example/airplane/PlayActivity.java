@@ -310,6 +310,15 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton megabullet = findViewById(R.id.megabullet);
+
+        megabullet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawThread.create_megabullet();
+            }
+        });
+
         green.setOnClickListener(Colors_b);
         red.setOnClickListener(Colors_b);
         yellow.setOnClickListener(Colors_b);

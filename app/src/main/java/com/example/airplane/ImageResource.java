@@ -22,6 +22,7 @@ public enum ImageResource {
     BULLET_YELLOW(R.drawable.bullet_yellow),
     BULLET_BLUE(R.drawable.bullet_blue),
     TURRET(R.drawable.turret),
+    MEGABULLET(R.drawable.megabullet),
 
     ALIEN(R.drawable.alien),
     ALIEN_DEATH(R.drawable.alien_death),

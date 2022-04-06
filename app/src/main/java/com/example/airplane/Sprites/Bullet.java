@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Bullet extends Sprite {
 
-    private int damage, speed;
+    protected int damage, speed;
 
     protected int color, size;
     private ImageResource imageResource;
@@ -20,7 +20,8 @@ public class Bullet extends Sprite {
                 koord_samolet[3] - 2*(koord_samolet[2] - koord_samolet[0]) / Math.pow(2, size+1) + (koord_samolet[3]-koord_samolet[1])/5,
                 (koord_samolet[0] + koord_samolet[2]) / 2 + (koord_samolet[2] - koord_samolet[0]) / Math.pow(2, size+1),
                 koord_samolet[3]+(koord_samolet[3]-koord_samolet[1])/5, context);
-        change(color, size);
+        if (color != 5)
+            change(color, size);
     }
 
     public int getColor() {

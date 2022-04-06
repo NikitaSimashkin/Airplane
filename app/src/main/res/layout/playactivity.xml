@@ -72,13 +72,14 @@
                     app:srcCompat="@drawable/many_bullet" />
 
                 <ImageButton
-                    android:id="@+id/imageButton3"
+                    android:id="@+id/megabullet"
                     style="@android:style/Widget.Holo.Light.ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:scaleType="fitStart"
-                    app:srcCompat="@drawable/bird" />
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/megabullet" />
 
                 <ImageButton
                     android:id="@+id/size_button"

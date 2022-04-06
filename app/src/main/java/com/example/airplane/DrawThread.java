@@ -17,6 +17,7 @@ import com.example.airplane.Sprites.Cat;
 import com.example.airplane.Sprites.Enemy;
 import com.example.airplane.Sprites.Heart;
 import com.example.airplane.Sprites.Many_bullets;
+import com.example.airplane.Sprites.MegaBullet;
 import com.example.airplane.Sprites.Megasun;
 import com.example.airplane.Sprites.Meteor;
 import com.example.airplane.Sprites.Packman;
@@ -236,6 +237,11 @@ public class DrawThread extends Thread{
         return true;
     }
 
+    public boolean create_megabullet(){
+        bullet_list.add(new MegaBullet(samolet.get_koord(), context));
+        return true;
+    }
+
     private int counter = 0;
 
     public void create_enemy(int enemy_number){
@@ -383,7 +389,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 20 && create_packman()){
+                if (count_meteor < 10 && create_packman()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){
@@ -435,7 +441,7 @@ public class DrawThread extends Thread{
                 time_meteor = 1000;
                 time_alien = 0;
                 time_alien_two = 500;
-                time_packman = 500;
+                time_packman = 1000;
                 time_bird = 500;
                 time_sun = 1000;
                 time_megasun = 500;
