@@ -64,23 +64,31 @@ public class Samolet extends Sprite{
 
     public class Turret extends Sprite{
         private List<Bullet> bullet_list;
-        private int damage = Params.turret_damage, hp = Params.turret_hp, color;
-        private int time_bullet;
-        private long last_bullet = System.currentTimeMillis();
+        private int damage = Params.turret_damage, hp = Params.turret_hp, color, number, number_bullet;
+        private long last_bullet, time_bullet;
 
-        public Turret(int color, List<Bullet> bullet_list, int time_bullet) {
+        public Turret(int color, List<Bullet> bullet_list, long time_bullet, int number) {
             super(ImageResource.TURRET, Samolet.this.up, Samolet.this.left,
                     Samolet.this.down ,width/8, Samolet.this.context);
             this.color = color;
             this.bullet_list = bullet_list;
             this.time_bullet = time_bullet;
+            this.number = number;
             Samolet.this.turret_exist = true;
             Samolet.this.turret = Turret.this;
+
+            last_bullet = System.currentTimeMillis();
         }
 
         public void create_bullet(){
             if (System.currentTimeMillis() - last_bullet > time_bullet) {
                 bullet_list.add(new Bullet(new double[]{up, left, down, right}, context, color));
+                number_bullet++;
+                if (number_bullet == number) {
+                    Samolet.this.turret_exist = false;
+                    Samolet.this.turret = null;
+                }
+                last_bullet = System.currentTimeMillis();
             }
         }
 

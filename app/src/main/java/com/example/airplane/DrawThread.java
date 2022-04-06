@@ -39,6 +39,7 @@ public class DrawThread extends Thread{
 
     private Samolet samolet;
     private Base base;
+    private int turret_number_bullet = 10; //кол-во пуль в туреле
 
     private long time = System.currentTimeMillis();
     private long time_bullet_last = System.currentTimeMillis();
@@ -90,6 +91,10 @@ public class DrawThread extends Thread{
                 bullet_list.remove(i);
                 i--;
             }
+
+            if(samolet.turret_exist()){
+                samolet.get_turret().create_bullet();
+            }
     }
 
     public void change_bullet_mode(int mode){
@@ -97,10 +102,9 @@ public class DrawThread extends Thread{
     }
 
     public void create_bullets() {
-        if (System.currentTimeMillis() - time_bullet_last >= 2000) {
-            time_bullet_last = System.currentTimeMillis() ;
-            double[] koord_samolet = samolet.get_koord();
+        if (System.currentTimeMillis() - time_bullet_last >= time_bullet) {
             bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_mode));
+            time_bullet_last = System.currentTimeMillis();
 
         }
     }
@@ -206,7 +210,7 @@ public class DrawThread extends Thread{
 
     public boolean create_turret(){
         if (!samolet.turret_exist()){
-            samolet.new Turret(bullet_mode, bullet_list, time_bullet);
+            samolet.new Turret(bullet_mode, bullet_list, time_bullet, turret_number_bullet);
             return true;
         }
         return false;
@@ -264,14 +268,11 @@ public class DrawThread extends Thread{
                 // what: 1 - хп самолета, 2 - хп базы
                 // agr1 - сколько хп нужно установить
             }
-            else if (samolet.turret_exist()){ //если турель есть, то проверяем столкновение с ней
-                if (Enemy.check_two(samolet.get_turret(), enemy_list.get(i), new double[]{(width/100), (height/150), -(width/100),
-                        -(height/150), (width/100), 0, -(width/100), 0}))  //проверяет столкновение с турелью
-                    {
+            else if (samolet.turret_exist() && Enemy.check_two(samolet.get_turret(), enemy_list.get(i), new double[]{(width/100), (height/150), -(width/100),
+                    -(height/150), (width/100), 0, -(width/100), 0})){ //если турель есть, то проверяем столкновение с ней
                         samolet.get_turret().change_hp(-enemy_list.get(i).get_damage());
                         enemy_list.remove(i);
                         i--;
-                    }
                 }
             else if(enemy_list.get(i).get_koord()[1] <= 0){
                 base.change_hp(-enemy_list.get(i).get_damage());
@@ -400,6 +401,7 @@ public class DrawThread extends Thread{
     public void start_options(int number) { //стартовые установки для разных уровней
         switch (number) {
             case 1:
+                time_bullet = 2000;
                 time_meteor = 1000;
                 time_alien = 0;
                 time_alien_two = 500;
