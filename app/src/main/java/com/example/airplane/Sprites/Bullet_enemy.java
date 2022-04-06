@@ -12,7 +12,8 @@ import java.util.List;
 public class Bullet_enemy extends Enemy{
     public Bullet_enemy(Bullet bullet, Context context) {
         super(Params.Bullets[bullet.getColor()-1], bullet.up, bullet.left, bullet.down, bullet.right, context,
-                Params.bullet_damage, Params.bullet_speed, Params.bullet_hp, bullet.getColor());
+                Params.bullet_stats[bullet.get_size()*3],
+                Params.bullet_stats[bullet.get_size()*3 + 1], Params.bullet_stats[bullet.get_size()*3 + 2], bullet.getColor());
     }
 
     @Override

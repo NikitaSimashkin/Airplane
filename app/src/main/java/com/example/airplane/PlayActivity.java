@@ -36,11 +36,10 @@ public class PlayActivity extends AppCompatActivity {
     protected SurfaceView play_field;
     protected Handler handler;
 
-    private int number;
+    private int number, current_size = 1;
 
     private Context context;
 
-    private int button_pressed = 1;
     private Drawable green_pressed, green_not_pressed,
             red_pressed, red_not_pressed,
             yellow_pressed, yellow_not_pressed,
@@ -101,6 +100,12 @@ public class PlayActivity extends AppCompatActivity {
         blue.setBackground(blue_not_pressed);
         yellow.setBackground(yellow_not_pressed);
 
+
+        ImageButton size = findViewById(R.id.size_button);
+        int k = size.getHeight();
+        System.out.println(k);
+        size.setPadding(3*k/10,3*k/10, 3*k/10, 3*k/10);
+
        // Looper.prepare();
         Looper looper = Looper.myLooper();
         handler = new Handler(looper) {
@@ -115,6 +120,11 @@ public class PlayActivity extends AppCompatActivity {
                         break;
                     case 2:
                         hp_base.setProgress(msg.arg1);
+                        break;
+                    case 3:
+                        int k = size.getHeight()/10;
+                        System.out.println(k);
+                        size.setPadding(3*k,3*k, 3*k, 3*k);
                         break;
                 }
             }
@@ -132,6 +142,7 @@ public class PlayActivity extends AppCompatActivity {
                 height = play_field.getHeight();
                 drawThread = create_new_thread(width, height);
                 drawThread.start();
+                drawThread.set_bullet_mode(1);
             }
 
             @Override
@@ -200,6 +211,11 @@ public class PlayActivity extends AppCompatActivity {
                 hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
                 hp_base.setProgress(drawThread.get_base().get_hp());
                 drawThread.start();
+                green.setImageDrawable(green_pressed);
+                red.setBackground(red_not_pressed);
+                blue.setBackground(blue_not_pressed);
+                yellow.setBackground(yellow_not_pressed);
+                size.setImageBitmap(Params.Bullets[0]);
                 loose.hide();
             }
         });
@@ -227,43 +243,70 @@ public class PlayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch(v.getId()){
                     case R.id.green:
-                        drawThread.change_bullet_mode(1);
+                        drawThread.set_bullet_mode(1);
                         green.setImageDrawable(green_pressed);
                         red.setImageDrawable(red_not_pressed);
                         yellow.setImageDrawable(yellow_not_pressed);
                         blue.setImageDrawable(blue_not_pressed);
+                        size.setImageBitmap(Params.Bullets[0]);
                         break;
                     case R.id.red:
-                        drawThread.change_bullet_mode(2);
+                        drawThread.set_bullet_mode(2);
                         green.setImageDrawable(green_not_pressed);
                         red.setImageDrawable(red_pressed);
                         yellow.setImageDrawable(yellow_not_pressed);
                         blue.setImageDrawable(blue_not_pressed);
+                        size.setImageBitmap(Params.Bullets[1]);
                         break;
                     case R.id.yellow:
-                        drawThread.change_bullet_mode(3);
+                        drawThread.set_bullet_mode(3);
                         green.setImageDrawable(green_not_pressed);
                         red.setImageDrawable(red_not_pressed);
                         yellow.setImageDrawable(yellow_pressed);
                         blue.setImageDrawable(blue_not_pressed);
+                        size.setImageBitmap(Params.Bullets[2]);
                         break;
                     case R.id.blue:
-                        drawThread.change_bullet_mode(4);
+                        drawThread.set_bullet_mode(4);
                         green.setImageDrawable(green_not_pressed);
                         red.setImageDrawable(red_not_pressed);
                         yellow.setImageDrawable(yellow_not_pressed);
                         blue.setImageDrawable(blue_pressed);
+                        size.setImageBitmap(Params.Bullets[3]);
                         break;
                 }
             }
         };
+        // 0 - большой; 1 - нормальный; 2 - маленький
+
+        size.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int k = size.getHeight()/10;
+                switch(current_size){
+                    case 0:
+                        current_size = 2;
+                        size.setPadding(4*k,4*k,4*k,4*k);
+                        break;
+                    case 1:
+                        current_size = 0;
+                        size.setPadding(2*k, 2*k, 2*k, 2*k);
+                        break;
+                    case 2:
+                        current_size = 1;
+                        size.setPadding(3*k, 3*k, 3*k, 3*k);
+                        break;
+                }
+                drawThread.set_bullet_size(current_size);
+            }
+        });
 
         green.setOnClickListener(Colors_b);
         red.setOnClickListener(Colors_b);
         yellow.setOnClickListener(Colors_b);
         blue.setOnClickListener(Colors_b);
-
     }
+
 
     public static Drawable getTintedDrawable(Context context, int drawableRes, int colorRes) {
         Drawable d = ContextCompat.getDrawable(context, drawableRes);

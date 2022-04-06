@@ -6,8 +6,9 @@ import android.graphics.Bitmap;
 public class Params {
     public static int samolet_speed = 120, samolet_hp = 500;
     public static int base_hp = 1000;
-    public static int bullet_damage = 100, bullet_speed = 200, bullet_hp = 100;
     public static int turret_damage = 200, turret_hp = 201;
+    public static int[] bullet_stats = new int[]{300, 600, 300, 100, 200, 100, 50, 100, 50};
+    // дамаг - скорость - хп
 
     public static int meteor_damage = 100, meteor_speed = 1000, meteor_hp = 100;
     public static int alien_damage = 150, alien_speed = 10000, alien_hp = 200;
@@ -20,9 +21,9 @@ public class Params {
     public static int yellow_damage = 100, yellow_speed = 700, yellow_hp = 100;
     public static int heart_damage = -100, heart_speed = 1500, heart_hp = 100;
 
-//    static ALIEN, ALIEN_DEATH, ALIEN_TWO,
-//    ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,
-//    YELLOW_DEATH, CAT_ONE, CAT_TWO, CAT_DEATH, HEART, BREAKING_HEART, MEGASUN;
+    //public static Bitmap ALIEN, ALIEN_DEATH, ALIEN_TWO,
+    //ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,
+    //YELLOW_DEATH, CAT_ONE, CAT_TWO, CAT_DEATH, HEART, BREAKING_HEART, MEGASUN;
 
     public static Bitmap[] Meteors = new Bitmap[5];
     public static Bitmap[] Bullets = new Bitmap[4];

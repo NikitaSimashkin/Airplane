@@ -43,12 +43,12 @@ public class DrawThread extends Thread{
 
     private long time = System.currentTimeMillis();
     private long time_bullet_last = System.currentTimeMillis();
-    private long lastFrame = System.currentTimeMillis();
+    private long last_frame = System.currentTimeMillis();
 
     protected List<Enemy> enemy_list = new ArrayList<>();
     protected List<Bullet> bullet_list = new ArrayList<>();
 
-    private int enemys, bullet_mode = 1;
+    private int enemys, bullet_mode = 1, size = 1; //bullet_mode - цвет, size - размер пули
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
@@ -58,6 +58,7 @@ public class DrawThread extends Thread{
         this.number = number;
         DrawThread.width = width;
         DrawThread.height = height;
+        handler.sendMessage(Message.obtain(handler, 3, 0, 0)); // меняем отображение размера пули
 
         samolet = new Samolet(context);
         base = new Base();
@@ -97,13 +98,16 @@ public class DrawThread extends Thread{
             }
     }
 
-    public void change_bullet_mode(int mode){
+    public void set_bullet_mode(int mode){
         bullet_mode = mode;
+    }
+    public void set_bullet_size(int size) {
+        this.size = size;
     }
 
     public void create_bullets() {
         if (System.currentTimeMillis() - time_bullet_last >= time_bullet) {
-            bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_mode));
+            bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_mode, size));
             time_bullet_last = System.currentTimeMillis();
 
         }
@@ -210,7 +214,7 @@ public class DrawThread extends Thread{
 
     public boolean create_turret(){
         if (!samolet.turret_exist()){
-            samolet.new Turret(bullet_mode, bullet_list, time_bullet, turret_number_bullet);
+            samolet.new Turret(bullet_mode, bullet_list, time_bullet, turret_number_bullet, size);
             return true;
         }
         return false;
@@ -297,6 +301,13 @@ public class DrawThread extends Thread{
         }
     }
 
+    @Override
+    public void interrupt() {
+        super.interrupt();
+        enemy_list.clear();
+        bullet_list.clear();
+    }
+
     public void draw_all(){
 
         try {
@@ -320,7 +331,6 @@ public class DrawThread extends Thread{
 
             if (samolet.turret_exist()) // рисуем турель
                 {
-                    System.out.println(1);
                     samolet.get_turret().draw(canvas, null);
                 }
             samolet.draw(canvas, null); //рисуем самолет
@@ -328,12 +338,10 @@ public class DrawThread extends Thread{
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
         catch (NullPointerException e){
-            enemy_list.removeAll(enemy_list);
-            bullet_list.removeAll(bullet_list);
+            enemy_list.clear();
+            bullet_list.clear();
         }
     }
-
-    private long last_frame = System.currentTimeMillis();
 
     @Override
     public void run() {
@@ -353,7 +361,7 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 10 && create_alien_two()){
+                if (count_meteor < 10 && create_packman()){
                     count_meteor++;
                 }
                 if (count_meteor == 50 && enemy_list.isEmpty()){
@@ -405,7 +413,7 @@ public class DrawThread extends Thread{
                 time_meteor = 1000;
                 time_alien = 0;
                 time_alien_two = 500;
-                time_packman = 0;
+                time_packman = 1000;
                 time_bird = 500;
                 time_sun = 2000;
                 time_megasun = 500;

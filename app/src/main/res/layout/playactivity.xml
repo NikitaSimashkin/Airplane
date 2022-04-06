@@ -81,13 +81,13 @@
                     app:srcCompat="@drawable/bird" />
 
                 <ImageButton
-                    android:id="@+id/imageButton4"
+                    android:id="@+id/size_button"
                     style="@android:style/Widget.Holo.Light.ImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:scaleType="fitStart"
-                    app:srcCompat="@drawable/breaking_heart" />
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/bullet_green" />
             </LinearLayout>
 
             <SurfaceView
