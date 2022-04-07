@@ -103,7 +103,6 @@ public class PlayActivity extends AppCompatActivity {
 
         ImageButton size = findViewById(R.id.size_button);
         int k = size.getHeight();
-        System.out.println(k);
         size.setPadding(3*k/10,3*k/10, 3*k/10, 3*k/10);
 
        // Looper.prepare();
@@ -123,7 +122,6 @@ public class PlayActivity extends AppCompatActivity {
                         break;
                     case 3:
                         int k = size.getHeight()/10;
-                        System.out.println(k);
                         size.setPadding(3*k,3*k, 3*k, 3*k);
                         break;
                 }

@@ -13,6 +13,7 @@ public class MegaBullet extends Bullet{
         bitmap = ImageResource.MEGABULLET.getBitmap(context);
         damage = Params.megabullet_damage;
         speed = Params.bullet_stats[1];
+        color = 5;
     }
 
     @Override

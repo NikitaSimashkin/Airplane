@@ -244,36 +244,33 @@ public class DrawThread extends Thread{
 
     private int counter = 0;
 
-    public void create_enemy(int enemy_number){
+    public boolean create_enemy(int enemy_number){
         switch (enemy_number){
             case 1:
-                create_meteor();
-                break;
+                return create_meteor();
             case 2:
-                create_alien();
-                break;
+                return create_alien();
             case 3:
-                create_alien_two();
-                break;
+                return  create_alien_two();
             case 4:
-                break;
+                return create_packman();
             case 5:
-                break;
+                return create_bird();
             case 6:
-                break;
+                return create_sun();
             case 7:
-                break;
+                return create_cat();
             case 8:
-                break;
+                return create_yellow();
             case 9:
-                break;
+                return create_megasun();
             case 10:
-                break;
+                return create_heart();
             case 11:
-                break;
             case 12:
-                break;
+
         }
+        return false;
     }
 
 
@@ -371,29 +368,31 @@ public class DrawThread extends Thread{
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
             if (System.currentTimeMillis() - last_frame > 16)
-                try {
+                //try {
                     last_frame = System.currentTimeMillis();
                     level(number);
                     update_samolet(); //обновляет координаты самолета
                     update_bullets(); //обновляет координаты пуль
                     update_enemy(); //отрисовывает всех врагов
                     draw_all();
-                } catch (Exception e){
-                    handler.sendMessage(Message.obtain(handler,0,100, 0));
-                }
+               // } catch (Exception e){
+                   // handler.sendMessage(Message.obtain(handler,0,100, 0));
+               // }
         }
     }
 
-    private int count_meteor = 0; // переменные для уровней
+    private int count = 10; // переменные для уровней
+    private int current_enemy = -1;
 
     public void level(int number){
         switch (number){
             case 1:
-                if (count_meteor < 10 && create_packman()){
-                    count_meteor++;
-                }
-                if (count_meteor == 50 && enemy_list.isEmpty()){
-                    System.out.println("YouWin");
+                if (current_enemy == -1){
+                    current_enemy = (int)(Math.random()*count);
+                } else if (mobs.size() > 0 && create_enemy(mobs.get(current_enemy)+1)){
+                    mobs.remove(current_enemy);
+                    current_enemy = -1;
+                    count--;
                 }
                 break;
             case 2:
@@ -423,13 +422,13 @@ public class DrawThread extends Thread{
     2 - alien
     3 - alien_two
     4 - packman
-    5 -
-    6 -
-    7 -
-    8 -
-    9 -
-    10 - final boss
-    11 - heart
+    5 - bird
+    6 - sun
+    7 - cat
+    8 - yellow
+    9 - megasun
+    10 - heart
+    11 - boss
      */
     private int time_bullet, time_meteor, time_alien, time_alien_two, time_packman, time_bird, time_sun, time_megasun,
             time_cat, time_yellow, time_heart;
@@ -438,18 +437,18 @@ public class DrawThread extends Thread{
         switch (number) {
             case 1:
                 time_bullet = 2000;
-                time_meteor = 1000;
-                time_alien = 0;
-                time_alien_two = 500;
-                time_packman = 1000;
-                time_bird = 500;
-                time_sun = 1000;
-                time_megasun = 500;
-                time_cat = 500;
-                time_yellow = 1000;
-                time_heart = 500;
-                for(int i = 0; i < 50; i++){
-                    mobs.add((byte) 1);
+                time_meteor = 2000;
+                time_alien = 2000;
+                time_alien_two = 2000;
+                time_packman = 2000;
+                time_bird = 2000;
+                time_sun = 2000;
+                time_megasun = 2000;
+                time_cat = 2000;
+                time_yellow = 2000;
+                time_heart = 2000;
+                for(int i = 0; i < 10; i++){
+                    mobs.add((byte) i);
                 }
                 break;
             case 2:

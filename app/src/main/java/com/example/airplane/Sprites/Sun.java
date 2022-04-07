@@ -28,7 +28,7 @@ public class Sun extends Enemy {
 
     @Override
     public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
-        if (color == two.getColor() && two.getColor() != 5){
+        if (color == two.getColor() || two.getColor() == 5){
             change_hp(-2*two.get_damage());
         }
         else{
