@@ -368,20 +368,20 @@ public class DrawThread extends Thread{
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
             if (System.currentTimeMillis() - last_frame > 33)
-                //try {
+                try {
                     last_frame = System.currentTimeMillis();
                     level(number);
                     update_samolet(); //обновляет координаты самолета
                     update_bullets(); //обновляет координаты пуль
                     update_enemy(); //отрисовывает всех врагов
                     draw_all();
-               // } catch (Exception e){
-                   // handler.sendMessage(Message.obtain(handler,0,100, 0));
-               // }
+                } catch (Exception e){
+                    handler.sendMessage(Message.obtain(handler,0,100, 0));
+                }
         }
     }
 
-    private int count = 10; // переменные для уровней
+    private int count = 0; // переменные для уровней
     private int current_enemy = -1;
 
     public void level(int number){
@@ -394,7 +394,7 @@ public class DrawThread extends Thread{
 //                    current_enemy = -1;
 //                    count--;
 //                }
-                if (count < 50 && create_packman()){
+                if (count < 5 && create_sun()){
                     count++;
                 }
                 break;
