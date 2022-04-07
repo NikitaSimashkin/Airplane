@@ -52,7 +52,7 @@ public class DrawThread extends Thread{
     protected List<Enemy> enemy_list = new ArrayList<>();
     protected List<Bullet> bullet_list = new ArrayList<>();
 
-    private int enemys, bullet_mode = 1, size = 1; //bullet_mode - цвет, size - размер пули
+    private int enemys, bullet_color = 1, size = 1; //bullet_mode - цвет, size - размер пули
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
@@ -107,8 +107,8 @@ public class DrawThread extends Thread{
             }
     }
 
-    public void set_bullet_mode(int mode){
-        bullet_mode = mode;
+    public void change_bullet_color(int color){
+        bullet_color = color;
     }
     public void set_bullet_size(int size) {
         this.size = size;
@@ -119,7 +119,7 @@ public class DrawThread extends Thread{
 
     public void create_bullets() {
         if (System.currentTimeMillis() - time_bullet_last >= time_bullet) {
-            bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_mode, size));
+            bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_color, size));
             time_bullet_last = System.currentTimeMillis();
 
         }
@@ -226,14 +226,14 @@ public class DrawThread extends Thread{
 
     public boolean create_turret(){
         if (!samolet.turret_exist()){
-            samolet.new Turret(bullet_mode, bullet_list, size);
+            samolet.new Turret(bullet_color, bullet_list, size);
             return true;
         }
         return false;
     }
 
     public boolean create_many_bullet(){
-        many_bullets = new Many_bullets(bullet_mode, size, this, bullet_list, context);
+        many_bullets = new Many_bullets(bullet_color, size, this, bullet_list, context);
         return true;
     }
 
@@ -367,7 +367,7 @@ public class DrawThread extends Thread{
     @Override
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
-            if (System.currentTimeMillis() - last_frame > 16)
+            if (System.currentTimeMillis() - last_frame > 33)
                 //try {
                     last_frame = System.currentTimeMillis();
                     level(number);
@@ -387,12 +387,15 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-                if (current_enemy == -1){
-                    current_enemy = (int)(Math.random()*count);
-                } else if (mobs.size() > 0 && create_enemy(mobs.get(current_enemy)+1)){
-                    mobs.remove(current_enemy);
-                    current_enemy = -1;
-                    count--;
+//                if (current_enemy == -1){
+//                    current_enemy = (int)(Math.random()*count);
+//                } else if (mobs.size() > 0 && create_enemy(mobs.get(current_enemy)+1)){
+//                    mobs.remove(current_enemy);
+//                    current_enemy = -1;
+//                    count--;
+//                }
+                if (count < 50 && create_packman()){
+                    count++;
                 }
                 break;
             case 2:
@@ -440,7 +443,7 @@ public class DrawThread extends Thread{
                 time_meteor = 2000;
                 time_alien = 2000;
                 time_alien_two = 2000;
-                time_packman = 2000;
+                time_packman = 0;
                 time_bird = 2000;
                 time_sun = 2000;
                 time_megasun = 2000;

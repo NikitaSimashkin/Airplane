@@ -140,7 +140,7 @@ public class PlayActivity extends AppCompatActivity {
                 height = play_field.getHeight();
                 drawThread = create_new_thread(width, height);
                 drawThread.start();
-                drawThread.set_bullet_mode(1);
+                drawThread.change_bullet_color(1);
             }
 
             @Override
@@ -241,7 +241,7 @@ public class PlayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch(v.getId()){
                     case R.id.green:
-                        drawThread.set_bullet_mode(1);
+                        drawThread.change_bullet_color(1);
                         green.setImageDrawable(green_pressed);
                         red.setImageDrawable(red_not_pressed);
                         yellow.setImageDrawable(yellow_not_pressed);
@@ -249,7 +249,7 @@ public class PlayActivity extends AppCompatActivity {
                         size.setImageBitmap(Params.Bullets[0]);
                         break;
                     case R.id.red:
-                        drawThread.set_bullet_mode(2);
+                        drawThread.change_bullet_color(2);
                         green.setImageDrawable(green_not_pressed);
                         red.setImageDrawable(red_pressed);
                         yellow.setImageDrawable(yellow_not_pressed);
@@ -257,7 +257,7 @@ public class PlayActivity extends AppCompatActivity {
                         size.setImageBitmap(Params.Bullets[1]);
                         break;
                     case R.id.yellow:
-                        drawThread.set_bullet_mode(3);
+                        drawThread.change_bullet_color(3);
                         green.setImageDrawable(green_not_pressed);
                         red.setImageDrawable(red_not_pressed);
                         yellow.setImageDrawable(yellow_pressed);
@@ -265,7 +265,7 @@ public class PlayActivity extends AppCompatActivity {
                         size.setImageBitmap(Params.Bullets[2]);
                         break;
                     case R.id.blue:
-                        drawThread.set_bullet_mode(4);
+                        drawThread.change_bullet_color(4);
                         green.setImageDrawable(green_not_pressed);
                         red.setImageDrawable(red_not_pressed);
                         yellow.setImageDrawable(yellow_not_pressed);
