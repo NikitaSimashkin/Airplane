@@ -41,6 +41,8 @@ public enum ImageResource {
 
     YELLOW(R.drawable.yellow),
     YELLOW_DEATH(R.drawable.yellow_death),
+    YELLOW_TWO(R.drawable.yellow_two),
+    YELLOW_TWO_TWO(R.drawable.yellow_two_two),
 
     CAT_ONE(R.drawable.cat_one),
     CAT_TWO(R.drawable.cat_two),

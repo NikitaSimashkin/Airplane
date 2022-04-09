@@ -19,7 +19,8 @@ public class Params {
     public static int sun_damage = 100, sun_speed = 1500, sun_hp = 100;
     public static int megasun_damage = 100, megasun_speed = 700, megasun_hp = 100;
     public static int cat_damage = 100, cat_speed = 700, cat_hp = 100, cat_speed_two = 400, cat_hp_two = 100;
-    public static int yellow_damage = 100, yellow_speed = 700, yellow_hp = 100;
+   // public static int yellow_damage = 100, yellow_speed = 700, yellow_hp = 100;
+    public static int yellow_damage = 100, yellow_hp = 200, yellow_hp_two = 100, yellow_speed = 700, yellow_damage_two = 100;
     public static int heart_damage = -100, heart_speed = 1500, heart_hp = 100;
 
     //public static Bitmap ALIEN, ALIEN_DEATH, ALIEN_TWO,

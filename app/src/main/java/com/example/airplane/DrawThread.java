@@ -207,7 +207,7 @@ public class DrawThread extends Thread{
     public boolean create_yellow(){
         if (System.currentTimeMillis() - time >= time_yellow){
             enemys = (int)(Math.random()*6);
-            enemy_list.add(new Yellow(height/32 + enemys*(3*height /32), 0, context));
+            enemy_list.add(new Yellow(height/32 + enemys*(2*height /32), 0, context));
             time = System.currentTimeMillis();
             return true;
         }
@@ -367,7 +367,7 @@ public class DrawThread extends Thread{
     @Override
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
-            if (System.currentTimeMillis() - last_frame > 33)
+            if (System.currentTimeMillis() - last_frame > 16)
                 try {
                     last_frame = System.currentTimeMillis();
                     level(number);
@@ -394,7 +394,7 @@ public class DrawThread extends Thread{
 //                    current_enemy = -1;
 //                    count--;
 //                }
-                if (count < 5 && create_sun()){
+                if (count < 5 && create_yellow()){
                     count++;
                 }
                 break;
@@ -442,13 +442,13 @@ public class DrawThread extends Thread{
                 time_bullet = 2000;
                 time_meteor = 2000;
                 time_alien = 2000;
-                time_alien_two = 2000;
+                time_alien_two = 0;
                 time_packman = 0;
                 time_bird = 2000;
                 time_sun = 2000;
                 time_megasun = 2000;
                 time_cat = 2000;
-                time_yellow = 2000;
+                time_yellow = 5000;
                 time_heart = 2000;
                 for(int i = 0; i < 10; i++){
                     mobs.add((byte) i);
