@@ -1,10 +1,11 @@
-package com.example.airplane.Sprites;
+package com.example.airplane.Sprites.Good;
 
 import android.content.Context;
 import android.graphics.Rect;
 
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
+import com.example.airplane.Sprites.Sprite;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public class Bullet extends Sprite {
 
     protected int color, size;
     private ImageResource imageResource;
+
+
 
     public Bullet(double[] koord_samolet, Context context, int color, int size) {
         super(Params.Bullets[0], (koord_samolet[0] + koord_samolet[2]) / 2 - (koord_samolet[2] - koord_samolet[0]) / Math.pow(2, size+1),

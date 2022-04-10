@@ -9,22 +9,23 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.SurfaceHolder;
 
-import com.example.airplane.Sprites.Alien;
-import com.example.airplane.Sprites.Alien_two;
-import com.example.airplane.Sprites.Bird;
-import com.example.airplane.Sprites.Bullet;
-import com.example.airplane.Sprites.Cat;
-import com.example.airplane.Sprites.Enemy;
-import com.example.airplane.Sprites.Heart;
-import com.example.airplane.Sprites.Many_bullets;
-import com.example.airplane.Sprites.MegaBullet;
-import com.example.airplane.Sprites.Megasun;
-import com.example.airplane.Sprites.Meteor;
-import com.example.airplane.Sprites.Packman;
-import com.example.airplane.Sprites.Samolet;
+import com.example.airplane.Sprites.Bad.Alien;
+import com.example.airplane.Sprites.Bad.Alien_two;
+import com.example.airplane.Sprites.Bad.Bird;
+import com.example.airplane.Sprites.Bad.Boss;
+import com.example.airplane.Sprites.Good.Bullet;
+import com.example.airplane.Sprites.Bad.Cat;
+import com.example.airplane.Sprites.Bad.Enemy;
+import com.example.airplane.Sprites.Bad.Heart;
+import com.example.airplane.Sprites.Good.Many_bullets;
+import com.example.airplane.Sprites.Good.MegaBullet;
+import com.example.airplane.Sprites.Bad.Megasun;
+import com.example.airplane.Sprites.Bad.Meteor;
+import com.example.airplane.Sprites.Bad.Packman;
+import com.example.airplane.Sprites.Good.Samolet;
 import com.example.airplane.Sprites.Sprite;
-import com.example.airplane.Sprites.Sun;
-import com.example.airplane.Sprites.Yellow;
+import com.example.airplane.Sprites.Bad.Sun;
+import com.example.airplane.Sprites.Bad.Yellow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,54 @@ public class DrawThread extends Thread{
 
     public static double get_width(){
         return width;
+    }
+
+    public static List<Byte> create_level(int meteor, int alien, int alien_two, int packman, int bird, int sun,
+                                      int cat, int yellow, int megasun, int heart)
+    {
+        int number = meteor + alien + alien_two + packman + bird + sun + cat + yellow + megasun + heart;
+        List<Byte> arr = new ArrayList<Byte>();
+        while (meteor > 0){
+            arr.add((byte)1);
+            meteor--;
+        }
+        while (alien > 0){
+            arr.add((byte)2);
+            alien--;
+        }
+        while (alien_two > 0){
+            arr.add((byte)3);
+            alien_two--;
+        }
+        while (packman > 0){
+            arr.add((byte)4);
+            packman--;
+        }
+        while (bird > 0){
+            arr.add((byte)5);
+            bird--;
+        }
+        while (sun > 0){
+            arr.add((byte)6);
+            sun--;
+        }
+        while (cat > 0){
+            arr.add((byte)7);
+            cat--;
+        }
+        while (yellow > 0){
+            arr.add((byte)8);
+            yellow--;
+        }
+        while (megasun > 0){
+            arr.add((byte)9);
+            megasun--;
+        }
+        while (heart > 0){
+            arr.add((byte)10);
+            heart--;
+        }
+        return arr;
     }
 
     public Samolet get_Samolet(){
@@ -222,6 +271,11 @@ public class DrawThread extends Thread{
             return true;
         }
         return false;
+    }
+
+    public boolean create_boss(){
+        enemy_list.add(new Boss(context, this, enemy_list));
+        return true;
     }
 
     public boolean create_turret(){
@@ -394,7 +448,11 @@ public class DrawThread extends Thread{
 //                    current_enemy = -1;
 //                    count--;
 //                }
-                if (count < 5 && create_yellow()){
+//                if (count < 5 && create_yellow()){
+//                    count++;
+//                }
+                if (count < 1) {
+                    create_boss();
                     count++;
                 }
                 break;
@@ -439,17 +497,17 @@ public class DrawThread extends Thread{
     public void start_options(int number) { //стартовые установки для разных уровней
         switch (number) {
             case 1:
-                time_bullet = 2000;
-                time_meteor = 2000;
-                time_alien = 2000;
+                time_bullet = 0;
+                time_meteor = 0;
+                time_alien = 0;
                 time_alien_two = 0;
                 time_packman = 0;
-                time_bird = 2000;
-                time_sun = 2000;
-                time_megasun = 2000;
-                time_cat = 2000;
-                time_yellow = 5000;
-                time_heart = 2000;
+                time_bird = 0;
+                time_sun = 0;
+                time_megasun = 0;
+                time_cat = 0;
+                time_yellow = 0;
+                time_heart = 0;
                 for(int i = 0; i < 10; i++){
                     mobs.add((byte) i);
                 }

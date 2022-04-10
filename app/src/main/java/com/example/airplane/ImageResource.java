@@ -15,6 +15,7 @@ public enum ImageResource {
     METEOR_BLUE(R.drawable.meteor_blue),
     METEOR_YELLOW(R.drawable.meteor_yellow),
     METEOR_DIED(R.drawable.meteor_death),
+    METEOR_BIG(R.drawable.meteor_big),
 
     SPACESHIP(R.drawable.spaceship),
     BULLET_GREEN(R.drawable.bullet_green),
@@ -22,7 +23,9 @@ public enum ImageResource {
     BULLET_YELLOW(R.drawable.bullet_yellow),
     BULLET_BLUE(R.drawable.bullet_blue),
     TURRET(R.drawable.turret),
+    ENEMY_TURRET(R.drawable.enemy_turret),
     MEGABULLET(R.drawable.megabullet),
+    ENEMY_MEGABULLET(R.drawable.enemy_megabullet),
 
     ALIEN(R.drawable.alien),
     ALIEN_DEATH(R.drawable.alien_death),
@@ -51,6 +54,7 @@ public enum ImageResource {
     HEART(R.drawable.heart),
     BREAKING_HEART(R.drawable.breaking_heart),
 
+    BOSS(R.drawable.boss),
     MEGASUN(R.drawable.megasun);
 
     private final int resourceId;

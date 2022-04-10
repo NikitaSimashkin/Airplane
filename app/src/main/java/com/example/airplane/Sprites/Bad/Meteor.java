@@ -1,9 +1,8 @@
-package com.example.airplane.Sprites;
+package com.example.airplane.Sprites.Bad;
 
 import android.content.Context;
 
 import com.example.airplane.Params;
-import com.example.airplane.Sprites.Enemy;
 
 public class Meteor extends Enemy {
     public Meteor(double line_v, double line_h, Context context, int color) {

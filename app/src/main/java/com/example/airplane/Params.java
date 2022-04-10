@@ -9,9 +9,11 @@ public class Params {
     public static int turret_damage = 200, turret_hp = 201;
     public static int[] bullet_stats = new int[]{300, 600, 300, 100, 200, 100, 50, 100, 50};
     public static int megabullet_damage = 10000;
+    public static int megabullet_enemy_damage = 499, megabullet_enemy_hp = 1000000000, megabullet_enemy_speed = 100;
     // дамаг - скорость - хп
 
     public static int meteor_damage = 100, meteor_speed = 1000, meteor_hp = 100;
+    public static int big_meteor_damage = 0, big_meteor_speed = 1000, big_meteor_hp = 200000;
     public static int alien_damage = 150, alien_speed = 10000, alien_hp = 200;
     public static int alien_two_damage = 200, alien_two_speed = 810, alien_two_hp = 150, alien_two_hp_two = 200;
     public static int packman_damage = 50, packman_speed = 800, packman_hp = 100;
@@ -19,9 +21,9 @@ public class Params {
     public static int sun_damage = 100, sun_speed = 1500, sun_hp = 100;
     public static int megasun_damage = 100, megasun_speed = 700, megasun_hp = 100;
     public static int cat_damage = 100, cat_speed = 700, cat_hp = 100, cat_speed_two = 400, cat_hp_two = 100;
-   // public static int yellow_damage = 100, yellow_speed = 700, yellow_hp = 100;
     public static int yellow_damage = 100, yellow_hp = 200, yellow_hp_two = 100, yellow_speed = 700, yellow_damage_two = 100;
     public static int heart_damage = -100, heart_speed = 1500, heart_hp = 100;
+    public static int boss_damage = -100, boss_speed = 100, boss_hp = 1000000000;
 
     //public static Bitmap ALIEN, ALIEN_DEATH, ALIEN_TWO,
     //ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,

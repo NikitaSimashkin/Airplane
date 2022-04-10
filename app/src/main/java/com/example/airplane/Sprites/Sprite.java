@@ -40,6 +40,21 @@ public class Sprite {
         return new Rect((int)(left+a), (int)(up+b), (int)(right+c), (int)(down+d));
     }
 
+    public double getUp() {
+        return up;
+    }
+
+    public double getDown() {
+        return down;
+    }
+
+    public double getLeft() {
+        return left;
+    }
+
+    public double getRight() {
+        return right;
+    }
 
     public Sprite(Bitmap bitmap, double up, double left, double down, double right, Context context){ //создаем спрайт и задаем нач. координаты
         this.bitmap = bitmap;

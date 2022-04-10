@@ -1,8 +1,7 @@
-package com.example.airplane.Sprites;
+package com.example.airplane.Sprites.Bad;
 
 import android.content.Context;
 
-import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
 

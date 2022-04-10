@@ -1,15 +1,12 @@
-package com.example.airplane.Sprites;
+package com.example.airplane.Sprites.Bad;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
-import com.example.airplane.Sprites.Bullet;
-import com.example.airplane.Sprites.Bullet_enemy;
-import com.example.airplane.Sprites.Enemy;
+import com.example.airplane.Sprites.Good.Bullet;
 
 import java.util.List;
 

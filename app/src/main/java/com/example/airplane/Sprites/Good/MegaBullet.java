@@ -1,4 +1,4 @@
-package com.example.airplane.Sprites;
+package com.example.airplane.Sprites.Good;
 
 import android.content.Context;
 
