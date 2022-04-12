@@ -63,38 +63,40 @@ public class Samolet extends Sprite {
 
     public static final int max_turret = 1;
 
-    public class Turret extends Sprite{
+    public class Turret extends Sprite {
         private List<Bullet> bullet_list;
-        private int damage = Params.turret_damage, hp = Params.turret_hp, color, n, number_bullet, size;
-        private long last_bullet, time_bullet;
+        private int color, n, number_bullet, size;
+        private float time_bullet;
+        private long last_bullet;
 
         public Turret(int color, List<Bullet> bullet_list, int size) {
             super(ImageResource.TURRET, Samolet.this.up, Samolet.this.left,
-                    Samolet.this.down ,width/8, Samolet.this.context);
+                    Samolet.this.down, width / 8, Samolet.this.context);
             this.color = color;
             this.size = size;
             this.bullet_list = bullet_list;
             Samolet.this.turret_exist = true;
             Samolet.this.turret = Turret.this;
-            switch (size){
+            switch (size) {
                 case 0:
                     n = 5;
-                    time_bullet = 4000;
+                    time_bullet = Params.time_bullet_big;
                     break;
                 case 1:
-                    time_bullet = 2000;
+                    time_bullet = Params.time_bullet_normal;
                     n = 10;
                     break;
                 case 2:
-                    time_bullet = 500;
+                    time_bullet = Params.time_bullet_small;
                     n = 20;
                     break;
             }
+            time_bullet *= Params.turret_multiplier_bullet;
 
             last_bullet = System.currentTimeMillis();
         }
 
-        public void create_bullet(){
+        public void create_bullet() {
             if (System.currentTimeMillis() - last_bullet > time_bullet) {
                 bullet_list.add(new Bullet(new double[]{up, left, down, right}, context, color, size));
                 number_bullet++;
@@ -106,23 +108,9 @@ public class Samolet extends Sprite {
             }
         }
 
-        public int get_hp(){
-            return hp;
-        }
-
-        public boolean change_hp(int a){ // возвращает тру или фолт в зависимости от того жива турель или нет
-            hp += a;
-            if (hp > Params.turret_hp) {
-                hp = Params.turret_hp;
-                return true;
-            }
-            else if (hp > 0)
-                return true;
-            else {
+        public void set_death() { // возвращает тру или фолс в зависимости от того жива турель или нет
                 Samolet.this.turret_exist = false;
                 Samolet.this.turret = null;
-                return false;
-            }
         }
     }
 }

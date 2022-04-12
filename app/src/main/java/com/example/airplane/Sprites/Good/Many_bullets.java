@@ -3,6 +3,7 @@ package com.example.airplane.Sprites.Good;
 import android.content.Context;
 
 import com.example.airplane.DrawThread;
+import com.example.airplane.Params;
 
 import java.util.List;
 
@@ -10,7 +11,8 @@ public class Many_bullets{
     private int color;
     private int size, n, counter;
     public  static boolean alive;
-    private long last_bullet, time_bullet;
+    private long last_bullet;
+    private double time_bullet;
     private List<Bullet> bullet_list;
     private DrawThread drawThread;
     private Context context;
@@ -26,17 +28,18 @@ public class Many_bullets{
         switch (size){
             case 0:
                 n = 3;
-                time_bullet = 1000;
+                time_bullet = Params.time_bullet_big;
                 break;
             case 1:
-                time_bullet = 500;
-                n = 6;
+                time_bullet = Params.time_bullet_normal;
+                n = 7;
                 break;
             case 2:
-                time_bullet = 300;
-                n = 10;
+                time_bullet = Params.time_bullet_small;
+                n = 19;
                 break;
         }
+        time_bullet *= Params.many_bullets_multiplier;
     }
 
     public void create_bullets(){
