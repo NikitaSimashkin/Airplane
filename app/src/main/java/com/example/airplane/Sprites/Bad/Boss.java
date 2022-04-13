@@ -119,7 +119,7 @@ public class Boss extends Enemy{
             left = left - (Sprite.width / speed);
             right = right - (Sprite.width / speed);
             time_one = System.currentTimeMillis();
-        } else if (System.currentTimeMillis() - time_one < time_center){}
+        } //else if (System.currentTimeMillis() - time_one < time_center){}
         else if (System.currentTimeMillis() - time_one > time_center){
             if (flag) {
                 center_switch(number);

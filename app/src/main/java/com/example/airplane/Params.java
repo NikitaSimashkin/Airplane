@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 public class Params {
     public static int samolet_speed = 90, samolet_hp = 1000;
     public static int base_hp = 2000;
-    public static int[] bullet_stats = new int[]{500, 500, 500, 200, 300, 200, 80, 175, 80};
+    public static int[] bullet_stats = new int[]{500, 450, 500, 200, 250, 200, 80, 150, 80};
     public static int megabullet_damage = 700;
     public static int megabullet_enemy_damage = 999, megabullet_enemy_hp = 1000000000, megabullet_enemy_speed = 400;
     // дамаг - скорость - хп
@@ -24,11 +24,13 @@ public class Params {
         yellow_damage2 = 300, yellow_speed2 = 800, yellow_hp2 = 300;
     public static int heart_damage = -400, heart_speed = 800, heart_hp = 1;
     public static int boss_damage = -100, boss_speed = 100, boss_hp = 1000000000;
-    public static int time_bullet_small = 400, time_bullet_normal = 800, time_bullet_big = 1600, time_meteor = 1000,
+    public static int time_bullet_small = 250, time_bullet_normal = 500, time_bullet_big = 1000, time_meteor = 1000,
             time_alien = 1000, time_alien_two = 1000, time_packman = 1500, time_sun = 2000, time_bird = 1000,
             time_megasun = 3000, time_cat = 3000, time_yellow = 3000, time_heart = 1000;
     public static double turret_multiplier_bullet = 1.5, many_bullets_multiplier = 0.5;
     public static int number_bullet_enemy_turret = 15;
+    public static double start_hp_multiplier = 1, start_speed_multiplier = 1, start_damage_multiplier = 1, start_time_multiplier = 1.5;
+    public static double start_speedbullet_m = 1, start_damagebullet_m = 1, start_timebullet_m = 1;
 
     //public static Bitmap ALIEN, ALIEN_DEATH, ALIEN_TWO,
     //ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,

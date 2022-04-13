@@ -39,7 +39,7 @@ public class Many_bullets{
                 n = 19;
                 break;
         }
-        time_bullet *= Params.many_bullets_multiplier;
+        time_bullet *= (Params.many_bullets_multiplier*Params.start_timebullet_m);
     }
 
     public void create_bullets(){

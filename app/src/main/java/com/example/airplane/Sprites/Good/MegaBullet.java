@@ -11,8 +11,8 @@ public class MegaBullet extends Bullet{
     public MegaBullet(double[] koord_samolet, Context context) {
         super(koord_samolet, context, 5, 0);
         bitmap = ImageResource.MEGABULLET.getBitmap(context);
-        damage = Params.megabullet_damage;
-        speed = Params.bullet_stats[1];
+        damage = (int)(Params.megabullet_damage*Params.start_damagebullet_m);
+        speed = (int)(Params.bullet_stats[1]*Params.start_damagebullet_m);
         color = 5;
     }
 

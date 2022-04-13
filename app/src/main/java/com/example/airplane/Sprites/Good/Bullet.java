@@ -14,9 +14,6 @@ public class Bullet extends Sprite {
     protected int damage, speed;
 
     protected int color, size;
-    private ImageResource imageResource;
-
-
 
     public Bullet(double[] koord_samolet, Context context, int color, int size) {
         super(Params.Bullets[0], (koord_samolet[0] + koord_samolet[2]) / 2 - (koord_samolet[2] - koord_samolet[0]) / Math.pow(2, size+1),
@@ -34,13 +31,10 @@ public class Bullet extends Sprite {
     private void change(int color, int size){
         this.color = color;
         this.size = size;
-        damage = Params.bullet_stats[size*3];
-        speed = Params.bullet_stats[size*3 + 1];
+        damage = (int)(Params.bullet_stats[size*3] * Params.start_damagebullet_m);
+        speed = (int)(Params.bullet_stats[size*3+1] * Params.start_speedbullet_m);
 
         bitmap = Params.Bullets[color - 1];
-        switch (size) {
-            case 0:
-        }
     }
 
     @Override

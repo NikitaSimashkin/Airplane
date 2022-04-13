@@ -20,7 +20,7 @@ public class Alien_two extends Enemy {
     public void setDeath() {
         if (i == 0) {
             change_bitmap();
-            hp = Params.alien_two_hp_two;
+            hp = (int)(Params.alien_two_hp_two * Params.start_hp_multiplier);
             i++;
         }
         else{

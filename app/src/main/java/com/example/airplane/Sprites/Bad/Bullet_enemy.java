@@ -32,6 +32,8 @@ public class Bullet_enemy extends Enemy{
                 Params.bullet_stats[size*3 + 1]*5, Params.bullet_stats[size*3 + 2], color);
     }
 
+
+    // так как у пули нет картинки смерти, то необходимо переопределить метод столкновения
     @Override
     public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
         super.collision(two, enemy_list);

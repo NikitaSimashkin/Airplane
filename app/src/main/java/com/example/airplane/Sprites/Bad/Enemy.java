@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 
 import com.example.airplane.ImageResource;
+import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Sprite;
 
@@ -20,17 +21,17 @@ public class Enemy extends Sprite {
 
     public Enemy(Bitmap bitmap, double up, double left, double down, double right, Context context, int damage, int speed, int hp, int color) {
         super(bitmap, up, left, down, right, context);
-        this.damage = damage;
-        this.speed = speed;
-        this.hp = hp;
+        this.damage = (int)(Params.start_damage_multiplier*damage);
+        this.speed = (int)(Params.start_speed_multiplier*speed) ;
+        this.hp = (int)(Params.start_hp_multiplier*hp);
         this.color = color;
     }
 
     public Enemy(ImageResource imageResource, double up, double left, double down, double right, Context context, int damage, int speed, int hp, int color) {
         super(imageResource, up, left, down, right, context);
-        this.damage = damage;
-        this.speed = speed;
-        this.hp = hp;
+        this.damage = (int)(Params.start_damage_multiplier*damage);
+        this.speed = (int)(Params.start_speed_multiplier*speed) ;
+        this.hp = (int)(Params.start_hp_multiplier*hp);
         this.color = color;
     }
 
@@ -71,7 +72,7 @@ public class Enemy extends Sprite {
     }
 
 
-    public void collision(@NonNull Bullet two, List<Enemy> enemy_list){ //возвращает тру сли пулю надо удалять после столкновения
+    public void collision(@NonNull Bullet two, List<Enemy> enemy_list){
         if (color == two.getColor()){
             change_hp(-2*two.get_damage());
         }

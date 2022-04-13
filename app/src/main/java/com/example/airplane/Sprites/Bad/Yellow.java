@@ -23,9 +23,9 @@ public class Yellow extends Enemy {
                 up += (down - temp)/4;
                 down -= (down - temp)/4;
                 bitmap = ImageResource.YELLOW_TWO_TWO.getBitmap(context);
-                hp = Params.yellow_hp2;
-                damage = Params.yellow_damage2;
-                speed = Params.yellow_speed2;
+                damage = (int)(Params.start_damage_multiplier*Params.yellow_damage2);
+                speed = (int)(Params.start_speed_multiplier*Params.yellow_speed2) ;
+                hp = (int)(Params.start_hp_multiplier*Params.yellow_hp2);
                 i++;
         }
         else {

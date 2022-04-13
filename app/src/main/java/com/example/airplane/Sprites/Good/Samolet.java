@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Samolet extends Sprite {
 
-    private int up_or_down, speed = (int)height/ Params.samolet_speed, hp = Params.samolet_hp;
+    private int up_or_down, speed = (int)(height/ Params.samolet_speed), hp = Params.samolet_hp;
     private boolean updown;
     private Context context;
     private boolean turret_exist = false;
@@ -91,7 +91,7 @@ public class Samolet extends Sprite {
                     n = 20;
                     break;
             }
-            time_bullet *= Params.turret_multiplier_bullet;
+            time_bullet *= (Params.turret_multiplier_bullet*Params.start_timebullet_m);
 
             last_bullet = System.currentTimeMillis();
         }

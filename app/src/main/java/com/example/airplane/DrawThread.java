@@ -35,6 +35,7 @@ public class DrawThread extends Thread{
     private Context context;
     private Handler handler;
     private int time_bullet = Params.time_bullet_normal, number; //номер уровня
+    private double hp_multiplier, damage_multiplier, speed_multiplier;
 
     private Canvas canvas;
 
@@ -185,7 +186,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_meteor(){
-        if (System.currentTimeMillis() - time >= Params.time_meteor){
+        if (System.currentTimeMillis() - time >= Params.time_meteor*Params.start_time_multiplier){
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Meteor((height/32 + enemys*(2 * height/32)),0, context, (int)(Math.random()*4 + 1)));
             time = System.currentTimeMillis();
@@ -195,7 +196,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_alien(){
-        if (System.currentTimeMillis() - time >= Params.time_alien){
+        if (System.currentTimeMillis() - time >= Params.time_alien*Params.start_time_multiplier){
             enemys = (int)(Math.random()*9);
             enemy_list.add(new Alien(height/32 + enemys*(3 * height/32), 0, context));
             time = System.currentTimeMillis();
@@ -205,7 +206,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_alien_two(){
-        if (System.currentTimeMillis() - time >= Params.time_alien_two){
+        if (System.currentTimeMillis() - time >= Params.time_alien_two*Params.start_time_multiplier){
             enemys = (int)(Math.random()*9);
             enemy_list.add(new Alien_two(height/32 + enemys*(3 * height/32), 0, context));
             time = System.currentTimeMillis();
@@ -215,7 +216,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_packman(){
-        if (System.currentTimeMillis() - time >= Params.time_packman){
+        if (System.currentTimeMillis() - time >= Params.time_packman*Params.start_time_multiplier){
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Packman(height/32 +enemys*(2 * height/32),0, context, enemy_list));
             time = System.currentTimeMillis();
@@ -225,7 +226,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_bird(){
-        if (System.currentTimeMillis() - time >= Params.time_bird){
+        if (System.currentTimeMillis() - time >= Params.time_bird*Params.start_time_multiplier){
             enemys = (int)(Math.random()*15);
             enemy_list.add(new Bird(height/32 + enemys*(2*height /32), 0, context));
             time = System.currentTimeMillis();
@@ -235,7 +236,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_sun(){
-        if (System.currentTimeMillis() - time >= Params.time_sun){
+        if (System.currentTimeMillis() - time >= Params.time_sun*Params.start_time_multiplier){
             enemys = (int)(Math.random()*9);
             enemy_list.add(new Sun(height/32 + enemys*(3*height /32), 0, context));
             time = System.currentTimeMillis();
@@ -245,7 +246,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_megasun(){
-        if (System.currentTimeMillis() - time >= Params.time_megasun){
+        if (System.currentTimeMillis() - time >= Params.time_megasun*Params.start_time_multiplier){
             enemy_list.add(new Megasun(height/32, 0, context));
             time = System.currentTimeMillis();
             return true;
@@ -254,7 +255,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_cat(){
-        if (System.currentTimeMillis() - time >= Params.time_cat){
+        if (System.currentTimeMillis() - time >= Params.time_cat*Params.start_time_multiplier){
             enemys = (int)(Math.random()*6);
             enemy_list.add(new Cat(height/32 + enemys*(4*height /32), 0, context));
             time = System.currentTimeMillis();
@@ -264,7 +265,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_yellow(){
-        if (System.currentTimeMillis() - time >= Params.time_yellow){
+        if (System.currentTimeMillis() - time >= Params.time_yellow*Params.start_time_multiplier){
             enemys = (int)(Math.random()*6);
             enemy_list.add(new Yellow(height/32 + enemys*(2*height /32), 0, context));
             time = System.currentTimeMillis();
@@ -274,7 +275,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_heart(){
-        if (System.currentTimeMillis() - time >= Params.time_heart){
+        if (System.currentTimeMillis() - time >= Params.time_heart*Params.start_time_multiplier){
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Heart(height/32 + enemys*(2 * height/32), 0, context));
             time = System.currentTimeMillis();
@@ -429,7 +430,7 @@ public class DrawThread extends Thread{
     @Override
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
-            if (System.currentTimeMillis() - last_frame > 0)
+            if (System.currentTimeMillis() - last_frame > 11)
                 try {
                     last_frame = System.currentTimeMillis();
                     level(number);
@@ -449,19 +450,12 @@ public class DrawThread extends Thread{
     public void level(int number){
         switch (number){
             case 1:
-//                if (current_enemy == -1){
-//                    current_enemy = (int)(Math.random()*count);
-//                } else if (mobs.size() > 0 && create_enemy(mobs.get(current_enemy)+1)){
-//                    mobs.remove(current_enemy);
-//                    current_enemy = -1;
-//                    count--;
-//                }
-//                if (count < 5 && create_yellow()){
-//                    count++;
-//                }
-                if (count < 1) {
-                    create_boss();
-                    count++;
+                if (current_enemy == -1){
+                    current_enemy = (int)(Math.random()*count);
+                } else if (mobs.size() > 0 && create_enemy(mobs.get(current_enemy))){
+                    mobs.remove(current_enemy);
+                    current_enemy = -1;
+                    count--;
                 }
                 break;
             case 2:
@@ -503,9 +497,8 @@ public class DrawThread extends Thread{
     public void start_options(int number) { //стартовые установки для разных уровней
         switch (number) {
             case 1:
-                for(int i = 0; i < 10; i++){
-                    mobs.add((byte) i);
-                }
+                mobs = create_level(50,0,0,0,0,0,0,0,0,0);
+                count = 50;
                 break;
             case 2:
                 break;
