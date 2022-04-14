@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 
 import com.example.airplane.Sprites.Bad.Alien;
 import com.example.airplane.Sprites.Bad.Alien_two;
+import com.example.airplane.Sprites.Bad.Big_meteor;
 import com.example.airplane.Sprites.Bad.Bird;
 import com.example.airplane.Sprites.Bad.Boss;
 import com.example.airplane.Sprites.Good.Bullet;
@@ -390,7 +391,8 @@ public class DrawThread extends Thread{
                             -(height/150), (width/100), 0, -(width/100), 0})){
                         enemy.collision(bullet, enemy_list);
                         bullet.collision(bullet_list);
-                        break;
+                        if (!(enemy instanceof Big_meteor) || !(bullet instanceof MegaBullet))
+                            break;
                     }
                 }
             }
@@ -458,9 +460,14 @@ public class DrawThread extends Thread{
 
     private int count = 0; // переменные для уровней
     private int current_enemy = -1;
+    private long last_update_time, last_ability_time;
+
+    public void set_last_udpate_time(long a){
+        last_update_time = a;
+        last_ability_time = a;
+    }
 
     public void level(){
-
                 if (current_enemy == -1){
                     current_enemy = (int)(Math.random()*count);
                 } else if (mobs.size() > 0 && create_enemy(mobs.get(current_enemy))){
@@ -469,6 +476,11 @@ public class DrawThread extends Thread{
                     count--;
                 } else if (count == 0 && enemy_list.size() == 0){
                     handler.sendMessage(Message.obtain(handler,0,1, 0));
+                }
+
+                if (System.currentTimeMillis() - last_update_time > 15_000){
+                    last_update_time = System.currentTimeMillis();
+                    handler.sendMessage(Message.obtain(handler, 3, (int) (System.currentTimeMillis()-last_ability_time), 0));
                 }
     }
 
@@ -523,6 +535,7 @@ public class DrawThread extends Thread{
                 break;
         }
         count = mobs.size();
+        last_update_time = last_ability_time = System.currentTimeMillis();
     }
 }
 

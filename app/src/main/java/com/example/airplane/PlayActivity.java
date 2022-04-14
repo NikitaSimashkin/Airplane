@@ -51,6 +51,8 @@ public class PlayActivity extends AppCompatActivity {
     private int width, height;
 
     private Button next;
+    private ImageButton many_bullets, turret, megabullet;
+
     private View background_win_or_loose;
 
     @Override
@@ -135,6 +137,9 @@ public class PlayActivity extends AppCompatActivity {
                     case 2:
                         next.setBackgroundColor(Color.BLUE); // TODO: не забыть изменить
                         next.setClickable(true);
+                        many_bullets.setVisibility(View.INVISIBLE);
+                        megabullet.setVisibility(View.INVISIBLE);
+                        turret.setVisibility(View.INVISIBLE);
                         hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
                         hp_base.setProgress(drawThread.get_base().get_hp());
                         green.setImageDrawable(green_pressed);
@@ -144,6 +149,9 @@ public class PlayActivity extends AppCompatActivity {
                         size.setImageBitmap(Params.Bullets[0]);
                         int k = size.getHeight()/10;
                         size.setPadding(3*k,3*k, 3*k, 3*k);
+                        break;
+                    case 3:
+                        update_abilities(msg.arg1);
                         break;
                 }
             }
@@ -251,12 +259,16 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton turret = findViewById(R.id.turret);
+        turret = findViewById(R.id.turret);
 
         turret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawThread.create_turret();
+                drawThread.set_last_udpate_time(System.currentTimeMillis());
+                turret.setVisibility(View.INVISIBLE);
+                megabullet.setVisibility(View.INVISIBLE);
+                many_bullets.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -323,21 +335,28 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton many_bullets = findViewById(R.id.many_bullets);
+        many_bullets = findViewById(R.id.many_bullets);
+        megabullet = findViewById(R.id.megabullet);
 
         many_bullets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawThread.create_many_bullet();
+                drawThread.set_last_udpate_time(System.currentTimeMillis());
+                turret.setVisibility(View.INVISIBLE);
+                megabullet.setVisibility(View.INVISIBLE);
+                many_bullets.setVisibility(View.INVISIBLE);
             }
         });
-
-        ImageButton megabullet = findViewById(R.id.megabullet);
 
         megabullet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawThread.create_megabullet();
+                drawThread.set_last_udpate_time(System.currentTimeMillis());
+                turret.setVisibility(View.INVISIBLE);
+                megabullet.setVisibility(View.INVISIBLE);
+                many_bullets.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -345,6 +364,18 @@ public class PlayActivity extends AppCompatActivity {
         red.setOnClickListener(Colors_b);
         yellow.setOnClickListener(Colors_b);
         blue.setOnClickListener(Colors_b);
+    }
+
+    private void update_abilities(int last_ability_time) {
+        if (last_ability_time >= Params.time_manybullets){
+            many_bullets.setVisibility(View.VISIBLE);
+        }
+        if (last_ability_time >= Params.time_turret){
+            turret.setVisibility(View.VISIBLE);
+        }
+        if (last_ability_time >= Params.time_megabullet){
+            megabullet.setVisibility(View.VISIBLE);
+        }
     }
 
 

@@ -18,7 +18,7 @@ public class Params {
     public static int packman_damage = 0, packman_speed = 700, packman_hp = 300;
     public static int bird_damage = 200, bird_speed = 400, bird_hp = 80;
     public static int sun_damage = 600, sun_speed = 600, sun_hp = 600;
-    public static int megasun_damage = 10000, megasun_speed = 1200, megasun_hp = 300;
+    public static int megasun_damage = 10000, megasun_speed = 1200, megasun_hp = 1200;
     public static int cat_damage = 800, cat_speed = 1000, cat_hp = 1, cat_speed_two = 500, cat_hp_two = 800;
     public static int yellow_damage = 10000, yellow_speed = 1200, yellow_hp = 1200,
         yellow_damage2 = 300, yellow_speed2 = 800, yellow_hp2 = 300;
@@ -29,8 +29,10 @@ public class Params {
             time_megasun = 3000, time_cat = 3000, time_yellow = 3000, time_heart = 1000;
     public static double turret_multiplier_bullet = 1.5, many_bullets_multiplier = 0.5;
     public static int number_bullet_enemy_turret = 15;
-    public static double start_hp_multiplier = 1, start_speed_multiplier = 1, start_damage_multiplier = 1, start_time_multiplier = 1.5;
+    public static double start_hp_multiplier = 1, start_speed_multiplier = 1000, start_damage_multiplier = 1, start_time_multiplier = 1.5;
     public static double start_speedbullet_m = 1, start_damagebullet_m = 1, start_timebullet_m = 1;
+
+    public static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000;
 
     //public static Bitmap ALIEN, ALIEN_DEATH, ALIEN_TWO,
     //ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,

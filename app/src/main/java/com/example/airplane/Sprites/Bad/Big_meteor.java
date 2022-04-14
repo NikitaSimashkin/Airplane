@@ -2,8 +2,12 @@ package com.example.airplane.Sprites.Bad;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
+import com.example.airplane.Sprites.Good.Bullet;
+import com.example.airplane.Sprites.Good.MegaBullet;
 import com.example.airplane.Sprites.Sprite;
 
 import java.util.List;
@@ -36,5 +40,11 @@ public class Big_meteor extends Enemy{
         super.setDeath();
         bitmap = Params.Meteors[4];
         Boss.set_meteor_flag(false);
+    }
+
+    @Override
+    public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
+        if (!(two instanceof MegaBullet))
+            super.collision(two, enemy_list);
     }
 }

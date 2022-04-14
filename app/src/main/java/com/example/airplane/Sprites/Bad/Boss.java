@@ -2,9 +2,12 @@ package com.example.airplane.Sprites.Bad;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
+import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Sprite;
 
 import java.util.List;
@@ -57,6 +60,9 @@ public class Boss extends Enemy{
                 break;
         }
     }
+
+    @Override
+    public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {}
 
     public static void set_meteor_flag(boolean a){
         meteor_flag = a;

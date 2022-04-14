@@ -17,6 +17,5 @@ public class MegaBullet extends Bullet{
     }
 
     @Override
-    public void collision(List<Bullet> bullet_list) {
-    }
+    public void collision(List<Bullet> bullet_list) {}
 }

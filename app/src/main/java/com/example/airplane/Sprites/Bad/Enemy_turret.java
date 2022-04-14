@@ -2,8 +2,12 @@ package com.example.airplane.Sprites.Bad;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
+import com.example.airplane.Sprites.Good.Bullet;
+import com.example.airplane.Sprites.Good.MegaBullet;
 
 import java.util.List;
 
@@ -33,4 +37,7 @@ public class Enemy_turret extends Enemy{
             last = System.currentTimeMillis();
         }
     }
+
+    @Override
+    public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {}
 }
