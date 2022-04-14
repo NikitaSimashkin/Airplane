@@ -26,34 +26,34 @@ public class Levels_activity extends AppCompatActivity {
                 public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.one:
-                        Level_one();
+                        Levels(1);
                         break;
                     case R.id.two:
-                        //Level_one();
+                        Levels(2);
                         break;
                     case R.id.three:
-                        // Level_one();
+                        Levels(3);
                         break;
                     case R.id.four:
-                        //Level_one();
+                        Levels(4);
                         break;
                     case R.id.five:
-                        // Level_one();
+                        Levels(5);
                         break;
                     case R.id.six:
-                        //  Level_one();
+                        Levels(6);
                         break;
                     case R.id.seven:
-                        //  Level_one();
+                        Levels(7);
                         break;
                     case R.id.eight:
-                        // Level_one();
+                        Levels(8);
                         break;
                     case R.id.nine:
-                        //Level_one();
+                        Levels(9);
                         break;
                     case R.id.ten:
-                        // Level_one();
+                        Levels(10);
                         break;
                     }
                 }
@@ -71,12 +71,21 @@ public class Levels_activity extends AppCompatActivity {
             Button ten = findViewById(R.id.ten);
 
             one.setOnClickListener(Levels);
+            two.setOnClickListener(Levels);
+            three.setOnClickListener(Levels);
+            four.setOnClickListener(Levels);
+            five.setOnClickListener(Levels);
+            six.setOnClickListener(Levels);
+            seven.setOnClickListener(Levels);
+            eight.setOnClickListener(Levels);
+            nine.setOnClickListener(Levels);
+            ten.setOnClickListener(Levels);
         }
     }
 
-    private void Level_one(){
+    private void Levels(int number){
         Intent i = new Intent(Levels_activity.this, PlayActivity.class);
-        i.putExtra("number", 1);
+        i.putExtra("number", number);
         startActivity(i);
     }
 }

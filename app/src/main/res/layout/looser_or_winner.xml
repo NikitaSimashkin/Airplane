@@ -2,24 +2,30 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/looser"
+    android:id="@+id/looser_or_winner"
     android:layout_width="match_parent"
-    tools:layout="@layout/looser"
+    tools:layout="@layout/looser_or_winner"
 
     android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="473dp"
         android:layout_height="275dp"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="68dp">
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="129dp"
+        android:layout_marginBottom="68dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@drawable/background_dialog"
+            android:background="@drawable/dialog_loose"
             android:orientation="vertical">
 
             <TextView
@@ -47,26 +53,40 @@
 
                 <Button
                     android:id="@+id/menu"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:insetLeft="20dp"
+                    android:insetLeft="30dp"
                     android:insetTop="10dp"
-                    android:insetRight="20dp"
-                    android:insetBottom="10dp"
+                    android:insetRight="10dp"
+                    android:insetBottom="20dp"
                     android:text="@string/menu"
                     app:cornerRadius="10dp" />
 
                 <Button
                     android:id="@+id/retry"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:insetLeft="20dp"
                     android:insetTop="10dp"
                     android:insetRight="20dp"
-                    android:insetBottom="10dp"
+                    android:insetBottom="20dp"
                     android:text="@string/retru"
+                    app:cornerRadius="10dp" />
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/cardview_dark_background"
+                    android:clickable="false"
+                    android:insetLeft="10dp"
+                    android:insetTop="10dp"
+                    android:insetRight="30dp"
+                    android:insetBottom="20dp"
+                    android:text="@string/next"
                     app:cornerRadius="10dp" />
 
             </LinearLayout>

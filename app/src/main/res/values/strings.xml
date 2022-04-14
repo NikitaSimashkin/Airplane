@@ -5,5 +5,6 @@
     <string name="lose"></string>>
     <string name="menu">MENU</string>>
     <string name="retru">RETRY</string>>
+    <string name="next">NEXT</string>>
     <string name="infinity_text">INFINITY \n MODE</string>>
 </resources>

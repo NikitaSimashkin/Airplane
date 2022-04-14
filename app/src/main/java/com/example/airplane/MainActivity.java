@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             play_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(MainActivity.this, PlayActivity.class);
+                    Intent i = new Intent(MainActivity.this, Levels_activity.class);
                     startActivity(i);
                 }
             });
@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
             test.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(MainActivity.this, Levels_activity.class);
-                    startActivity(i);
+
                 }
             });
         }

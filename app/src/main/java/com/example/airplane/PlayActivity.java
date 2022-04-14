@@ -3,12 +3,14 @@ package com.example.airplane;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,12 +20,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import java.util.Objects;
@@ -31,7 +33,7 @@ import java.util.Objects;
 public class PlayActivity extends AppCompatActivity {
 
     private DrawThread drawThread;
-    private Dialog loose;
+    private Dialog loose_or_win;
 
     protected SurfaceView play_field;
     protected Handler handler;
@@ -47,6 +49,9 @@ public class PlayActivity extends AppCompatActivity {
 
 
     private int width, height;
+
+    private Button next;
+    private View background_win_or_loose;
 
     @Override
     public void finish() {
@@ -70,16 +75,18 @@ public class PlayActivity extends AppCompatActivity {
         ProgressBar hp_samolet = findViewById(R.id.samolet_hp);
         ProgressBar hp_base = findViewById(R.id.base_hp);
 
-        Dialog loose = new Dialog(this);
-        loose.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
-        loose.setCancelable(false); // нельзя закрыто окно кнопкой назад
-        loose.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        loose.setContentView(R.layout.looser);
+        loose_or_win = new Dialog(this);
+        loose_or_win.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
+        loose_or_win.setCancelable(false); // нельзя закрыто окно кнопкой назад
+        loose_or_win.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        loose_or_win.setContentView(R.layout.looser_or_winner);
 
-        TextView haha = loose.findViewById(R.id.haha);
-        TextView points = loose.findViewById(R.id.points);
-        Button menu = loose.findViewById(R.id.menu);
-        Button retry = loose.findViewById(R.id.retry);
+
+        background_win_or_loose = loose_or_win.findViewById(R.id.frameLayout);
+        Button menu = loose_or_win.findViewById(R.id.menu);
+        Button retry = loose_or_win.findViewById(R.id.retry);
+        next = loose_or_win.findViewById(R.id.next);
+        next.setBackgroundColor(Color.BLUE);
 
         ImageButton green = findViewById(R.id.green);
         ImageButton red = findViewById(R.id.red);
@@ -105,22 +112,36 @@ public class PlayActivity extends AppCompatActivity {
         int k = size.getHeight();
         size.setPadding(3*k/10,3*k/10, 3*k/10, 3*k/10);
 
-       // Looper.prepare();
+        // Looper.prepare();
         Looper looper = Looper.myLooper();
         handler = new Handler(looper) {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what){
-                    case 0:
+                    case 0: // проиграл или выиграл
                         drawThread.interrupt();
-                        loose.show();
+                        win_or_loose_dialog(msg.arg1);
+                        break;
                     case 1:
-                        hp_samolet.setProgress(msg.arg1);
+                        switch(msg.arg1) {
+                            case 0:
+                                hp_samolet.setProgress(msg.arg2);
+                                break;
+                            case 1:
+                                hp_base.setProgress(msg.arg2);
+                                break;
+                        }
                         break;
                     case 2:
-                        hp_base.setProgress(msg.arg1);
-                        break;
-                    case 3:
+                        next.setBackgroundColor(Color.BLUE); // TODO: не забыть изменить
+                        next.setClickable(true);
+                        hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
+                        hp_base.setProgress(drawThread.get_base().get_hp());
+                        green.setImageDrawable(green_pressed);
+                        red.setImageDrawable(red_not_pressed);
+                        blue.setImageDrawable(blue_not_pressed);
+                        yellow.setImageDrawable(yellow_not_pressed);
+                        size.setImageBitmap(Params.Bullets[0]);
                         int k = size.getHeight()/10;
                         size.setPadding(3*k,3*k, 3*k, 3*k);
                         break;
@@ -138,7 +159,7 @@ public class PlayActivity extends AppCompatActivity {
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
                 width = play_field.getWidth();
                 height = play_field.getHeight();
-                drawThread = create_new_thread(width, height);
+                drawThread = create_new_thread(width, height, number);
                 drawThread.start();
                 drawThread.change_bullet_color(1);
             }
@@ -205,25 +226,28 @@ public class PlayActivity extends AppCompatActivity {
         retry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawThread = create_new_thread(width, height);
-                hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
-                hp_base.setProgress(drawThread.get_base().get_hp());
+                drawThread = create_new_thread(width, height, number);
                 drawThread.start();
-                green.setImageDrawable(green_pressed);
-                red.setImageDrawable(red_not_pressed);
-                blue.setImageDrawable(blue_not_pressed);
-                yellow.setImageDrawable(yellow_not_pressed);
-                size.setImageBitmap(Params.Bullets[0]);
-                loose.hide();
+                loose_or_win.hide();
             }
         });
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loose.hide();
+                loose_or_win.hide();
                 Intent i = new Intent(PlayActivity.this, MainActivity.class);
                 startActivity(i);
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawThread = create_new_thread(width, height, number+1);
+                number++;
+                drawThread.start();
+                loose_or_win.hide();
             }
         });
 
@@ -331,8 +355,27 @@ public class PlayActivity extends AppCompatActivity {
         return d;
     }
 
-    public DrawThread create_new_thread(int width, int height){
+    public DrawThread create_new_thread(int width, int height, int number){
         return new DrawThread(play_field.getHolder(), getApplicationContext(), width, height, handler, number);
+    }
+
+    public void win_or_loose_dialog(int win_or_loose){
+        switch(win_or_loose){
+            case 0:
+                next.setBackgroundColor(Color.GRAY);
+                next.setClickable(false);
+                background_win_or_loose.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_loose, null));
+                loose_or_win.show();
+                break;
+            case 1:
+                if (number == 10){
+                    next.setBackgroundColor(Color.GRAY);
+                    next.setClickable(false);
+                }
+                background_win_or_loose.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_win, null));
+                loose_or_win.show();
+                break;
+        }
     }
 
     @Override
@@ -352,7 +395,4 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    private void Levels(int number){ // а - номер уровня; в зависимости от уровня делаем что то
-
-    }
 }

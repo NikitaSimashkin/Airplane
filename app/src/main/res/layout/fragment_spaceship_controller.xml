@@ -62,8 +62,8 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:max="500"
-                android:progress="500"
+                android:max="1000"
+                android:progress="1000"
                 android:progressDrawable="@drawable/progressbar" />
 
             <FrameLayout
@@ -80,8 +80,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:max="1000"
-                android:progress="1000"
+                android:max="2000"
+                android:progress="2000"
                 android:progressDrawable="@drawable/progressbar" />
 
         </LinearLayout>

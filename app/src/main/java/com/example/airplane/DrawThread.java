@@ -53,7 +53,7 @@ public class DrawThread extends Thread{
     protected List<Enemy> enemy_list = new ArrayList<>();
     protected List<Bullet> bullet_list = new ArrayList<>();
 
-    private int enemys, bullet_color = 1, size = 1; //bullet_mode - цвет, size - размер пули
+    private int enemys, bullet_color = 1, size = 1; // bullet_color - цвет, size - размер пули
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
@@ -64,7 +64,7 @@ public class DrawThread extends Thread{
         DrawThread.width = width;
         DrawThread.height = height;
         Many_bullets.alive = false;
-        handler.sendMessage(Message.obtain(handler, 3, 0, 0)); // меняем отображение размера пули
+        handler.sendMessage(Message.obtain(handler, 2, 0, 0)); // меняем отображение размера пули
 
         samolet = new Samolet(context);
         base = new Base();
@@ -81,7 +81,6 @@ public class DrawThread extends Thread{
     public static List<Byte> create_level(int meteor, int alien, int alien_two, int packman, int bird, int sun,
                                       int cat, int yellow, int megasun, int heart)
     {
-        int number = meteor + alien + alien_two + packman + bird + sun + cat + yellow + megasun + heart;
         List<Byte> arr = new ArrayList<Byte>();
         while (meteor > 0){
             arr.add((byte)1);
@@ -331,6 +330,8 @@ public class DrawThread extends Thread{
                 return create_megasun();
             case 10:
                 return create_heart();
+            case 11:
+                return create_boss();
 
         }
         return false;
@@ -348,14 +349,25 @@ public class DrawThread extends Thread{
                 enemy_list.remove(i);
                 i--;
                 if (samolet.get_hp() > 0) // снимаем хп у самолета
-                    handler.sendMessage(Message.obtain(handler, 1, samolet.get_hp(), 0));
+                    handler.sendMessage(Message.obtain(handler, 1, 0, samolet.get_hp()));
                 else
-                    handler.sendMessage(Message.obtain(handler,0,100, 0));
-                //TODO: второй аргумент - кол-во волн если бесконечный режим и кол-во очков если уровень
-
-                // можем передать 3 аргумента: 1 - что меняем; 2 и 3 - как меняем
-                // what: 1 - хп самолета, 2 - хп базы
-                // agr1 - сколько хп нужно установить
+                    handler.sendMessage(Message.obtain(handler,0,0, 0));
+                //TODO: arg2 - кол-во волн если бесконечный режим и кол-во очков если уровень
+                 /*
+                 what:
+                    0 - диалоговое окно
+                        arg1:
+                            0 - проиграл
+                            1 - выиграл
+                        arg2: -
+                    1 - меняем хп
+                        arg1:
+                            0 - самолета
+                            1 - базы
+                        arg2:
+                            кол-во хп, которое надо установить
+                    2 - устанавливаемм стартовые настро
+                  */
             }
             else if (samolet.turret_exist() && Enemy.check_two(samolet.get_turret(), enemy, new double[]{(width/100), (height/150), -(width/100),
                     -(height/150), (width/100), 0, -(width/100), 0}) && !(enemy instanceof Heart)){ //если турель есть, то проверяем столкновение с ней
@@ -366,9 +378,9 @@ public class DrawThread extends Thread{
                 enemy_list.remove(i);
                 i--;
                 if (base.get_hp() > 0)
-                    handler.sendMessage(Message.obtain(handler, 2, base.get_hp(), 0));
+                    handler.sendMessage(Message.obtain(handler, 1, 1, base.get_hp()));
                 else
-                    handler.sendMessage(Message.obtain(handler,0,100, 0));
+                    handler.sendMessage(Message.obtain(handler,0,0, 0));
             }
 
             else { // столкновение с пулей
@@ -433,7 +445,7 @@ public class DrawThread extends Thread{
             if (System.currentTimeMillis() - last_frame > 11)
                 try {
                     last_frame = System.currentTimeMillis();
-                    level(number);
+                    level();
                     update_samolet(); //обновляет координаты самолета
                     update_bullets(); //обновляет координаты пуль
                     update_enemy(); //отрисовывает всех врагов
@@ -447,36 +459,17 @@ public class DrawThread extends Thread{
     private int count = 0; // переменные для уровней
     private int current_enemy = -1;
 
-    public void level(int number){
-        switch (number){
-            case 1:
+    public void level(){
+
                 if (current_enemy == -1){
                     current_enemy = (int)(Math.random()*count);
                 } else if (mobs.size() > 0 && create_enemy(mobs.get(current_enemy))){
                     mobs.remove(current_enemy);
                     current_enemy = -1;
                     count--;
+                } else if (count == 0 && enemy_list.size() == 0){
+                    handler.sendMessage(Message.obtain(handler,0,1, 0));
                 }
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-        }
     }
 
     List<Byte> mobs= new ArrayList<Byte>();
@@ -496,29 +489,40 @@ public class DrawThread extends Thread{
 
     public void start_options(int number) { //стартовые установки для разных уровней
         switch (number) {
-            case 1:
-                mobs = create_level(50,0,0,0,0,0,0,0,0,0);
-                count = 50;
+            case 1: // 50
+                //mobs = create_level(3,0,0,0,0,0,0,0,0,0);
+                mobs = create_level(50,0,0,0,0,0,0,0,0,2);
                 break;
-            case 2:
+            case 2: // 70
+                //mobs = create_level(3,0,0,0,0,0,0,0,0,0);
+                mobs = create_level(40,30,0,0,0,0,0,0,0,3);
                 break;
-            case 3:
+            case 3: // 100
+                mobs = create_level(50,30,20,0,0,0,0,0,0,4);
                 break;
-            case 4:
+            case 4: // 130
+                mobs = create_level(60,35,20,15,0,0,0,0,0,5);
                 break;
-            case 5:
+            case 5: // 150
+                mobs = create_level(55,35,25,15,20,0,0,0,0,6);
                 break;
-            case 6:
+            case 6: // 180
+                mobs = create_level(65,35,25,20,25,10,0,0,0,7);
                 break;
-            case 7:
+            case 7: // 200
+                mobs = create_level(65,30,20,25,40,15,5,0,0,8);
                 break;
-            case 8:
+            case 8: // 220
+                mobs = create_level(70,35,30,25,30,18,7,5,0,9);
                 break;
-            case 9:
+            case 9: // 250
+                mobs = create_level(80,45,30,20,30,20,10,10,5,10);
                 break;
             case 10:
+                mobs.add((byte)(11));
                 break;
         }
+        count = mobs.size();
     }
 }
 
