@@ -140,6 +140,8 @@ public class PlayActivity extends AppCompatActivity {
                         many_bullets.setVisibility(View.INVISIBLE);
                         megabullet.setVisibility(View.INVISIBLE);
                         turret.setVisibility(View.INVISIBLE);
+                        if (number == 1)
+                            size.setVisibility(View.INVISIBLE);
                         hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
                         hp_base.setProgress(drawThread.get_base().get_hp());
                         green.setImageDrawable(green_pressed);
@@ -367,13 +369,13 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void update_abilities(int last_ability_time) {
-        if (last_ability_time >= Params.time_manybullets){
+        if (last_ability_time >= Params.time_manybullets && number > 2){
             many_bullets.setVisibility(View.VISIBLE);
         }
-        if (last_ability_time >= Params.time_turret){
+        if (last_ability_time >= Params.time_turret && number > 3){
             turret.setVisibility(View.VISIBLE);
         }
-        if (last_ability_time >= Params.time_megabullet){
+        if (last_ability_time >= Params.time_megabullet && number > 4){
             megabullet.setVisibility(View.VISIBLE);
         }
     }

@@ -367,7 +367,7 @@ public class DrawThread extends Thread{
                             1 - базы
                         arg2:
                             кол-во хп, которое надо установить
-                    2 - устанавливаемм стартовые настро
+                    2 - устанавливаемм стартовые настройки
                   */
             }
             else if (samolet.turret_exist() && Enemy.check_two(samolet.get_turret(), enemy, new double[]{(width/100), (height/150), -(width/100),

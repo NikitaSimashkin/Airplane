@@ -29,7 +29,7 @@ public class Params {
             time_megasun = 3000, time_cat = 3000, time_yellow = 3000, time_heart = 1000;
     public static double turret_multiplier_bullet = 1.5, many_bullets_multiplier = 0.5;
     public static int number_bullet_enemy_turret = 15;
-    public static double start_hp_multiplier = 1, start_speed_multiplier = 1000, start_damage_multiplier = 1, start_time_multiplier = 1.5;
+    public static double start_hp_multiplier = 1.5, start_speed_multiplier = 1, start_damage_multiplier = 1, start_time_multiplier = 1.5;
     public static double start_speedbullet_m = 1, start_damagebullet_m = 1, start_timebullet_m = 1;
 
     public static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000;
@@ -43,6 +43,7 @@ public class Params {
 
     public Params(Context context){
         Meteors[1] = ImageResource.METEOR_RED.getBitmap(context);
+        //Meteors[1] = ImageResource.G.getBitmap(context);
         Meteors[0] = ImageResource.METEOR_GREEN.getBitmap(context);
         Meteors[3] = ImageResource.METEOR_BLUE.getBitmap(context);
         Meteors[2] = ImageResource.METEOR_YELLOW.getBitmap(context);

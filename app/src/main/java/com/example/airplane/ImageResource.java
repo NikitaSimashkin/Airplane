@@ -26,6 +26,7 @@ public enum ImageResource {
     ENEMY_TURRET(R.drawable.enemy_turret),
     MEGABULLET(R.drawable.megabullet),
     ENEMY_MEGABULLET(R.drawable.enemy_megabullet),
+    //G(R.drawable.abc),
 
     ALIEN(R.drawable.alien),
     ALIEN_DEATH(R.drawable.alien_death),
