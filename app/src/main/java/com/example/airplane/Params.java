@@ -32,7 +32,7 @@ public class Params {
     public static double start_hp_multiplier = 1.5, start_speed_multiplier = 1, start_damage_multiplier = 1, start_time_multiplier = 1.5;
     public static double start_speedbullet_m = 1, start_damagebullet_m = 1, start_timebullet_m = 1;
 
-    public static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000;
+    public static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000; // не замыть поменят в string.xml
 
     //public static Bitmap ALIEN, ALIEN_DEATH, ALIEN_TWO,
     //ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,

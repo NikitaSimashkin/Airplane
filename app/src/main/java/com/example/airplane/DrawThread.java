@@ -390,9 +390,8 @@ public class DrawThread extends Thread{
                     if (enemy.get_alive() && Sprite.check_two(bullet, enemy, new double[]{(width/100), (height/150), -(width/100),
                             -(height/150), (width/100), 0, -(width/100), 0})){
                         enemy.collision(bullet, enemy_list);
-                        bullet.collision(bullet_list);
-                        if (!(enemy instanceof Big_meteor) || !(bullet instanceof MegaBullet))
-                            break;
+                        bullet.collision(enemy, bullet_list);
+                        break;
                     }
                 }
             }

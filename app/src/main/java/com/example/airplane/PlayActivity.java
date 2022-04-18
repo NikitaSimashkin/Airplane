@@ -2,7 +2,9 @@ package com.example.airplane;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
@@ -18,12 +20,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
@@ -33,7 +39,11 @@ import java.util.Objects;
 public class PlayActivity extends AppCompatActivity {
 
     private DrawThread drawThread;
-    private Dialog loose_or_win;
+    private Dialog loose_or_win, start;
+    private TextView start_text;
+    private ImageView helper;
+    private int step = 1; // для диалогового начального окна
+    private String[] start_phrases; // стартовые фразы
 
     protected SurfaceView play_field;
     protected Handler handler;
@@ -83,6 +93,75 @@ public class PlayActivity extends AppCompatActivity {
         loose_or_win.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         loose_or_win.setContentView(R.layout.looser_or_winner);
 
+        start = new Dialog(this);
+        start.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
+        start.setCancelable(false); // нельзя закрыто окно кнопкой назад
+        start.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        start.setContentView(R.layout.start_dialog);
+        start.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        start.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        start_text = start.findViewById(R.id.helper_text);
+        helper = start.findViewById(R.id.helper);
+
+        Resources res = getResources();
+        switch (number){
+            case 1:
+                start_phrases = res.getStringArray(R.array.start_1);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper1, null));
+                break;
+            case 2:
+                start_phrases = res.getStringArray(R.array.start_2);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper2, null));
+                break;
+            case 3:
+                start_phrases = res.getStringArray(R.array.start_3);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper3, null));
+                break;
+            case 4:
+                start_phrases = res.getStringArray(R.array.start_4);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper4, null));
+                break;
+            case 5:
+                start_phrases = res.getStringArray(R.array.start_5);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper5, null));
+                break;
+            case 6:
+                start_phrases = res.getStringArray(R.array.start_6);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper6, null));
+                break;
+            case 7:
+                start_phrases = res.getStringArray(R.array.start_7);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper7, null));
+                break;
+            case 8:
+                start_phrases = res.getStringArray(R.array.start_8);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper8, null));
+                break;
+            case 9:
+                start_phrases = res.getStringArray(R.array.start_9);
+                helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper9, null));
+                break;
+            case 10:
+                start_phrases = res.getStringArray(R.array.start_10);
+                break;
+        }
+
+        start_text.setText(start_phrases[0]);
+        ConstraintLayout start_dialog_layout = start.findViewById(R.id.start_dialog_layout);
+        start_dialog_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (step < start_phrases.length){
+                    start_text.setText(start_phrases[step]);
+                }
+                else if (step == start_phrases.length){
+                    start.hide();
+                    drawThread.start();
+                }
+                step++;
+            }
+        });
+
 
         background_win_or_loose = loose_or_win.findViewById(R.id.frameLayout);
         Button menu = loose_or_win.findViewById(R.id.menu);
@@ -108,7 +187,6 @@ public class PlayActivity extends AppCompatActivity {
         red.setBackground(red_not_pressed);
         blue.setBackground(blue_not_pressed);
         yellow.setBackground(yellow_not_pressed);
-
 
         ImageButton size = findViewById(R.id.size_button);
         int k = size.getHeight();
@@ -137,6 +215,7 @@ public class PlayActivity extends AppCompatActivity {
                     case 2:
                         next.setBackgroundColor(Color.BLUE); // TODO: не забыть изменить
                         next.setClickable(true);
+                        drawThread.change_bullet_color(1);
                         many_bullets.setVisibility(View.INVISIBLE);
                         megabullet.setVisibility(View.INVISIBLE);
                         turret.setVisibility(View.INVISIBLE);
@@ -167,11 +246,10 @@ public class PlayActivity extends AppCompatActivity {
         play_field.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
+                start.show();
                 width = play_field.getWidth();
                 height = play_field.getHeight();
                 drawThread = create_new_thread(width, height, number);
-                drawThread.start();
-                drawThread.change_bullet_color(1);
             }
 
             @Override

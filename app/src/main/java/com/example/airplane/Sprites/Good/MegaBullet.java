@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
+import com.example.airplane.Sprites.Bad.Big_meteor;
+import com.example.airplane.Sprites.Bad.Enemy;
 
 import java.util.List;
 
@@ -17,5 +19,8 @@ public class MegaBullet extends Bullet{
     }
 
     @Override
-    public void collision(List<Bullet> bullet_list) {}
+    public void collision(Enemy enemy, List<Bullet> bullet_list) {
+        if ((enemy instanceof Big_meteor))
+            bullet_list.remove(this);
+    }
 }

@@ -5,6 +5,7 @@ import android.graphics.Rect;
 
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
+import com.example.airplane.Sprites.Bad.Enemy;
 import com.example.airplane.Sprites.Sprite;
 
 import java.util.List;
@@ -57,7 +58,7 @@ public class Bullet extends Sprite {
         return size;
     }
 
-    public void collision(List<Bullet> bullet_list){ // при столкновени по умолчанию удаляем
+    public void collision(Enemy enemy, List<Bullet> bullet_list){ // при столкновени по умолчанию удаляем
         bullet_list.remove(this);
     }
 }
