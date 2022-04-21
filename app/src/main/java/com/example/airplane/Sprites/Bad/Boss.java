@@ -8,28 +8,39 @@ import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
+import com.example.airplane.Sprites.Good.Elain;
 import com.example.airplane.Sprites.Sprite;
 
 import java.util.List;
+import android.os.Handler;
+import android.os.Message;
 
 public class Boss extends Enemy{
     private DrawThread drawThread;
     private List<Enemy> enemyList;
+    private List<Bullet> bulletList;
 
-    private long time_one, time_center = 2000;
+    private long time_one, time_center = 5000;
     private boolean back = true;
     List<Byte> enemys;
     private int count;
     private int step = 0, number = 1;
+    private Handler handler;
 
     private boolean bullet_is_created = false, meteor_is_created = false, turret_is_created = false;
-    private static boolean meteor_flag = false, turret_flag = false;
+    private static boolean meteor_flag, turret_flag;
 
-    public Boss(Context context, DrawThread drawThread, List<Enemy> enemyList) {
+    public Boss(Context context, DrawThread drawThread, List<Enemy> enemyList, List<Bullet> bulletList, Handler handler) {
         super(ImageResource.BOSS, Sprite.height/32, Sprite.width, 31* Sprite.height/32, 14* Sprite.width/10,
                 context, Params.boss_damage, Params.boss_speed, Params.boss_hp, 6);
         this.drawThread = drawThread;
         this.enemyList = enemyList;
+        this.bulletList = bulletList;
+        this.handler = handler;
+        Boss.elain_in_center = false;
+        Boss.time_center_one = 0;
+        Boss.meteor_flag = false;
+        Boss.turret_flag = false;
     }
 
     @Override
@@ -101,32 +112,54 @@ public class Boss extends Enemy{
     public void enemy_switch(int number){
         switch (number){
             case 1:
-                enemys = DrawThread.create_level(7, 7, 7, 5, 4, 5, 3,1, 1, 1);
-                //enemys = DrawThread.create_level(0, 0, 0, 0, 0, 0, 0,0, 0, 0);
+                //enemys = DrawThread.create_level(7, 7, 7, 5, 4, 5, 3,1, 1, 1);
+                enemys = DrawThread.create_level(0, 0, 0, 0, 0, 0, 0,0, 0, 0);
                 break;
             case 2:
-                enemys = DrawThread.create_level(9, 9, 8, 6, 5, 6, 3,2, 1, 2);
-                //enemys = DrawThread.create_level(0, 0, 0, 0, 0, 0, 0,0, 0, 0);
+                //enemys = DrawThread.create_level(9, 9, 8, 6, 5, 6, 3,2, 1, 2);
+                enemys = DrawThread.create_level(0, 0, 0, 0, 0, 0, 0,0, 0, 0);
                 break;
             case 3:
-                 enemys = DrawThread.create_level(11, 10, 10, 6, 7, 6, 5, 3, 2, 4);
-                //enemys = DrawThread.create_level(0, 0, 0, 0, 0, 0, 0,0, 0, 0);
+                //enemys = DrawThread.create_level(11, 10, 10, 6, 7, 6, 5, 3, 2, 4);
+                enemys = DrawThread.create_level(0, 0, 0, 0, 0, 0, 0,0, 0, 0);
                 break;
             case 4:
-                enemys = DrawThread.create_level(15, 12, 10, 7, 8, 6, 6, 4, 2, 6);
-                //enemys = DrawThread.create_level(0, 0, 0, 0, 0, 0, 0,0, 0, 0);
+                //enemys = DrawThread.create_level(15, 12, 10, 7, 8, 6, 6, 4, 2, 6);
+                enemys = DrawThread.create_level(0, 0, 0, 0, 0, 0, 0,0, 0, 0);
                 break;
         }
         count = enemys.size();
     }
-    private boolean flag = true;
+    private boolean flag = true, flag_f = false;
+    private boolean[] flags_number = new boolean[6];
     public void center(long time_center){ //босс выходит в центер и уходит назад, number - номер выхода
         if (left > Sprite.width/2 && back) {
             left = left - (Sprite.width / speed);
             right = right - (Sprite.width / speed);
             time_one = System.currentTimeMillis();
-        } //else if (System.currentTimeMillis() - time_one < time_center){}
-        else if (System.currentTimeMillis() - time_one > time_center){
+            if (!flag_f) {
+                handler.handleMessage(Message.obtain(handler, 4, 0, 0));
+                handler.sendMessage(Message.obtain(handler,6,0,0));
+                flag_f = true;
+            }
+        } else if (!flags_number[number] ){
+
+            if (System.currentTimeMillis() - time_one > time_center)
+                center_action();
+            else
+                if (number == 1)
+                    handler.sendMessage(Message.obtain(handler,6,1,0));
+                if (number == 2)
+                    handler.sendMessage(Message.obtain(handler,6,4,0));
+                if (number == 3)
+                    handler.sendMessage(Message.obtain(handler,6,5 ,0));
+                if (number == 4)
+                    handler.sendMessage(Message.obtain(handler,6,6 ,0));
+                if (number == 5)
+                    handler.sendMessage(Message.obtain(handler,6,7 ,0));
+
+        }
+        else {
             if (flag) {
                 center_switch(number);
                 flag = false;
@@ -142,8 +175,70 @@ public class Boss extends Enemy{
                     enemy_switch(number);
                     number++;
                     flag = true;
+                    flag_f = false;
+                    handler.handleMessage(Message.obtain(handler, 5, 0, 0));
+                    if (number == 6)
+                        handler.sendMessage(Message.obtain(handler,0,1, 0));
                 }
             }
+        }
+    }
+    private boolean elain_is_created = false, bullet_elain_is_created = false;
+    private static boolean elain_in_center = false;
+
+    public static void set_elain_in_center(){
+        Boss.elain_in_center = true;
+        time_center_one = System.currentTimeMillis();
+    }
+
+    private static long time_center_one;
+    public void center_action(){
+        switch(number){
+            case 1:
+                if (!elain_is_created){
+                    bulletList.add(new Elain(context));
+                    elain_is_created = true;
+                }
+                else if (!bullet_elain_is_created && elain_in_center){
+                    if (System.currentTimeMillis() - time_center_one > 10000) {
+                        Bullet_enemy bullet = new Bullet_enemy(new double[]{height / 2 - 3 * height / 32, width - 6 * height / 32, height / 2 + 3 * height / 32, width},
+                                context, 1, 2) {
+                            @Override
+                            public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
+                                enemy_list.remove(this);
+                            }
+
+                            @Override
+                            public void update_koord() {
+                                speed = Params.bullet_stats[5];
+                                super.update_koord();
+                            }
+                        };
+                        enemyList.add(bullet);
+                        bullet_elain_is_created = true;
+                    } else {
+                        if (System.currentTimeMillis() - time_center_one < 5000)
+                            handler.sendMessage(Message.obtain(handler,6,2,0));
+                        else
+                            handler.sendMessage(Message.obtain(handler,6,3,0));
+                    }
+                } else if (!Elain.get_alive()){
+                    flags_number[1] = true;
+                    speed /= 2;
+                }
+                break;
+            case 2:
+                flags_number[2] = true;
+                break;
+            case 3:
+                flags_number[3] = true;
+                break;
+            case 4:
+                flags_number[4] = true;
+                break;
+            case 5:
+                flags_number[5] = true;
+                break;
         }
     }
 
@@ -179,35 +274,36 @@ public class Boss extends Enemy{
     }
 
     public void create_birds(){
-        enemyList.add(new Bird(1* Sprite.height/32, 0, context));
-        enemyList.add(new Bird(3*height/32, 0, context));
-        enemyList.add(new Bird(5*height/32, 0, context));
-        enemyList.add(new Bird(7*height/32, 0, context));
-        enemyList.add(new Bird(9*height/32, 0, context));
-        enemyList.add(new Bird(11*height/32, 0, context));
-        enemyList.add(new Bird(13*height/32, 0, context));
-        enemyList.add(new Bird(15*height/32, 0, context));
-        enemyList.add(new Bird(17*height/32, 0, context));
-        enemyList.add(new Bird(19*height/32, 0, context));
-        enemyList.add(new Bird(21*height/32, 0, context));
-        enemyList.add(new Bird(23*height/32, 0, context));
-        enemyList.add(new Bird(25*height/32, 0, context));
-        enemyList.add(new Bird(27*height/32, 0, context));
-        enemyList.add(new Bird(29*height/32, 0, context));
+//        enemyList.add(new Bird(1* Sprite.height/32, 0, context));
+//        enemyList.add(new Bird(3*height/32, 0, context));
+//        enemyList.add(new Bird(5*height/32, 0, context));
+//        enemyList.add(new Bird(7*height/32, 0, context));
+//        enemyList.add(new Bird(9*height/32, 0, context));
+//        enemyList.add(new Bird(11*height/32, 0, context));
+//        enemyList.add(new Bird(13*height/32, 0, context));
+//        enemyList.add(new Bird(15*height/32, 0, context));
+//        enemyList.add(new Bird(17*height/32, 0, context));
+//        enemyList.add(new Bird(19*height/32, 0, context));
+//        enemyList.add(new Bird(21*height/32, 0, context));
+//        enemyList.add(new Bird(23*height/32, 0, context));
+//        enemyList.add(new Bird(25*height/32, 0, context));
+//        enemyList.add(new Bird(27*height/32, 0, context));
+//        enemyList.add(new Bird(29*height/32, 0, context));
     }
 
     public void create_big_bullets(){
         enemyList.add(new Bullet_enemy(context, 9));
         enemyList.add(new Bullet_enemy(context, 19));
+        handler.handleMessage(Message.obtain(handler, 5, 0, 0));
     }
 
     public void create_packmans(){
-        enemyList.add(new Packman(1*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(6*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(11*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(16*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(21*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(26*height/32, 0, context, enemyList));
+//        enemyList.add(new Packman(1*height/32, 0, context, enemyList));
+//        enemyList.add(new Packman(6*height/32, 0, context, enemyList));
+//        enemyList.add(new Packman(11*height/32, 0, context, enemyList));
+//        enemyList.add(new Packman(16*height/32, 0, context, enemyList));
+//        enemyList.add(new Packman(21*height/32, 0, context, enemyList));
+//        enemyList.add(new Packman(26*height/32, 0, context, enemyList));
 
     }
 
@@ -216,16 +312,16 @@ public class Boss extends Enemy{
     }
 
     public void create_bird_and_sun(){
-        enemyList.add(new Bird(1* Sprite.height/32, 0, context));
-        enemyList.add(new Bird(7*height/32, 0, context));
-        enemyList.add(new Bird(13*height/32, 0, context));
-        enemyList.add(new Bird(19*height/32, 0, context));
-        enemyList.add(new Bird(25*height/32, 0, context));
-        enemyList.add(new Sun(1*height/32, 0, context));
-        enemyList.add(new Sun(7*height/32, 0, context));
-        enemyList.add(new Sun(13*height/32, 0, context));
-        enemyList.add(new Sun(19*height/32, 0, context));
-        enemyList.add(new Sun(25*height/32, 0, context));
+//        enemyList.add(new Bird(1* Sprite.height/32, 0, context));
+//        enemyList.add(new Bird(7*height/32, 0, context));
+//        enemyList.add(new Bird(13*height/32, 0, context));
+//        enemyList.add(new Bird(19*height/32, 0, context));
+//        enemyList.add(new Bird(25*height/32, 0, context));
+//        enemyList.add(new Sun(1*height/32, 0, context));
+//        enemyList.add(new Sun(7*height/32, 0, context));
+//        enemyList.add(new Sun(13*height/32, 0, context));
+//        enemyList.add(new Sun(19*height/32, 0, context));
+//        enemyList.add(new Sun(25*height/32, 0, context));
     }
 
     public void create_turrets(){

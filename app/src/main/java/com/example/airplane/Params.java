@@ -27,7 +27,7 @@ public class Params {
     public static int time_bullet_small = 250, time_bullet_normal = 500, time_bullet_big = 1000, time_meteor = 1000,
             time_alien = 1000, time_alien_two = 1000, time_packman = 1500, time_sun = 2000, time_bird = 1000,
             time_megasun = 3000, time_cat = 3000, time_yellow = 3000, time_heart = 1000;
-    public static double turret_multiplier_bullet = 1.5, many_bullets_multiplier = 0.5;
+    public static double turret_multiplier_bullet = 2, many_bullets_multiplier = 0.5, turret_multiplier_bullet_enemy = 8;
     public static int number_bullet_enemy_turret = 15;
     public static double start_hp_multiplier = 1.5, start_speed_multiplier = 1, start_damage_multiplier = 1, start_time_multiplier = 1.5;
     public static double start_speedbullet_m = 1, start_damagebullet_m = 1, start_timebullet_m = 1;

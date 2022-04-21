@@ -99,12 +99,16 @@
                 android:background="@null" />
         </LinearLayout>
 
-        <fragment
-            class="com.example.airplane.SpaceshipControllerFragment"
+        <LinearLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            tools:layout="@layout/fragment_spaceship_controller" />
+            android:orientation="horizontal">
+
+
+
+        </LinearLayout>
 
 
     </LinearLayout>

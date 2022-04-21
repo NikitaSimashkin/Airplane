@@ -25,6 +25,10 @@ public class Bullet extends Sprite {
             change(color, size);
     }
 
+    protected Bullet(double up, double left, double down, double right, Context context) { // Отрисовка Элаина
+        super(ImageResource.ELAIN_1, up, left, down, right, context);
+    }
+
     public int getColor() {
         return color;
     }

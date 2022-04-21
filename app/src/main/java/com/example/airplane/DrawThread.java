@@ -285,7 +285,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_boss(){
-        enemy_list.add(new Boss(context, this, enemy_list));
+        enemy_list.add(new Boss(context, this, enemy_list, bullet_list, handler));
         return true;
     }
 

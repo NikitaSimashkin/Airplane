@@ -15,7 +15,7 @@ public class Enemy_turret extends Enemy{
 
     private final List<Enemy> enemyList;
     private long last;
-    private double time_bullet = Params.time_bullet_small*Params.turret_multiplier_bullet;
+    private double time_bullet = Params.time_bullet_small*Params.turret_multiplier_bullet_enemy;
     private int number = 0, max_number = Params.number_bullet_enemy_turret;
 
     public Enemy_turret(Context context, double h, List<Enemy> enemyList) {

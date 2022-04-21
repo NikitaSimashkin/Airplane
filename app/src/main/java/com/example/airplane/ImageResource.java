@@ -56,7 +56,16 @@ public enum ImageResource {
     BREAKING_HEART(R.drawable.breaking_heart),
 
     BOSS(R.drawable.boss),
-    MEGASUN(R.drawable.megasun);
+    MEGASUN(R.drawable.megasun),
+
+    ELAIN_1(R.drawable.helper101),
+    ELAIN_2(R.drawable.helper102),
+    ELAIN_3(R.drawable.helper103),
+    ELAIN_4(R.drawable.helper104),
+    ELAIN_5(R.drawable.helper105),
+    ELAIN_6(R.drawable.helper106),
+    ELAIN_7(R.drawable.helper107),
+    ELAIN_DEATH(R.drawable.helper_death);
 
     private final int resourceId;
     private ImageResource(int resourceId){
