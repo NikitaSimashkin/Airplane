@@ -21,17 +21,17 @@ public class Enemy extends Sprite {
 
     public Enemy(Bitmap bitmap, double up, double left, double down, double right, Context context, int damage, int speed, int hp, int color) {
         super(bitmap, up, left, down, right, context);
-        this.damage = (int)(Params.start_damage_multiplier*damage);
-        this.speed = (int)(Params.start_speed_multiplier*speed) ;
-        this.hp = (int)(Params.start_hp_multiplier*hp);
+        this.damage = (int)(Params.get_start_damage()*damage);
+        this.speed = (int)(Params.get_start_speed()*speed) ;
+        this.hp = (int)(Params.get_start_hp()*hp);
         this.color = color;
     }
 
     public Enemy(ImageResource imageResource, double up, double left, double down, double right, Context context, int damage, int speed, int hp, int color) {
         super(imageResource, up, left, down, right, context);
-        this.damage = (int)(Params.start_damage_multiplier*damage);
-        this.speed = (int)(Params.start_speed_multiplier*speed) ;
-        this.hp = (int)(Params.start_hp_multiplier*hp);
+        this.damage = (int)(Params.get_start_damage()*damage);
+        this.speed = (int)(Params.get_start_speed()*speed) ;
+        this.hp = (int)(Params.get_start_hp()*hp);
         this.color = color;
     }
 

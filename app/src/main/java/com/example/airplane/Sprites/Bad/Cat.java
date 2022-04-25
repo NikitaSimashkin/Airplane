@@ -17,8 +17,8 @@ public class Cat extends Enemy{
     @Override
     public void setDeath() {
         if (i == 0){
-            speed = (int)(Params.cat_speed_two * Params.start_speed_multiplier);
-            hp = (int)(Params.cat_hp_two * Params.start_hp_multiplier);
+            speed = (int)(Params.cat_speed_two * Params.get_start_speed());
+            hp = (int)(Params.cat_hp_two * Params.get_start_hp());
             bitmap = ImageResource.CAT_TWO.getBitmap(context);
             i++;
         }

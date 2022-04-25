@@ -1,15 +1,34 @@
 <resources>
-    <string name="app_name">Airplane</string>
-    <string name="Title">Hello, world</string>
-    <string name="play">PLAY</string>
-    <string name="lose"></string>>
-    <string name="menu">MENU</string>>
-    <string name="retru">RETRY</string>>
-    <string name="next">NEXT</string>>
-    <string name="infinity_text">INFINITY \n MODE</string>>
+  <!--  <string name="app_name" translatable="false">Airplane</string>
+    <string name="Title" translatable="false">Hello, world</string>
+    <string name="play" translatable="false">PLAY</string>
+    <string name="lose" translatable="false"></string>>
+    <string name="name" translatable="false">Name:</string>>
+    <string name="menu" translatable="false">MENU</string>>
+    <string name="retru" translatable="false">RETRY</string>>
+    <string name="next" translatable="false">NEXT</string>>
+    <string name="infinity_text" translatable="false">INFINITY \n MODE</string>
+    <string name="difficult" translatable="false">Difficulty:</string>
+    <string name="easy" translatable="false">Easy</string>
+    <string name="normal" translatable="false">Normal</string>
+    <string name="hard" translatable="false">Hard</string>
+    <string name="your_name">Your name</string>-->
+    <string name="app_name" translatable="false">Airplane</string>
+    <string name="Title" translatable="false">Привет, мир</string>
+    <string name="play" translatable="false">Играть</string>
+    <string name="name" translatable="false">Имя:</string>>
+    <string name="menu" translatable="false">МЕНЮ</string>>
+    <string name="retru" translatable="false">ЗАНОВО</string>>
+    <string name="next" translatable="false">ДАЛЬШЕ</string>>
+    <string name="infinity_text" translatable="false">БЕСКОНЕЧНЫЙ \n РЕЖИМ</string>
+    <string name="difficult" translatable="false">Сложность:</string>
+    <string name="easy" translatable="false">Легкая</string>
+    <string name="normal" translatable="false">Средняя</string>
+    <string name="hard" translatable="false">Высокая</string>
+    <string name="your_name">Ваше имя</string>
 
     <string-array name="start_1">
-        <item>Привет, "введенное игроком имя"!</item>
+        <item>Привет, \n </item>
         <item>Меня зовут Элаин. Старый помощник капитана уволился, поэтому теперь я за него.</item>
         <item>Нам с тобой предстоит долгий путь. Для начала, СПАСИ НАС ОТ МЕТЕОРИТОВ, ААААААААААА</item>
     </string-array>
@@ -66,7 +85,7 @@
 
     <string-array name="start_10">
         <item></item>
-        <item>Я ждал этого дня! В этот раз победа будет за мной! Я привел сюда ЛУЧШУЮ АРМИЮ ГАЛАКТИКИ! Тебе конец, "Имя"</item>
+        <item>Я ждал этого дня! В этот раз победа будет за мной! Я привел сюда ЛУЧШУЮ АРМИЮ ГАЛАКТИКИ! Тебе конец, </item>
         <item>Лорд Блэкитус, моя миссия выполнена - вся информация об их планете у вас. Что прикажете делать?</item>
         <item>Ты хорошо поработал… Проблема лишь в том, что ты слишком многое знаешь. Придется решить эту проблему радикально.</item>
         <item>Ты серьезно думаешь победить меня? У меня для тебя есть небольшие подарочки.</item>
@@ -74,6 +93,4 @@
         <item>Ты мне надоел, я правда устал играться с тобой и давать тебе ложную надежду. Эту волну ты не переживешь</item>
         <item>ТЫ ДУМАЕШЬ ТЫ ПОБЕДИЛ!? НЕ НАДЕЙСЯ! ВСЯ ИНФОРМАЦИЯ О ТВОЕЙ ПЛАНЕТЕ У МЕНЯ! НЕ СЕГОДНЯ, ТАК ЗАВТРА, НО ОНА СТАНЕТ МОЕЙ!!</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -186,7 +186,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_meteor(){
-        if (System.currentTimeMillis() - time >= Params.time_meteor*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_meteor*Params.get_start_time()){
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Meteor((height/32 + enemys*(2 * height/32)),0, context, (int)(Math.random()*4 + 1)));
             time = System.currentTimeMillis();
@@ -196,7 +196,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_alien(){
-        if (System.currentTimeMillis() - time >= Params.time_alien*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_alien*Params.get_start_time()){
             enemys = (int)(Math.random()*9);
             enemy_list.add(new Alien(height/32 + enemys*(3 * height/32), 0, context));
             time = System.currentTimeMillis();
@@ -206,7 +206,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_alien_two(){
-        if (System.currentTimeMillis() - time >= Params.time_alien_two*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_alien_two*Params.get_start_time()){
             enemys = (int)(Math.random()*9);
             enemy_list.add(new Alien_two(height/32 + enemys*(3 * height/32), 0, context));
             time = System.currentTimeMillis();
@@ -216,7 +216,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_packman(){
-        if (System.currentTimeMillis() - time >= Params.time_packman*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_packman*Params.get_start_time()){
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Packman(height/32 +enemys*(2 * height/32),0, context, enemy_list));
             time = System.currentTimeMillis();
@@ -226,7 +226,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_bird(){
-        if (System.currentTimeMillis() - time >= Params.time_bird*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_bird*Params.get_start_time()){
             enemys = (int)(Math.random()*15);
             enemy_list.add(new Bird(height/32 + enemys*(2*height /32), 0, context));
             time = System.currentTimeMillis();
@@ -236,7 +236,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_sun(){
-        if (System.currentTimeMillis() - time >= Params.time_sun*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_sun*Params.get_start_time()){
             enemys = (int)(Math.random()*9);
             enemy_list.add(new Sun(height/32 + enemys*(3*height /32), 0, context));
             time = System.currentTimeMillis();
@@ -246,7 +246,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_megasun(){
-        if (System.currentTimeMillis() - time >= Params.time_megasun*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_megasun*Params.get_start_time()){
             enemy_list.add(new Megasun(height/32, 0, context));
             time = System.currentTimeMillis();
             return true;
@@ -255,7 +255,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_cat(){
-        if (System.currentTimeMillis() - time >= Params.time_cat*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_cat*Params.get_start_time()){
             enemys = (int)(Math.random()*6);
             enemy_list.add(new Cat(height/32 + enemys*(4*height /32), 0, context));
             time = System.currentTimeMillis();
@@ -265,7 +265,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_yellow(){
-        if (System.currentTimeMillis() - time >= Params.time_yellow*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_yellow*Params.get_start_time()){
             enemys = (int)(Math.random()*6);
             enemy_list.add(new Yellow(height/32 + enemys*(2*height /32), 0, context));
             time = System.currentTimeMillis();
@@ -275,7 +275,7 @@ public class DrawThread extends Thread{
     }
 
     public boolean create_heart(){
-        if (System.currentTimeMillis() - time >= Params.time_heart*Params.start_time_multiplier){
+        if (System.currentTimeMillis() - time >= Params.time_heart*Params.get_start_time()){
             enemys = (int)(Math.random()*14);
             enemy_list.add(new Heart(height/32 + enemys*(2 * height/32), 0, context));
             time = System.currentTimeMillis();
@@ -306,8 +306,6 @@ public class DrawThread extends Thread{
         bullet_list.add(new MegaBullet(samolet.get_koord(), context));
         return true;
     }
-
-    private int counter = 0;
 
     public boolean create_enemy(int enemy_number){
         switch (enemy_number){

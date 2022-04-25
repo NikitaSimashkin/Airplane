@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Airplane</string>
+    <string name="Title" translatable="false">Привет, мир</string>
+    <string name="play" translatable="false">Играть</string>
+    <string name="lose" translatable="false"></string>>
+    <string name="name" translatable="false">Имя:</string>>
+    <string name="menu" translatable="false">МЕНЮ</string>>
+    <string name="retru" translatable="false">ЗАНОВО</string>>
+    <string name="next" translatable="false">ДАЛЬШЕ</string>>
+    <string name="infinity_text" translatable="false">БЕСКОНЕЧНЫЙ \n РЕЖИМ</string>
+    <string name="your_name">Ваше имя</string>
+
+</resources>

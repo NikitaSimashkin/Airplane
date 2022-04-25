@@ -116,7 +116,11 @@ public class PlayActivity extends AppCompatActivity {
         switch (number){
             case 1:
                 start_phrases = res.getStringArray(R.array.start_1);
+                start_phrases[0] +=
+                        context.getSharedPreferences("Main", MODE_PRIVATE).getString(MainActivity.nickname, "") +
+                        "!";
                 helper.setImageDrawable(ResourcesCompat.getDrawable(res, R.drawable.helper1, null));
+                start_text.setMaxLines(2);
                 break;
             case 2:
                 start_phrases = res.getStringArray(R.array.start_2);
@@ -152,6 +156,9 @@ public class PlayActivity extends AppCompatActivity {
                 break;
             case 10:
                 start_phrases = res.getStringArray(R.array.start_10);
+                start_phrases[1] += " " +
+                        context.getSharedPreferences("Main", MODE_PRIVATE).getString(MainActivity.nickname, "") +
+                                "!";
                 break;
         }
 
@@ -162,6 +169,8 @@ public class PlayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (step < start_phrases.length){
                     start_text.setText(start_phrases[step]);
+                    if (number == 1)
+                        start_text.setMaxLines(10);
                 }
                 else if (step == start_phrases.length){
                     start.hide();
