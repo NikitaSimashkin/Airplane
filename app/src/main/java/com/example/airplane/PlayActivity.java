@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -399,10 +400,16 @@ public class PlayActivity extends AppCompatActivity {
                     loose_or_win.show();
                 break;
             case 1:
+                SharedPreferences pref = getSharedPreferences("Main", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
                 if (number == 10){
                     next.setBackgroundColor(Color.GRAY);
                     next.setClickable(false);
+                    edit.putBoolean("level_inf", true);
+                } else {
+                    edit.putBoolean("level_" + (number + 1), true);
                 }
+                edit.apply();
                 background_win_or_loose.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_win, null));
                 if (!isFinishing())
                     loose_or_win.show();

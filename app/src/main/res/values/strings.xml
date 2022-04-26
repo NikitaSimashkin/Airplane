@@ -1,31 +1,19 @@
 <resources>
-  <!--  <string name="app_name" translatable="false">Airplane</string>
-    <string name="Title" translatable="false">Hello, world</string>
-    <string name="play" translatable="false">PLAY</string>
-    <string name="lose" translatable="false"></string>>
-    <string name="name" translatable="false">Name:</string>>
-    <string name="menu" translatable="false">MENU</string>>
-    <string name="retru" translatable="false">RETRY</string>>
-    <string name="next" translatable="false">NEXT</string>>
-    <string name="infinity_text" translatable="false">INFINITY \n MODE</string>
-    <string name="difficult" translatable="false">Difficulty:</string>
-    <string name="easy" translatable="false">Easy</string>
-    <string name="normal" translatable="false">Normal</string>
-    <string name="hard" translatable="false">Hard</string>
-    <string name="your_name">Your name</string>-->
-    <string name="app_name" translatable="false">Airplane</string>
-    <string name="Title" translatable="false">Привет, мир</string>
-    <string name="play" translatable="false">Играть</string>
-    <string name="name" translatable="false">Имя:</string>>
-    <string name="menu" translatable="false">МЕНЮ</string>>
-    <string name="retru" translatable="false">ЗАНОВО</string>>
-    <string name="next" translatable="false">ДАЛЬШЕ</string>>
-    <string name="infinity_text" translatable="false">БЕСКОНЕЧНЫЙ \n РЕЖИМ</string>
-    <string name="difficult" translatable="false">Сложность:</string>
-    <string name="easy" translatable="false">Легкая</string>
-    <string name="normal" translatable="false">Средняя</string>
-    <string name="hard" translatable="false">Высокая</string>
+    <string name="app_name">Airplane</string>
+    <string name="Title">Привет, мир</string>
+    <string name="play">Играть</string>
+    <string name="name">Имя:</string>>
+    <string name="menu">МЕНЮ</string>>
+    <string name="retru">ЗАНОВО</string>>
+    <string name="next">ДАЛЬШЕ</string>>
+    <string name="infinity_text">БЕСКОНЕЧНЫЙ \n РЕЖИМ</string>
+    <string name="difficult">Сложность:</string>
+    <string name="easy">Легкая</string>
+    <string name="normal">Средняя</string>
+    <string name="hard">Высокая</string>
     <string name="your_name">Ваше имя</string>
+    <string name="shop">Магазин</string>
+    <string name="rate_table">Таблица лидеров</string>
 
     <string-array name="start_1">
         <item>Привет, \n </item>

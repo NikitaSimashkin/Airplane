@@ -3,11 +3,14 @@ package com.example.airplane;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Levels_activity extends AppCompatActivity {
@@ -59,27 +62,41 @@ public class Levels_activity extends AppCompatActivity {
                 }
             };
 
-            Button one = (Button) findViewById(R.id.one);
-            Button two = findViewById(R.id.two);
-            Button three = findViewById(R.id.three);
-            Button four = findViewById(R.id.four);
-            Button five = findViewById(R.id.five);
-            Button six = findViewById(R.id.six);
-            Button seven = findViewById(R.id.seven);
-            Button eight = findViewById(R.id.eight);
-            Button nine = findViewById(R.id.nine);
-            Button ten = findViewById(R.id.ten);
+            ArrayList<Button> level_buttons = new ArrayList<>();
+            level_buttons.add(findViewById(R.id.one));
+            level_buttons.add(findViewById(R.id.two));
+            level_buttons.add(findViewById(R.id.three));
+            level_buttons.add(findViewById(R.id.four));
+            level_buttons.add(findViewById(R.id.five));
+            level_buttons.add(findViewById(R.id.six));
+            level_buttons.add(findViewById(R.id.seven));
+            level_buttons.add(findViewById(R.id.eight));
+            level_buttons.add(findViewById(R.id.nine));
+            level_buttons.add(findViewById(R.id.ten));
 
-            one.setOnClickListener(Levels);
-            two.setOnClickListener(Levels);
-            three.setOnClickListener(Levels);
-            four.setOnClickListener(Levels);
-            five.setOnClickListener(Levels);
-            six.setOnClickListener(Levels);
-            seven.setOnClickListener(Levels);
-            eight.setOnClickListener(Levels);
-            nine.setOnClickListener(Levels);
-            ten.setOnClickListener(Levels);
+            SharedPreferences pref = getSharedPreferences("Main", MODE_PRIVATE);
+            pref.edit().putBoolean("level_1", true).apply();
+
+            boolean[] level_acces = new boolean[level_buttons.size()];
+            for (int i = 0; i < level_acces.length; i++){
+                Button current_button = level_buttons.get(i);
+                current_button.setOnClickListener(Levels);
+                level_acces[i] = pref.getBoolean("level_" + (i + 1), false);
+                if (!level_acces[i]){
+                    current_button.setClickable(false);
+                    current_button.setBackgroundColor(Color.GRAY);
+                } else {
+                    current_button.setBackgroundColor(Color.BLUE);
+                }
+            }
+
+            Button level_inf = findViewById(R.id.button_inf);
+            if (!pref.getBoolean("level_inf", false)){
+                level_inf.setClickable(false);
+                level_inf.setBackgroundColor(Color.GRAY);
+            } else {
+                level_inf.setBackgroundColor(Color.BLUE);
+            }
         }
     }
 

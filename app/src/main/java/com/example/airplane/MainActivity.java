@@ -120,5 +120,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button shop = findViewById(R.id.shop);
+        shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Shop.class);
+                startActivity(i);
+            }
+        });
+
     }
 }

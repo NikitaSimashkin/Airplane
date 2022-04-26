@@ -10,5 +10,11 @@
     <string name="next" translatable="false">ДАЛЬШЕ</string>>
     <string name="infinity_text" translatable="false">БЕСКОНЕЧНЫЙ \n РЕЖИМ</string>
     <string name="your_name">Ваше имя</string>
+    <string name="difficult">Сложность:</string>
+    <string name="easy">Легкая</string>
+    <string name="normal">Средняя</string>
+    <string name="hard">Высокая</string>
+    <string name="shop">Магазин</string>
+    <string name="rate_table">Таблица лидеров</string>
 
 </resources>
