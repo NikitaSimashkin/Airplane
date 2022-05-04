@@ -10,6 +10,7 @@ public class Meteor extends Enemy {
                 line_v + 4*height/32, width*15/14 + line_h, context,
                 Params.meteor_damage, Params.meteor_speed, Params.meteor_hp, color);
         change_bitmap(color);
+        points = Params.p_meteor;
         }
 
 

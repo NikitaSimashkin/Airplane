@@ -16,6 +16,7 @@ public class Packman extends Enemy {
                 width*13/12 + line_h, context, Params.packman_damage, Params.packman_speed, Params.packman_hp, 3);
         last_time = System.currentTimeMillis();
         this.enemy_list = enemy_list;
+        points = Params.p_packman;
     }
 
     @Override

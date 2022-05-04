@@ -1,6 +1,8 @@
 package com.example.airplane;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -119,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (pref.getString("ship", "").equals("")){
+            SharedPreferences.Editor edit = pref.edit();
+            edit.putString("ship", "default_ship");
+            edit.putString("bullet", "default_bullet");
+            edit.putString("base", "default_base");
+            edit.apply();
+        }
 
         Button shop = findViewById(R.id.shop);
         shop.setOnClickListener(new View.OnClickListener() {

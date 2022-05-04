@@ -42,13 +42,15 @@
                 android:background="@drawable/base2"
                 android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/fdfd"
-                    style="@android:style/Widget.Holo.Light.ImageButton"
+                <TextView
+                    android:id="@+id/points"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:scaleType="fitStart" />
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    app:autoSizeTextType="uniform" />
 
                 <ImageButton
                     android:id="@+id/turret"

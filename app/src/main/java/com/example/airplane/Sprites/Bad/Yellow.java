@@ -13,6 +13,7 @@ public class Yellow extends Enemy {
         super(ImageResource.YELLOW_TWO, line_v, width+line_h, line_v + 15*height/32,
                 width*12/10 + line_h, context, Params.yellow_damage,
                 Params.yellow_speed, Params.yellow_hp, 3);
+        points = Params.p_yellow;
     }
 
     @Override

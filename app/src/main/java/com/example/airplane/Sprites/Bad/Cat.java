@@ -12,6 +12,7 @@ public class Cat extends Enemy{
         super(ImageResource.CAT_ONE, line_v, Sprite.width + line_h, 10* Sprite.height/32 + line_v,
                 Sprite.width*12/10 + line_h, context,
                 Params.cat_damage, Params.cat_speed, Params.cat_hp, 4);
+        points = Params.p_cat;
     }
 
     @Override

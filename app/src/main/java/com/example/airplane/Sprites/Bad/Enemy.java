@@ -2,22 +2,25 @@ package com.example.airplane.Sprites.Bad;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Message;
 
 import androidx.annotation.NonNull;
 
+import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Sprite;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 public class Enemy extends Sprite {
 
     protected int damage, speed, hp;
     protected boolean alive = true;
     protected long time_death = 0; // время смерти
-    protected int color;
+    protected int color, points;
 
     public Enemy(Bitmap bitmap, double up, double left, double down, double right, Context context, int damage, int speed, int hp, int color) {
         super(bitmap, up, left, down, right, context);
@@ -61,6 +64,8 @@ public class Enemy extends Sprite {
     public void setDeath() { //ставим смерть
         alive = false;
         time_death = System.currentTimeMillis();
+        DrawThread.add_points(points);
+        DrawThread.points_handler();
     }
 
     public int getColor() {
@@ -82,5 +87,9 @@ public class Enemy extends Sprite {
         else {
             change_hp(-two.get_damage());
         }
+    }
+
+    public int get_points(){
+        return points;
     }
 }

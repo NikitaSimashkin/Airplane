@@ -63,7 +63,7 @@ public class PlayActivity extends AppCompatActivity {
     private Button next;
     private ImageButton many_bullets, turret, megabullet, green, yellow, blue, red, size;
     private ProgressBar hp_samolet, hp_base;
-    private TextView textView;
+    private TextView textView, points;
 
     private View background_win_or_loose;
 
@@ -163,7 +163,9 @@ public class PlayActivity extends AppCompatActivity {
                 break;
         }
 
-        start_text.setText(start_phrases[0]);
+        if (number != 99)
+            start_text.setText(start_phrases[0]);
+
         ConstraintLayout start_dialog_layout = start.findViewById(R.id.start_dialog_layout);
         start_dialog_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +200,7 @@ public class PlayActivity extends AppCompatActivity {
         blue_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_not_pressed);
 
         size = findViewById(R.id.size_button);
+        points = findViewById(R.id.points);
 
         // Looper.prepare();
         Looper looper = Looper.myLooper();
@@ -207,7 +210,7 @@ public class PlayActivity extends AppCompatActivity {
                 switch (msg.what){
                     case 0: // проиграл или выиграл
                         drawThread.interrupt();
-                        win_or_loose_dialog(msg.arg1);
+                        win_or_loose_dialog(msg.arg1, msg.arg2);
                         break;
                     case 1:
                         switch(msg.arg1) {
@@ -240,6 +243,9 @@ public class PlayActivity extends AppCompatActivity {
                     case 6: // arg1 - номер фразы
                         textView.setText(start_phrases[msg.arg1]);
                         break;
+                    case 7:
+                        points.setText(Integer.toString(msg.arg1));
+                        break;
                 }
             }
         };
@@ -255,7 +261,7 @@ public class PlayActivity extends AppCompatActivity {
                 width = play_field.getWidth();
                 height = play_field.getHeight();
                 drawThread = create_new_thread(width, height, number);
-                if (number != 10) {
+                if (number != 10 && number != 99) {
                     if (!isFinishing())
                         start.show();
                 } else {
@@ -390,12 +396,18 @@ public class PlayActivity extends AppCompatActivity {
         return new DrawThread(play_field.getHolder(), getApplicationContext(), width, height, handler, number);
     }
 
-    public void win_or_loose_dialog(int win_or_loose){
+    public void win_or_loose_dialog(int win_or_loose, int points){
         switch(win_or_loose){
             case 0:
                 next.setBackgroundColor(Color.GRAY);
                 next.setClickable(false);
                 background_win_or_loose.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_loose, null));
+                if (number == 99){
+                    TextView one = loose_or_win.findViewById(R.id.points_1);
+                    TextView two = loose_or_win.findViewById(R.id.points_2);
+                    one.setText(getResources().getString(R.string.inf_loose));
+                    two.setText(Integer.toString(points));
+                }
                 if (!isFinishing())
                     loose_or_win.show();
                 break;
@@ -546,6 +558,12 @@ public class PlayActivity extends AppCompatActivity {
         size.setImageBitmap(Params.Bullets[0]);
         int k = size.getHeight()/10;
         size.setPadding(3*k,3*k, 3*k, 3*k);
+
+        if (number != 99){
+            points.setVisibility(View.INVISIBLE);
+        } else {
+            points.setText(Integer.toString(0));
+        }
     }
 
     @Override
@@ -567,7 +585,6 @@ public class PlayActivity extends AppCompatActivity {
         loose_or_win.dismiss();
         start.dismiss();
         drawThread.interrupt();
-        System.out.println(1);
         super.onDestroy();
     }
 

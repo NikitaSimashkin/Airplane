@@ -94,14 +94,14 @@ public class Boss extends Enemy{
                 break;
             case 3:
                 if (!meteor_is_created){
-                    create_big_meteor();
+                    create_big_meteor(enemyList, context);
                     meteor_is_created = true;
                     meteor_flag = true;
                 }
                 break;
             case 4:
                 if (!turret_is_created){
-                    create_turrets();
+                    create_turrets(enemyList, context);
                     turret_is_created = true;
                     turret_flag = true;
                 }
@@ -255,15 +255,15 @@ public class Boss extends Enemy{
                 } else if (count == 0 && enemyList.size() == 1){
                     switch(number-1) {
                         case 1:
-                            create_birds();
+                            create_birds(enemyList, context);
                             step++;
                             break;
                         case 2:
-                            create_packmans();
+                            create_packmans(enemyList, context);
                             step++;
                             break;
                         case 3:
-                            create_bird_and_sun();
+                            create_bird_and_sun(enemyList, context);
                             step++;
                             break;
                         case 4:
@@ -273,7 +273,13 @@ public class Boss extends Enemy{
                 }
     }
 
-    public void create_birds(){
+    public void create_big_bullets(){
+        enemyList.add(new Bullet_enemy(context, 9));
+        enemyList.add(new Bullet_enemy(context, 19));
+        handler.handleMessage(Message.obtain(handler, 5, 0, 0));
+    }
+
+    public static boolean create_birds(List<Enemy> enemyList, Context context){
         enemyList.add(new Bird(1* Sprite.height/32, 0, context));
         enemyList.add(new Bird(3*height/32, 0, context));
         enemyList.add(new Bird(5*height/32, 0, context));
@@ -289,29 +295,25 @@ public class Boss extends Enemy{
         enemyList.add(new Bird(25*height/32, 0, context));
         enemyList.add(new Bird(27*height/32, 0, context));
         enemyList.add(new Bird(29*height/32, 0, context));
+        return true;
     }
 
-    public void create_big_bullets(){
-        enemyList.add(new Bullet_enemy(context, 9));
-        enemyList.add(new Bullet_enemy(context, 19));
-        handler.handleMessage(Message.obtain(handler, 5, 0, 0));
-    }
-
-    public void create_packmans(){
+    public static boolean create_packmans(List<Enemy> enemyList, Context context){
         enemyList.add(new Packman(1*height/32, 0, context, enemyList));
         enemyList.add(new Packman(6*height/32, 0, context, enemyList));
         enemyList.add(new Packman(11*height/32, 0, context, enemyList));
         enemyList.add(new Packman(16*height/32, 0, context, enemyList));
         enemyList.add(new Packman(21*height/32, 0, context, enemyList));
         enemyList.add(new Packman(26*height/32, 0, context, enemyList));
-
+        return true;
     }
 
-    public void create_big_meteor(){
+    public static boolean create_big_meteor(List<Enemy> enemyList, Context context){
         enemyList.add(new Big_meteor(context, enemyList));
+        return true;
     }
 
-    public void create_bird_and_sun(){
+    public static boolean create_bird_and_sun(List<Enemy> enemyList, Context context){
         enemyList.add(new Bird(1* Sprite.height/32, 0, context));
         enemyList.add(new Bird(7*height/32, 0, context));
         enemyList.add(new Bird(13*height/32, 0, context));
@@ -322,11 +324,13 @@ public class Boss extends Enemy{
         enemyList.add(new Sun(13*height/32, 0, context));
         enemyList.add(new Sun(19*height/32, 0, context));
         enemyList.add(new Sun(25*height/32, 0, context));
+        return true;
     }
 
-    public void create_turrets(){
+    public static boolean create_turrets(List<Enemy> enemyList, Context context){
         enemyList.add(new Enemy_turret(context, 5*height/32, enemyList));
         enemyList.add(new Enemy_turret(context, 19*height/32, enemyList));
+        return true;
     }
 
 }

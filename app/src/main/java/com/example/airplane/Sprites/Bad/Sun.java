@@ -15,6 +15,7 @@ public class Sun extends Enemy {
     public Sun(double line_v, double line_h, Context context) {
         super(ImageResource.SUN, line_v, width + line_h, 6*height/32 + line_v,
                 width*12/11 + line_h, context, Params.sun_damage, Params.sun_speed, Params.sun_hp, 2);
+        points = Params.p_sun;
     }
 
     @Override

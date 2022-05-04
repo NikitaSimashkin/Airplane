@@ -36,22 +36,24 @@ public class Params {
             time_megasun = 3000, time_cat = 3000, time_yellow = 3000,
             time_heart = 1000;
 
+    public final static int time_big_meteor = 5000, time_birds = 7000, time_packmans = 8000, time_birdsuns = 10000,
+            time_turrets = 10000;
+
     public final static double turret_multiplier_bullet = 2, many_bullets_multiplier = 0.5, turret_multiplier_bullet_enemy = 4;
 
     public final static int number_bullet_enemy_turret = 15;
-    public final static double start_hp_multiplier_default = 1.5, start_speed_multiplier_default = 1,
+    public final static double start_hp_multiplier_default = 1.5, start_speed_multiplier_default = 0.8,
             start_damage_multiplier_default = 1, start_time_multiplier_default = 1.5;
     public final static double start_speedbullet_m = 1, start_damagebullet_m = 1, start_timebullet_m = 1;
 
-    public final static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000; // не замыть поменят в string.xml
-
-    //public static Bitmap ALIEN, ALIEN_DEATH, ALIEN_TWO,
-    //ALIEN_TWO_WITHOUT_CAP, PACKMAN, PACKMAN_DEATH, BIRD, BIRD_DEATH, SUN, SUN_DEATH, YELLOW,
-    //YELLOW_DEATH, CAT_ONE, CAT_TWO, CAT_DEATH, HEART, BREAKING_HEART, MEGASUN;
+    public final static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000; // не забыть поменят в string.xml
 
     private static double start_hp_multiplier, start_damage_multiplier, start_speed_multiplier, start_time_multiplier;
     public final static Bitmap[] Meteors = new Bitmap[5];
     public final static Bitmap[] Bullets = new Bitmap[4];
+
+    public static final int p_meteor = 10, p_alien = 14, p_alien_two = 16, p_bird = 16, p_packman = 18, p_sun = 21, p_megasun = 25,
+                            p_cat = 30, p_yellow = 30, p_big_meteor = 40, p_turret = 40;
 
     public Params(Context context){
         Meteors[1] = ImageResource.METEOR_RED.getBitmap(context);
@@ -66,7 +68,7 @@ public class Params {
         Bullets[2] = ImageResource.BULLET_YELLOW.getBitmap(context);
         Bullets[3] = ImageResource.BULLET_BLUE.getBitmap(context);
 
-        switch (context.getSharedPreferences("Main", MODE_PRIVATE).getInt(MainActivity.diff, 1)){ // 1 - легко - 2 - нормально 3 - сложно
+        switch (context.getSharedPreferences("Main", MODE_PRIVATE).getInt(MainActivity.diff, 1)){ // 0 - легко - 1 - нормально 2 - сложно
             case 0:
                 start_hp_multiplier = 0.9 * start_hp_multiplier_default;
                 start_speed_multiplier = 0.9 * start_speed_multiplier_default;
@@ -102,5 +104,11 @@ public class Params {
 
     public static double get_start_time(){
         return start_time_multiplier;
+    }
+
+    public static void change_difficult(){
+        start_hp_multiplier *= 1.05;
+        start_speed_multiplier *= 1.05;
+        start_damage_multiplier *= 1.05;
     }
 }

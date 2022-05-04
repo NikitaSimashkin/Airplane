@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
@@ -33,6 +34,8 @@ public class Enemy_turret extends Enemy{
             if (number == max_number){
                 enemyList.remove(this);
                 Boss.set_turret_flag(false);
+                DrawThread.add_points(points);
+                DrawThread.points_handler();
             }
             last = System.currentTimeMillis();
         }

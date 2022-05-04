@@ -11,7 +11,6 @@ import android.view.SurfaceHolder;
 
 import com.example.airplane.Sprites.Bad.Alien;
 import com.example.airplane.Sprites.Bad.Alien_two;
-import com.example.airplane.Sprites.Bad.Big_meteor;
 import com.example.airplane.Sprites.Bad.Bird;
 import com.example.airplane.Sprites.Bad.Boss;
 import com.example.airplane.Sprites.Good.Bullet;
@@ -34,7 +33,7 @@ import java.util.List;
 public class DrawThread extends Thread{
     private SurfaceHolder surfaceHolder;
     private Context context;
-    private Handler handler;
+    private static Handler handler;
     private int time_bullet = Params.time_bullet_normal, number; //номер уровня
     private double hp_multiplier, damage_multiplier, speed_multiplier;
 
@@ -56,6 +55,8 @@ public class DrawThread extends Thread{
 
     private int enemys, bullet_color = 1, size = 1; // bullet_color - цвет, size - размер пули
 
+    private static int points;
+
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
         this.surfaceHolder = surfaceHolder;
@@ -70,7 +71,17 @@ public class DrawThread extends Thread{
         samolet = new Samolet(context);
         base = new Base();
         start_options(number);
+        points = 0;
     }
+
+    public static void add_points(int p){
+        points += p;
+    }
+
+    public static void points_handler(){
+        handler.sendMessage(Message.obtain(handler, 7, points, 0));
+    }
+
     public static double get_height(){
         return height;
     }
@@ -274,6 +285,51 @@ public class DrawThread extends Thread{
         return false;
     }
 
+    public boolean create_big_meteor(){
+        if (System.currentTimeMillis() - time >= Params.time_big_meteor*Params.get_start_time()){
+            Boss.create_big_meteor(enemy_list, context);
+            time = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean create_birds(){
+        if (System.currentTimeMillis() - time >= Params.time_birds*Params.get_start_time()){
+            Boss.create_birds(enemy_list, context);
+            time = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean create_packmans(){
+        if (System.currentTimeMillis() - time >= Params.time_packmans*Params.get_start_time()){
+            Boss.create_packmans(enemy_list, context);
+            time = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean create_bird_and_sun(){
+        if (System.currentTimeMillis() - time >= Params.time_birdsuns*Params.get_start_time()){
+            Boss.create_bird_and_sun(enemy_list, context);
+            time = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean create_turrets(){
+        if (System.currentTimeMillis() - time >= Params.time_turrets*Params.get_start_time()){
+            Boss.create_turrets(enemy_list, context);
+            time = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
     public boolean create_heart(){
         if (System.currentTimeMillis() - time >= Params.time_heart*Params.get_start_time()){
             enemys = (int)(Math.random()*14);
@@ -331,7 +387,16 @@ public class DrawThread extends Thread{
                 return create_heart();
             case 11:
                 return create_boss();
-
+            case 12:
+                return create_birds();
+            case 13:
+                return create_big_meteor();
+            case 14:
+                return create_packmans();
+            case 15:
+                return create_turrets();
+            case 16:
+                return create_bird_and_sun();
         }
         return false;
     }
@@ -350,7 +415,8 @@ public class DrawThread extends Thread{
                 if (samolet.get_hp() > 0) // снимаем хп у самолета
                     handler.sendMessage(Message.obtain(handler, 1, 0, samolet.get_hp()));
                 else
-                    handler.sendMessage(Message.obtain(handler,0,0, 0));
+                    handler.sendMessage(Message.obtain(handler, 0, 0, points));
+
                 //TODO: arg2 - кол-во волн если бесконечный режим и кол-во очков если уровень
                  /*
                  what:
@@ -379,7 +445,7 @@ public class DrawThread extends Thread{
                 if (base.get_hp() > 0)
                     handler.sendMessage(Message.obtain(handler, 1, 1, base.get_hp()));
                 else
-                    handler.sendMessage(Message.obtain(handler,0,0, 0));
+                    handler.sendMessage(Message.obtain(handler,0,0, points));
             }
 
             else { // столкновение с пулей
@@ -413,8 +479,9 @@ public class DrawThread extends Thread{
             canvas.drawRect(0, 0, (int)width, (int)height, clearPaint);
 
             for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
-                if (enemy_list.get(i).getTime_death() == 0 || System.currentTimeMillis() - enemy_list.get(i).getTime_death() <= 2000) {
-                    enemy_list.get(i).draw(canvas, null);
+                Enemy enemy = enemy_list.get(i);
+                if (enemy.getTime_death() == 0 || System.currentTimeMillis() - enemy.getTime_death() <= 2000) {
+                    enemy.draw(canvas, null);
                 } else {
                     enemy_list.remove(i);
                     i--;
@@ -472,7 +539,12 @@ public class DrawThread extends Thread{
                     current_enemy = -1;
                     count--;
                 } else if (count == 0 && enemy_list.size() == 0){
-                    handler.sendMessage(Message.obtain(handler,0,1, 0));
+                    if (!(number == 99))
+                        handler.sendMessage(Message.obtain(handler,0,1, 0));
+                    else {
+                        start_options(99);
+                        Params.change_difficult();
+                    }
                 }
 
                 if (System.currentTimeMillis() - last_update_time > 15_000){
@@ -481,21 +553,43 @@ public class DrawThread extends Thread{
                 }
     }
 
-    List<Byte> mobs= new ArrayList<Byte>();
+    List<Byte> mobs= new ArrayList<>();
     /*
-    1 - meteor
-    2 - alien
-    3 - alien_two
-    4 - packman
-    5 - bird
-    6 - sun
-    7 - cat
-    8 - yellow
-    9 - megasun
-    10 - heart
-    11 - boss
+            case 1:
+                return create_meteor();
+            case 2:
+                return create_alien();
+            case 3:
+                return  create_alien_two();
+            case 4:
+                return create_packman();
+            case 5:
+                return create_bird();
+            case 6:
+                return create_sun();
+            case 7:
+                return create_cat();
+            case 8:
+                return create_yellow();
+            case 9:
+                return create_megasun();
+            case 10:
+                return create_heart();
+            case 11:
+                return create_boss();
+            case 12:
+                return create_birds();
+            case 13:
+                return create_big_meteor();
+            case 14:
+                return create_packmans();
+            case 15:
+                return create_turrets();
+            case 16:
+                return create_bird_and_sun();
      */
 
+    private boolean first = true;
     public void start_options(int number) { //стартовые установки для разных уровней
         switch (number) {
             case 1: // 50
@@ -530,9 +624,21 @@ public class DrawThread extends Thread{
             case 10:
                 mobs.add((byte)(11));
                 break;
+            case 99:
+                mobs = create_level(80,45,30,20,30,20,10,10,5,10);
+                mobs.add((byte)(12));
+                mobs.add((byte)(13));
+                mobs.add((byte)(14));
+                mobs.add((byte)(15));
+                mobs.add((byte)(16));
+                break;
         }
         count = mobs.size();
-        last_update_time = last_ability_time = System.currentTimeMillis();
+
+        if(first) {
+            last_update_time = last_ability_time = System.currentTimeMillis();
+            first = false;
+        }
     }
 }
 

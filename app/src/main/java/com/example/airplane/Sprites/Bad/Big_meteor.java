@@ -23,6 +23,7 @@ public class Big_meteor extends Enemy{
                 Params.big_meteor_damage, Params.big_meteor_speed, Params.big_meteor_hp, 5);
         this.enemyList = enemyList;
         time_created = System.currentTimeMillis();
+        points = Params.p_big_meteor;
     }
 
     @Override

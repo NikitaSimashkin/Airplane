@@ -13,6 +13,7 @@ public class Bird extends Enemy {
     public Bird(double line_v, double line_h, Context context) {
         super(ImageResource.BIRD, line_v, Sprite.width + line_h, 2* Sprite.height/32 + line_v,
                 Sprite.width*14/13 + line_h, context, Params.bird_damage, Params.bird_speed, Params.bird_hp, 4);
+        points = Params.p_bird;
     }
 
     @Override

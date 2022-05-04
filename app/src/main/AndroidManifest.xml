@@ -12,7 +12,8 @@
         <activity
             android:name=".Shop"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:noHistory="true"/>
         <activity
             android:name=".Levels_activity"
             android:exported="false"

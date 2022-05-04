@@ -87,6 +87,7 @@ public class Sprite {
     }
 
     public static boolean check_two (Sprite first, Sprite second, double[] a){
+        //return check(first, second);
         return first.create_rect_minus(a[0], a[1], a[2], a[3]).intersect(second.create_rect_minus(a[4], a[5], a[6], a[7]));
     }
 }

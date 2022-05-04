@@ -14,6 +14,7 @@ public class Alien_two extends Enemy {
         super(ImageResource.ALIEN_TWO, line_v, Sprite.width + line_h,
                 6* Sprite.height/32 + line_v, Sprite.width*14/13 + line_h, context,
                 Params.alien_two_damage, Params.alien_two_speed, Params.alien_two_hp, 1);
+        points = Params.p_alien_two;
     }
 
     @Override
