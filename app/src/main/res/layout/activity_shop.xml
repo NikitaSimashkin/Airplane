@@ -31,20 +31,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/close_shop"
-                style="@android:style/Widget.Holo.Light.ImageButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/cancel" />
-        </FrameLayout>
+            android:layout_weight="1"/>
     </LinearLayout>
 
     <FrameLayout

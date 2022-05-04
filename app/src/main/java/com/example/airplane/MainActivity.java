@@ -139,5 +139,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button rate_table = findViewById(R.id.rate_table);
+
+        Dialog table = new Dialog(this);
+        table.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
+        table.setCancelable(false); // нельзя закрыть окно кнопкой назад
+        table.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        table.setContentView(R.layout.rate_table);
+
+        rate_table.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                table.show();
+            }
+        });
+        ImageButton close_table = table.findViewById(R.id.close_table);
+        close_table.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isFinishing())
+                    table.dismiss();
+            }
+        });
+        RecyclerView rv = table.findViewById(R.id.rating);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rv.setLayoutManager(layoutManager);
+        rv.setHasFixedSize(true);
+
+        Table_adapter adapter = new Table_adapter(MainActivity.this);
+        rv.setAdapter(adapter);
+
     }
 }

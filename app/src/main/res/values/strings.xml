@@ -16,6 +16,7 @@
     <string name="rate_table">Таблица лидеров</string>
     <string name="closed">Пройдите игру, чтобы открыть этот скин</string>
     <string name="inf_loose">Набрано очков:</string>
+    <string name="rate">Таблица лидеров</string>
 
     <string-array name="start_1">
         <item>Привет, \n </item>

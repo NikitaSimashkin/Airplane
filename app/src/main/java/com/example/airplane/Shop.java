@@ -29,16 +29,6 @@ public class Shop extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_shop);
 
-        ImageButton close = findViewById(R.id.close_shop);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSharedPreferences("Main", MODE_PRIVATE).edit().putBoolean("level_inf", true).apply();
-                Intent i = new Intent(Shop.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
-
         RecyclerView rv = findViewById(R.id.rv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

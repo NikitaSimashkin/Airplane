@@ -39,7 +39,7 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
     private int[] colors; // хранит цвета
     private int[] closed = new int[3];
 
-    private boolean flag = true;
+    private boolean flag = true, level10;
 
     public int[] get_colors(){
         return colors;
@@ -107,15 +107,17 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
         base = ship + 3;
 
         pref = context.getSharedPreferences("Main", Context.MODE_PRIVATE);
-        boolean level10 = pref.getBoolean("level_10", false);
+        level10 = pref.getBoolean("level_10", false);
 
         if (!level10){
             Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.lock);
             String text = context.getResources().getString(R.string.closed);
-            for (int i = 0; i < closed.length; i++){
-                pictures.set(closed[i], bitmap);
-                names.set(closed[i], text);
+            for (int j : closed) {
+                pictures.set(j, bitmap);
+                names.set(j, text);
             }
+        } else {
+            Arrays.fill(closed, 999);
         }
 
         int size = pictures.size();
@@ -167,11 +169,7 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
             item.skin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (closed[0] == item.id || closed[1] == item.id || closed[2] == item.id){
-                        item.closed = true;
-                    } else {
-                        item.closed = false;
-                    }
+                    item.closed = closed[0] == item.id || closed[1] == item.id || closed[2] == item.id;
                     if (!item.closed) {
                         int one, count;
                         String type;
