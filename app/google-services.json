@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "962110731204",
+    "project_id": "spacewar-8bb7b",
+    "storage_bucket": "spacewar-8bb7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962110731204:android:335d393fb0e32cc9972a91",
+        "android_client_info": {
+          "package_name": "com.example.airplane"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962110731204-vf9rrqh70201nkabetmge00hmaabn1ej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrB3uwQeUB3tPwCXV4kWmDM0xltU9sXMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962110731204-vf9rrqh70201nkabetmge00hmaabn1ej.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 package com.example.airplane;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,15 +17,29 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences pref;
-    public static final String nickname = "Name", diff = "difficult";
-    private Dialog options;
+    public static final String nickname = "Name", diff = "difficult", PLAYERS = "Players";
+    public static final int rate_table_kolvo = 20;
+
+    private Dialog options, table;
     private ImageButton close;
     private String player;
     private EditText name;
+    private Player[] list_info = new Player[MainActivity.rate_table_kolvo];
+    private Table_adapter adapter;
+
+    public static final DatabaseReference mDataBase = FirebaseDatabase.getInstance("https://spacewar-8bb7b-default-rtdb.firebaseio.com/").getReference(PLAYERS);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,43 +146,91 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Button shop = findViewById(R.id.shop);
+        final int[] i = {0};
         shop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Shop.class);
                 startActivity(i);
+//                mDataBase.push().setValue(new Player("None", mDataBase.getKey(), i[0], 0));
+//                i[0]++;
+//                pref.edit().putBoolean("level_inf", true).apply();
             }
         });
 
+        pref.edit().putBoolean("level_inf", true).apply();
         Button rate_table = findViewById(R.id.rate_table);
-
-        Dialog table = new Dialog(this);
-        table.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
-        table.setCancelable(false); // нельзя закрыть окно кнопкой назад
-        table.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        table.setContentView(R.layout.rate_table);
 
         rate_table.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (table == null)
+                    table = create_rate_table();
+                get_info();
                 table.show();
             }
         });
-        ImageButton close_table = table.findViewById(R.id.close_table);
+
+    }
+
+    public Dialog create_rate_table(){
+
+        Dialog t = new Dialog(this);
+        t.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
+        t.setCancelable(false); // нельзя закрыть окно кнопкой назад
+        t.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        t.setContentView(R.layout.rate_table);
+
+        ImageButton close_table = t.findViewById(R.id.close_table);
         close_table.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isFinishing())
-                    table.dismiss();
+                    t.dismiss();
             }
         });
-        RecyclerView rv = table.findViewById(R.id.rating);
+        RecyclerView rv = t.findViewById(R.id.rating);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
         rv.setHasFixedSize(true);
 
-        Table_adapter adapter = new Table_adapter(MainActivity.this);
-        rv.setAdapter(adapter);
+        {
+            adapter = new Table_adapter(MainActivity.this);
+            for (int i = 0; i < MainActivity.rate_table_kolvo; i++) {
+                list_info[i] = (new Player("None", "0", i, 0));
+            }
+            adapter.change(list_info);
+            adapter.notifyDataSetChanged();
+            rv.setAdapter(adapter);
+        }
+
+        return t;
+    }
+
+    private void get_info(){
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 0;
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    Player player = ds.getValue(Player.class);
+                    if (player != null){
+                        list_info[player.getNumber()] = player;
+                    }
+                    i++;
+                }
+                adapter.change(list_info);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+        mDataBase.addListenerForSingleValueEvent(valueEventListener);
 
     }
 }

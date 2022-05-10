@@ -34,6 +34,18 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class PlayActivity extends AppCompatActivity {
@@ -250,8 +262,7 @@ public class PlayActivity extends AppCompatActivity {
             }
         };
 
-        play_field = (SurfaceView) findViewById(R.id.play_field); //поле для рисования
-
+        play_field = findViewById(R.id.play_field); //поле для рисования
         play_field.setZOrderOnTop (true); // Установить фон холста прозрачным
         play_field.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
@@ -372,6 +383,41 @@ public class PlayActivity extends AppCompatActivity {
 
     }
 
+    private void add_to_table(int points) {
+        MainActivity.mDataBase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, Object> players = (HashMap<String, Object>) dataSnapshot.getValue();
+                HashMap<String, Object> update = new HashMap<>();
+                int k = 0;
+                for (Map.Entry<String, Object> entry : players. entrySet()){
+                    Player current = dataSnapshot.child(entry.getKey()).getValue(Player.class);
+                    if (current.getPoints() < points){
+                        current.addNumber(1);
+                        k++;
+                        if (current.getNumber() != MainActivity.rate_table_kolvo){
+                            update.put(entry.getKey(), current);
+                        } else {
+                            MainActivity.mDataBase.child(entry.getKey()).removeValue();
+                        }
+                    }
+                }
+                MainActivity.mDataBase.push().setValue(
+                        new Player(getSharedPreferences("Main", MODE_PRIVATE).getString(MainActivity.nickname, ""),
+                                MainActivity.mDataBase.getKey(), MainActivity.rate_table_kolvo-k, points));
+                if (update.size() != 0){
+                    MainActivity.mDataBase.updateChildren(update);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void update_abilities(int last_ability_time) {
         if (last_ability_time >= Params.time_manybullets && number > 2){
             many_bullets.setVisibility(View.VISIBLE);
@@ -407,6 +453,7 @@ public class PlayActivity extends AppCompatActivity {
                     TextView two = loose_or_win.findViewById(R.id.points_2);
                     one.setText(getResources().getString(R.string.inf_loose));
                     two.setText(Integer.toString(points));
+                    add_to_table(points);
                 }
                 if (!isFinishing())
                     loose_or_win.show();

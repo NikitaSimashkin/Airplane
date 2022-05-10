@@ -20,18 +20,13 @@ public class Table_adapter extends RecyclerView.Adapter<Table_adapter.Note>{
     private ArrayList<String> names;
     private ArrayList<Integer> points;
 
-    private int item_count = 20, current_item = 0;
+    private int item_count = MainActivity.rate_table_kolvo, current_item = 0;
 
     public Table_adapter(Context context){
         this.context = context;
 
         names = new ArrayList<>();
         points = new ArrayList<>();
-
-        for (int i = 0; i < item_count; i++){
-            names.add("null");
-            points.add(i*i);
-        }
     }
 
 
@@ -64,6 +59,15 @@ public class Table_adapter extends RecyclerView.Adapter<Table_adapter.Note>{
     @Override
     public int getItemCount() {
         return item_count;
+    }
+
+    public void change(Player[] players){
+        names.clear();
+        points.clear();
+        for (int i = 0; i < MainActivity.rate_table_kolvo; i++){
+            names.add(players[i].getNickname());
+            points.add(players[i].getPoints());
+        }
     }
 
     class Note extends RecyclerView.ViewHolder{
