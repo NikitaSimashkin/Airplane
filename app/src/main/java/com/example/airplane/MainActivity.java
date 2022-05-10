@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        create_video();
+      //  create_video();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        video.stopPlayback();
+        //video.stopPlayback();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        create_video();
+       //video.start();
 
         options = new Dialog(this);
         options.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void create_video(){
-        video = findViewById(R.id.videoView);
+       // video = findViewById(R.id.videoView);
         String path = "android.resource://" + getPackageName() + "/" + R.raw.back_video;
         video.setVideoURI(Uri.parse(path));
         video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -263,6 +263,5 @@ public class MainActivity extends AppCompatActivity {
                 mp.setLooping(true);
             }
         });
-        video.start();
     }
 }
