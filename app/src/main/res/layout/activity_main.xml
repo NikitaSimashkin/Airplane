@@ -6,28 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <pl.droidsonroids.gif.GifImageView
+    <VideoView
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/back_one"
-        android:scaleType="centerCrop"/>
+        android:scaleType = "centerCrop"/>
+
+  <!--  <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" /> -->
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="130dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/Name_game"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
+            android:gravity="center"
             android:text="@string/Title"
             android:textColor="#C5B1B1"
-            android:textSize="48sp"
-            android:gravity="center"/>
+            android:textSize="48sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
