@@ -42,8 +42,21 @@ public class MainActivity extends AppCompatActivity {
     private EditText name;
     private Player[] list_info = new Player[MainActivity.rate_table_kolvo];
     private Table_adapter adapter;
+    private VideoView video;
 
     public static final DatabaseReference mDataBase = FirebaseDatabase.getInstance("https://spacewar-8bb7b-default-rtdb.firebaseio.com/").getReference(PLAYERS);
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        create_video();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        video.stopPlayback();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +64,6 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide(); //убирает title_bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
-        VideoView video = findViewById(R.id.videoView);
-        String path = "android.resource://" + getPackageName() + "/" + R.raw.back_video;
-        video.setVideoURI(Uri.parse(path));
-        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });
-        video.start();
 
         { //обработчик кнопки, который вызывает вторую активити playactivity
             Button play_button = (Button) findViewById(R.id.play_button);
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        create_video();
 
         options = new Dialog(this);
         options.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
@@ -247,5 +251,18 @@ public class MainActivity extends AppCompatActivity {
 
         mDataBase.addListenerForSingleValueEvent(valueEventListener);
 
+    }
+
+    private void create_video(){
+        video = findViewById(R.id.videoView);
+        String path = "android.resource://" + getPackageName() + "/" + R.raw.back_video;
+        video.setVideoURI(Uri.parse(path));
+        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
+        video.start();
     }
 }
