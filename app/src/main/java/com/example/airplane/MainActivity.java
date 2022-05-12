@@ -18,9 +18,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,13 +51,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-      //  create_video();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //video.stopPlayback();
     }
 
     @Override
@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-       //video.start();
+//        ImageView imageView = findViewById(R.id.imageView);
+//        Glide.with(this).asGif().load(R.drawable.back).into(imageView);
 
         options = new Dialog(this);
         options.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
@@ -251,17 +252,5 @@ public class MainActivity extends AppCompatActivity {
 
         mDataBase.addListenerForSingleValueEvent(valueEventListener);
 
-    }
-
-    private void create_video(){
-       // video = findViewById(R.id.videoView);
-        String path = "android.resource://" + getPackageName() + "/" + R.raw.back_video;
-        video.setVideoURI(Uri.parse(path));
-        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });
     }
 }

@@ -71,7 +71,7 @@ public class Params {
         switch (context.getSharedPreferences("Main", MODE_PRIVATE).getInt(MainActivity.diff, 1)){ // 0 - легко - 1 - нормально 2 - сложно
             case 0:
                 start_hp_multiplier = 0.9 * start_hp_multiplier_default;
-                start_speed_multiplier = 0.9 * start_speed_multiplier_default;
+                start_speed_multiplier = 1.1 * start_speed_multiplier_default;
                 start_damage_multiplier = 0.9 * start_damage_multiplier_default;
                 start_time_multiplier = 1.1 * start_time_multiplier_default;
                 break;
@@ -83,7 +83,7 @@ public class Params {
                 break;
             case 2:
                 start_hp_multiplier = 1.1 * start_hp_multiplier_default;
-                start_speed_multiplier = 1.1 * start_speed_multiplier_default;
+                start_speed_multiplier = 0.9 * start_speed_multiplier_default;
                 start_damage_multiplier = 1.1 * start_damage_multiplier_default;
                 start_time_multiplier = 0.9 * start_time_multiplier_default;
                 break;
