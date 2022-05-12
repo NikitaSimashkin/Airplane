@@ -508,16 +508,16 @@ public class DrawThread extends Thread{
     @Override
     public void run() {
         while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
-            if (System.currentTimeMillis() - last_frame > 11)
-                try {
+            if (System.currentTimeMillis() - last_frame > 11) {
+              //  try {
                     last_frame = System.currentTimeMillis();
                     level();
                     update_samolet(); //обновляет координаты самолета
                     update_bullets(); //обновляет координаты пуль
                     update_enemy(); //отрисовывает всех врагов
                     draw_all();
-                } catch (Exception e){
-                    handler.sendMessage(Message.obtain(handler,0,100, 0));
+              //  } catch (Exception e){
+              ////      handler.sendMessage(Message.obtain(handler,0,100, 0));
                 }
         }
     }
@@ -591,6 +591,7 @@ public class DrawThread extends Thread{
 
     private boolean first = true;
     public void start_options(int number) { //стартовые установки для разных уровней
+        current_enemy = -1;
         switch (number) {
             case 1: // 50
                 //mobs = create_level(3,0,0,0,0,0,0,0,0,0);
