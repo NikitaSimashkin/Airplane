@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-//        ImageView imageView = findViewById(R.id.imageView);
-//        Glide.with(this).asGif().load(R.drawable.back2).into(imageView);
 
         options = new Dialog(this);
         options.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок

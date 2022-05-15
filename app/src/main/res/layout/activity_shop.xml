@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context=".Shop"
+    android:background="@drawable/back_shop_2"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <pl.droidsonroids.gif.GifImageView
+   <!-- <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="centerCrop"
-        android:src="@drawable/test2"
+        android:src="@drawable/test3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" /> -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +43,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:text="TextView" />
+                android:fontFamily="@font/arbutus"
+                android:gravity="center"
+                android:text="@string/shop2"
+                android:textColor="#FFAC31"
+                app:autoSizeTextType="uniform" />
 
             <FrameLayout
                 android:layout_width="0dp"
