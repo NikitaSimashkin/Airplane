@@ -28,6 +28,9 @@
     <color name="in_table">@color/gray</color>
     <color name="out_table">#2D2E2D</color>
 
-    <color name="level_active">#283FB1</color>>
+    <color name="level_active">#283FB1</color>
     <color name="level_inf">#34BC03</color>
+
+    <color name="helper">#0099FF</color>>
+    <color name="boss">#FF9900</color>
 </resources>

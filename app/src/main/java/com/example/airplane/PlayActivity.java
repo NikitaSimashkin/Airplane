@@ -255,6 +255,11 @@ public class PlayActivity extends AppCompatActivity {
                         break;
                     case 6: // arg1 - номер фразы
                         textView.setText(start_phrases[msg.arg1]);
+                        if (msg.arg1 == 2){
+                            textView.setTextColor(getResources().getColor(R.color.helper, null));
+                        } else {
+                            textView.setTextColor(getResources().getColor(R.color.boss, null));
+                        }
                         break;
                     case 7:
                         points.setText(Integer.toString(msg.arg1));
