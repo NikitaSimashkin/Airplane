@@ -198,8 +198,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        pref.edit().putBoolean("level_9", true).apply();
-
         Button rate_table = findViewById(R.id.rate_table);
 
         rate_table.setOnClickListener(new View.OnClickListener() {
