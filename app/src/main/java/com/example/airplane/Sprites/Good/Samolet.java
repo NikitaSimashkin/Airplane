@@ -16,9 +16,12 @@ public class Samolet extends Sprite {
     private boolean turret_exist = false;
     private Turret turret;
 
-    public Samolet(Context context) {
-        super(ImageResource.SPACESHIP, height/32, 0, (height/5), width/7, context);
+    public Samolet(Context context, ImageResource res, boolean square) {
+        super(res, height/32, 0, (height/5), width/8, context);
         this.context = context;
+        if (square){
+            right = height/5-height/32;
+        }
     }
 
     public boolean turret_exist(){

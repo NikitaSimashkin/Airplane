@@ -23,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -258,6 +259,9 @@ public class PlayActivity extends AppCompatActivity {
                     case 7:
                         points.setText(Integer.toString(msg.arg1));
                         break;
+                    case 8:
+                        change_base();
+                        break;
                 }
             }
         };
@@ -381,6 +385,22 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void change_base() {
+        LinearLayout layout = findViewById(R.id.base);
+        String name_base = getSharedPreferences("Main", MODE_PRIVATE).getString("base", "");
+        switch (name_base) {
+            case "default_base":
+                layout.setBackgroundResource(R.drawable.base);
+                break;
+            case "cool_base":
+                layout.setBackgroundResource(R.drawable.blue_base);
+                break;
+            case "gold_base":
+                layout.setBackgroundResource(R.drawable.gold_base);
+                break;
+        }
     }
 
     private void add_to_table(int points) {
@@ -593,6 +613,7 @@ public class PlayActivity extends AppCompatActivity {
         if (number == 1)
             size.setVisibility(View.INVISIBLE);
 
+        System.out.println(getSharedPreferences("Main", MODE_PRIVATE).getString("ship", ""));
         hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
         hp_base.setProgress(drawThread.get_base().get_hp());
         many_bullets.setVisibility(View.INVISIBLE);

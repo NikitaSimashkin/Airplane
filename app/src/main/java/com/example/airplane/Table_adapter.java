@@ -41,6 +41,12 @@ public class Table_adapter extends RecyclerView.Adapter<Table_adapter.Note>{
         params.height = (int)(2 * parent.getHeight()/9);
         note.layout_base.setLayoutParams(params);
 
+        if (current_item == 0){
+            note.in.setBackgroundColor(context.getResources().getColor(R.color.in_table_first, null));
+            note.out.setBackgroundColor(context.getResources().getColor(R.color.out_table_first, null));
+        }
+
+        note.num = current_item+1;
         note.number.setText(Integer.toString(current_item+1));
         note.name.setText(names.get(current_item));
         note.points.setText(Integer.toString(points.get(current_item)));
@@ -51,6 +57,15 @@ public class Table_adapter extends RecyclerView.Adapter<Table_adapter.Note>{
 
     @Override
     public void onBindViewHolder(@NonNull Note holder, int position) {
+        holder.num = position+1;
+        if (holder.num == 1) {
+            holder.in.setBackgroundColor(context.getResources().getColor(R.color.in_table_first, null));
+            holder.out.setBackgroundColor(context.getResources().getColor(R.color.out_table_first, null));
+        } else {
+            holder.in.setBackgroundColor(context.getResources().getColor(R.color.in_table, null));
+            holder.out.setBackgroundColor(context.getResources().getColor(R.color.out_table, null));
+        }
+
         holder.number.setText(Integer.toString(position+1));
         holder.name.setText(names.get(position));
         holder.points.setText(Integer.toString(points.get(position)));
@@ -73,7 +88,9 @@ public class Table_adapter extends RecyclerView.Adapter<Table_adapter.Note>{
     class Note extends RecyclerView.ViewHolder{
 
         ConstraintLayout layout_base;
+        LinearLayout in, out;
         TextView number, name, points;
+        int num;
 
         public Note(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +98,8 @@ public class Table_adapter extends RecyclerView.Adapter<Table_adapter.Note>{
             number = itemView.findViewById(R.id.number_rate_table);
             name = itemView.findViewById(R.id.name_rate_table);
             points = itemView.findViewById(R.id.points_rate_table);
+            in = itemView.findViewById(R.id.in);
+            out = itemView.findViewById(R.id.out);
         }
     }
 }

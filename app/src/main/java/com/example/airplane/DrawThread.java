@@ -1,6 +1,7 @@
 package com.example.airplane;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -53,6 +54,8 @@ public class DrawThread extends Thread{
     protected List<Enemy> enemy_list = new ArrayList<>();
     protected List<Bullet> bullet_list = new ArrayList<>();
 
+    private SharedPreferences pref;
+
     private int enemys, bullet_color = 1, size = 1; // bullet_color - цвет, size - размер пули
 
     private static int points;
@@ -66,9 +69,19 @@ public class DrawThread extends Thread{
         DrawThread.width = width;
         DrawThread.height = height;
         Many_bullets.alive = false;
-        handler.sendMessage(Message.obtain(handler, 2, 0, 0)); // меняем отображение размера пули
+        handler.sendMessage(Message.obtain(handler, 2, 0, 0));
+        handler.sendMessage(Message.obtain(handler, 8, 0, 0));
 
-        samolet = new Samolet(context);
+        pref = context.getSharedPreferences("Main", Context.MODE_PRIVATE);
+        String temp = pref.getString("ship", "");
+
+        if (temp.equals("default_ship"))
+            samolet = new Samolet(context, ImageResource.SPACESHIP, false);
+        else if (temp.equals("cool_ship"))
+            samolet = new Samolet(context, ImageResource.SPACESHIP_COOL, false);
+        else if (temp.equals("white_packman"))
+            samolet = new Samolet(context, ImageResource.WHITE_PACKMAN, true);
+
         base = new Base();
         start_options(number);
         points = 0;

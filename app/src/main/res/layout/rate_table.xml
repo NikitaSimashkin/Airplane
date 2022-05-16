@@ -10,12 +10,12 @@
         android:id="@+id/linearLayout2"
         android:layout_width="557dp"
         android:layout_height="338dp"
-        android:background="@color/blue_not_pressed"
+        android:background="@drawable/back_shop_2"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,15 +28,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:textColor="#FF8D03"
+                    android:textSize="20dp"
+                    app:autoSizeTextType="uniform" />
             </FrameLayout>
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="@string/rate"
+                android:text="@string/rate_table"
+                android:textColor="#FF8D03"
                 app:autoSizeTextType="uniform" />
 
             <FrameLayout

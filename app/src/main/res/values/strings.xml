@@ -18,6 +18,27 @@
     <string name="closed">Пройдите игру, чтобы открыть этот скин</string>
     <string name="inf_loose">Набрано очков:</string>
     <string name="rate">Таблица лидеров</string>
+    <string name="rating">Рейтинг</string>
+    <string name="nickname">Никнейм</string>
+    <string name="points">Очки</string>
+
+    <string-array name="ships">
+        <item>Корабль №1</item>
+        <item>Корабль №2</item>
+        <item>Пакман</item>
+    </string-array>
+
+    <string-array name="bullets">
+        <item>Шары</item>
+        <item>Ромбы</item>
+        <item>Метеориты</item>
+    </string-array>
+
+    <string-array name="bases">
+        <item>Красная база</item>
+        <item>Синяя база</item>
+        <item>Золотая база</item>
+    </string-array>
 
     <string-array name="start_1">
         <item>Привет, \n </item>

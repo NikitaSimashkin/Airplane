@@ -61,50 +61,54 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
         this.context = context;
         this.handler = handler;
 
-        pictures.add(ImageResource.BULLET_BLUE.getBitmap(context));
-        names.add("Bullet_blue");
-        sp_names.add("default_bullet");
+        String[] nnn = context.getResources().getStringArray(R.array.ships);
 
-        pictures.add(ImageResource.BULLET_GREEN.getBitmap(context));
-        names.add("Bullet_green");
-        sp_names.add("cool_ship");
-
-        pictures.add(ImageResource.BULLET_YELLOW.getBitmap(context));
-        names.add("Bullet_yellow");
-        sp_names.add("enemy_ship");
-        closed[0] = 2;
-
-        bullet = 3;
-
-        pictures.add(ImageResource.BULLET_RED.getBitmap(context));
-        names.add("Bullet_red");
+        pictures.add(ImageResource.SPACESHIP.getBitmap(context));
+        names.add(nnn[0]);
         sp_names.add("default_ship");
 
-        pictures.add(ImageResource.MEGABULLET.getBitmap(context));
-        names.add("Megabullet");
+        pictures.add(ImageResource.SPACESHIP_COOL.getBitmap(context));
+        names.add(nnn[1]);
+        sp_names.add("cool_ship");
+
+        pictures.add(ImageResource.WHITE_PACKMAN.getBitmap(context));
+        names.add(nnn[2]);
+        sp_names.add("white_packman");
+        closed[0] = 2;
+
+        ship = 3;
+
+        nnn = context.getResources().getStringArray(R.array.bullets);
+        pictures.add(ImageResource.BULLET_RED.getBitmap(context));
+        names.add(nnn[0]);
+        sp_names.add("default_bullet");
+
+        pictures.add(ImageResource.ROMB_RED.getBitmap(context));
+        names.add(nnn[1]);
         sp_names.add("cool_bullet");
 
-        pictures.add(ImageResource.ENEMY_MEGABULLET.getBitmap(context));
-        names.add("Enemy_Megabullet");
-        sp_names.add("enemy_bullet");
+        pictures.add(ImageResource.METEOR_RED.getBitmap(context));
+        names.add(nnn[2]);
+        sp_names.add("meteor");
         closed[1] = 5;
 
-        ship = bullet + 3;
+        bullet = ship + 3;
 
-        pictures.add(ImageResource.BULLET_RED.getBitmap(context));
-        names.add("Bullet_red");
+        nnn = context.getResources().getStringArray(R.array.bases);
+        pictures.add(ImageResource.RED_BASE.getBitmap(context));
+        names.add(nnn[0]);
         sp_names.add("default_base");
 
-        pictures.add(ImageResource.MEGABULLET.getBitmap(context));
-        names.add("Megabullet");
+        pictures.add(ImageResource.BLUE_BASE.getBitmap(context));
+        names.add(nnn[1]);
         sp_names.add("cool_base");
 
-        pictures.add(ImageResource.ENEMY_MEGABULLET.getBitmap(context));
-        names.add("Enemy_Megabullet");
-        sp_names.add("enemy_base");
+        pictures.add(ImageResource.GOLD_BASE.getBitmap(context));
+        names.add(nnn[2]);
+        sp_names.add("gold_base");
         closed[2] = 8;
 
-        base = ship + 3;
+        base = bullet + 3;
 
         pref = context.getSharedPreferences("Main", Context.MODE_PRIVATE);
         level10 = pref.getBoolean("level_10", false);
@@ -173,17 +177,17 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
                     if (!item.closed) {
                         int one, count;
                         String type;
-                        if (item.id < bullet) {
+                        if (item.id < ship) {
                             one = 0;
-                            count = bullet;
-                            type = "bullet";
-                        } else if (item.id < ship) {
-                            one = bullet;
-                            count = ship - bullet;
+                            count = ship;
                             type = "ship";
-                        } else {
+                        } else if (item.id < bullet) {
                             one = ship;
-                            count = base - ship;
+                            count = bullet - ship;
+                            type = "bullet";
+                        } else {
+                            one = bullet;
+                            count = base - bullet;
                             type = "base";
                         }
                         for (int i = one; i < count + one; i++) {

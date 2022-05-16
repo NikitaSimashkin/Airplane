@@ -56,19 +56,33 @@ public class Params {
                             p_cat = 30, p_yellow = 30, p_big_meteor = 40, p_turret = 40;
 
     public Params(Context context){
-        Meteors[1] = ImageResource.METEOR_RED.getBitmap(context);
-        //Meteors[1] = ImageResource.G.getBitmap(context);
         Meteors[0] = ImageResource.METEOR_GREEN.getBitmap(context);
-        Meteors[3] = ImageResource.METEOR_BLUE.getBitmap(context);
+        Meteors[1] = ImageResource.METEOR_RED.getBitmap(context);
         Meteors[2] = ImageResource.METEOR_YELLOW.getBitmap(context);
+        Meteors[3] = ImageResource.METEOR_BLUE.getBitmap(context);
         Meteors[4] = ImageResource.METEOR_DIED.getBitmap(context);
 
-        Bullets[0] = ImageResource.BULLET_GREEN.getBitmap(context);
-        Bullets[1] = ImageResource.BULLET_RED.getBitmap(context);
-        Bullets[2] = ImageResource.BULLET_YELLOW.getBitmap(context);
-        Bullets[3] = ImageResource.BULLET_BLUE.getBitmap(context);
+        SharedPreferences pref = context.getSharedPreferences("Main", MODE_PRIVATE);
+        String bullets_in_sharedpreference = pref.getString("bullet", "");
 
-        switch (context.getSharedPreferences("Main", MODE_PRIVATE).getInt(MainActivity.diff, 1)){ // 0 - легко - 1 - нормально 2 - сложно
+        if (bullets_in_sharedpreference.equals("default_bullet")) {
+            Bullets[0] = ImageResource.BULLET_GREEN.getBitmap(context);
+            Bullets[1] = ImageResource.BULLET_RED.getBitmap(context);
+            Bullets[2] = ImageResource.BULLET_YELLOW.getBitmap(context);
+            Bullets[3] = ImageResource.BULLET_BLUE.getBitmap(context);
+        } else if (bullets_in_sharedpreference.equals("cool_bullet")){
+            Bullets[0] = ImageResource.ROMB_GREEN.getBitmap(context);
+            Bullets[1] = ImageResource.ROMB_RED.getBitmap(context);
+            Bullets[2] = ImageResource.ROMB_YELLOW.getBitmap(context);
+            Bullets[3] = ImageResource.ROMB_BLUE.getBitmap(context);
+        } else if (bullets_in_sharedpreference.equals("meteor")){
+            Bullets[0] = ImageResource.METEOR_GREEN.getBitmap(context);
+            Bullets[1] = ImageResource.METEOR_RED.getBitmap(context);
+            Bullets[2] = ImageResource.METEOR_YELLOW.getBitmap(context);
+            Bullets[3] = ImageResource.METEOR_BLUE.getBitmap(context);
+        }
+
+        switch (pref.getInt(MainActivity.diff, 1)){ // 0 - легко - 1 - нормально 2 - сложно
             case 0:
                 start_hp_multiplier = 0.9 * start_hp_multiplier_default;
                 start_speed_multiplier = 1.1 * start_speed_multiplier_default;

@@ -21,4 +21,10 @@
 
     <color name="shop_selected">#1636BC</color>
     <color name="shop_not_selected">#7D85A6</color>
+
+    <color name="in_table_first">#CACF16</color>
+    <color name="out_table_first">#C19125</color>
+
+    <color name="in_table">@color/gray</color>
+    <color name="out_table">#2D2E2D</color>
 </resources>

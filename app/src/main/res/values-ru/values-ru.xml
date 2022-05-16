@@ -20,5 +20,8 @@
     <string name="inf_loose">Набрано очков:</string>
     <string name="rate">Таблица лидеров</string>
     <string name="shop2">Магазин скинов</string>
+    <string name="rating">Рейтинг</string>
+    <string name="nickname">Никнейм</string>
+    <string name="points">Набрано очков</string>
 
 </resources>

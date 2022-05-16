@@ -18,16 +18,27 @@ public enum ImageResource {
     METEOR_BIG(R.drawable.meteor_big),
 
     SPACESHIP(R.drawable.spaceship),
+    SPACESHIP_COOL(R.drawable.spaceship_cool),
+
     BULLET_GREEN(R.drawable.bullet_green),
     BULLET_RED(R.drawable.bullet_red),
     BULLET_YELLOW(R.drawable.bullet_yellow),
     BULLET_BLUE(R.drawable.bullet_blue),
+
+    ROMB_GREEN(R.drawable.romb_green),
+    ROMB_RED(R.drawable.romb_red),
+    ROMB_YELLOW(R.drawable.romb_yellow),
+    ROMB_BLUE(R.drawable.romb_blue),
+
+    RED_BASE(R.drawable.base),
+    BLUE_BASE(R.drawable.blue_base),
+    GOLD_BASE(R.drawable.gold_base),
+
     TURRET(R.drawable.turret),
     ENEMY_TURRET(R.drawable.enemy_turret),
     MEGABULLET(R.drawable.megabullet),
     ENEMY_MEGABULLET(R.drawable.enemy_megabullet),
-    //G(R.drawable.abc),
-
+    WHITE_PACKMAN(R.drawable.white_packman),
     ALIEN(R.drawable.alien),
     ALIEN_DEATH(R.drawable.alien_death),
 
@@ -43,8 +54,6 @@ public enum ImageResource {
     SUN(R.drawable.sun),
     SUN_DEATH(R.drawable.sun_death),
 
-    YELLOW(R.drawable.yellow),
-    YELLOW_DEATH(R.drawable.yellow_death),
     YELLOW_TWO(R.drawable.yellow_two),
     YELLOW_TWO_TWO(R.drawable.yellow_two_two),
 

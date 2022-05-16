@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/back2"
+        android:src="@drawable/back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,22 +61,37 @@
                       android:layout_width="match_parent"
                       android:layout_height="0dp"
                       android:layout_weight="1"
-                      android:autoText="false"
-                      android:text="@string/play" />
+                      android:backgroundTint="#590E6E"
+                      android:text="@string/play"
+                      android:textSize="20dp"
+                      android:textStyle="bold"
+                      app:cornerRadius="50dp"
+                      app:strokeColor="#D30FFF"
+                      app:strokeWidth="2dp" />
 
                   <Button
                       android:id="@+id/shop"
                       android:layout_width="match_parent"
                       android:layout_height="0dp"
                       android:layout_weight="1"
-                      android:text="@string/shop" />
+                      android:backgroundTint="#590E6E"
+                      android:text="@string/shop"
+                      android:textSize="20dp"
+                      app:cornerRadius="50dp"
+                      app:strokeColor="#D30FFF"
+                      app:strokeWidth="2dp" />
 
                   <Button
                       android:id="@+id/rate_table"
                       android:layout_width="match_parent"
                       android:layout_height="0dp"
                       android:layout_weight="1"
-                      android:text="Button" />
+                      android:text="@string/rating"
+                      android:backgroundTint="#590E6E"
+                      android:textSize="20dp"
+                      app:cornerRadius="50dp"
+                      app:strokeColor="#D30FFF"
+                      app:strokeWidth="2dp" />
               </LinearLayout>
 
               <LinearLayout

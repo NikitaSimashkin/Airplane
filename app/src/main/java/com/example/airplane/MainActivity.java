@@ -12,9 +12,12 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText name;
     private Player[] list_info = new Player[MainActivity.rate_table_kolvo];
     private Table_adapter adapter;
-    private VideoView video;
+    private ImageView imageStart;
 
     public static final DatabaseReference mDataBase = FirebaseDatabase.getInstance("https://spacewar-8bb7b-default-rtdb.firebaseio.com/").getReference(PLAYERS);
 
@@ -76,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-
         options = new Dialog(this);
         options.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
         options.setCancelable(false); // нельзя закрыть окно кнопкой назад
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         close = options.findViewById(R.id.close);
         ImageButton accept = options.findViewById(R.id.accept);
+        imageStart = options.findViewById(R.id.image_start);
         ImageButton opt = findViewById(R.id.options);
 
         name = options.findViewById(R.id.name);
@@ -98,6 +101,25 @@ public class MainActivity extends AppCompatActivity {
         RadioButton easy = options.findViewById(R.id.easy);
         RadioButton normal = options.findViewById(R.id.normal);
         RadioButton hard = options.findViewById(R.id.hard);
+
+        View.OnClickListener change_image = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()){
+                    case R.id.easy:
+                        imageStart.setImageBitmap(ImageResource.ALIEN.getBitmap(getApplicationContext()));
+                        break;
+                    case R.id.normal:
+                        imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(getApplicationContext()));
+                        break;
+                    case R.id.hard:
+                        imageStart.setImageBitmap(ImageResource.BOSS.getBitmap(getApplicationContext()));
+                }
+            }
+        };
+        easy.setOnClickListener(change_image);
+        normal.setOnClickListener(change_image);
+        hard.setOnClickListener(change_image);
 
         opt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,12 +130,15 @@ public class MainActivity extends AppCompatActivity {
                 switch (difficult){
                     case 0:
                         easy.setChecked(true);
+                        imageStart.setImageBitmap(ImageResource.ALIEN.getBitmap(getApplicationContext()));
                         break;
                     case 1:
                         normal.setChecked(true);
+                        imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(getApplicationContext()));
                         break;
                     case 2:
                         hard.setChecked(true);
+                        imageStart.setImageBitmap(ImageResource.BOSS.getBitmap(getApplicationContext()));
                         break;
                 }
             }
@@ -170,13 +195,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, Shop.class);
                 startActivity(i);
-//                mDataBase.push().setValue(new Player("None", mDataBase.getKey(), i[0], 0));
-//                i[0]++;
-//                pref.edit().putBoolean("level_inf", true).apply();
             }
         });
 
-        pref.edit().putBoolean("level_inf", true).apply();
+        pref.edit().putBoolean("level_9", true).apply();
+
         Button rate_table = findViewById(R.id.rate_table);
 
         rate_table.setOnClickListener(new View.OnClickListener() {
