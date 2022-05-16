@@ -474,6 +474,7 @@ public class PlayActivity extends AppCompatActivity {
                     one.setText(getResources().getString(R.string.inf_loose));
                     two.setText(Integer.toString(points));
                     add_to_table(points);
+                    update_record(points);
                 }
                 if (!isFinishing())
                     loose_or_win.show();
@@ -493,6 +494,13 @@ public class PlayActivity extends AppCompatActivity {
                 if (!isFinishing())
                     loose_or_win.show();
                 break;
+        }
+    }
+
+    private void update_record(int points) {
+        SharedPreferences pref = getSharedPreferences("Main", MODE_PRIVATE);
+        if (points > pref.getInt("record", 0)){
+            pref.edit().putInt("record", points).apply();
         }
     }
 

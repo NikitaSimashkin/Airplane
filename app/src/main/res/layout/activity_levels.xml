@@ -7,18 +7,6 @@
     android:background="@drawable/back_shop"
     tools:context=".Levels_activity">
 
-    <!--<pl.droidsonroids.gif.GifImageView
-        android:id="@+id/gifImageView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scaleType="centerCrop"
-        android:src="@drawable/test3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /> -->
-
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="0dp"
@@ -43,7 +31,11 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="25dp"
                 android:layout_weight="2"
-                android:text="1" />
+                android:backgroundTint="#283FB1"
+                android:text="1"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <Button
                 android:id="@+id/four"
@@ -52,7 +44,11 @@
                 android:layout_gravity="end"
                 android:layout_marginLeft="30dp"
                 android:layout_weight="2"
-                android:text="4" />
+                android:backgroundTint="#283FB1"
+                android:text="4"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <Button
                 android:id="@+id/seven"
@@ -61,7 +57,11 @@
                 android:layout_gravity="end"
                 android:layout_marginLeft="30dp"
                 android:layout_weight="2"
-                android:text="7" />
+                android:backgroundTint="#283FB1"
+                android:text="7"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -87,7 +87,11 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="2"
-                android:text="2" />
+                android:backgroundTint="#283FB1"
+                android:text="2"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <Button
                 android:id="@+id/five"
@@ -97,7 +101,11 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="2"
-                android:text="5" />
+                android:backgroundTint="#283FB1"
+                android:text="5"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <Button
                 android:id="@+id/eight"
@@ -107,7 +115,11 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="2"
-                android:text="8" />
+                android:backgroundTint="#283FB1"
+                android:text="8"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -124,7 +136,11 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="2"
-                    android:text="10" />
+                    android:backgroundTint="#FF0000"
+                    android:text="10"
+                    app:cornerRadius="20dp"
+                    app:strokeColor="#FFDD00"
+                    app:strokeWidth="3dp" />
             </FrameLayout>
 
         </LinearLayout>
@@ -143,7 +159,11 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="2"
-                android:text="3" />
+                android:backgroundTint="#283FB1"
+                android:text="3"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <Button
                 android:id="@+id/six"
@@ -152,7 +172,11 @@
                 android:layout_gravity="end"
                 android:layout_marginRight="30dp"
                 android:layout_weight="2"
-                android:text="6" />
+                android:backgroundTint="#283FB1"
+                android:text="6"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <Button
                 android:id="@+id/nine"
@@ -161,7 +185,11 @@
                 android:layout_gravity="end"
                 android:layout_marginRight="30dp"
                 android:layout_weight="2"
-                android:text="9" />
+                android:backgroundTint="#283FB1"
+                android:text="9"
+                app:cornerRadius="20dp"
+                app:strokeColor="#00EBF3"
+                app:strokeWidth="2dp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -182,6 +210,7 @@
                 android:id="@+id/infinity_text"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="3"
                 android:fontFamily="@font/black_ops_one"
                 android:gravity="center"
@@ -189,6 +218,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="#FF9800"
+                android:textStyle="bold"
                 android:typeface="normal"
                 app:autoSizeTextType="uniform" />
 
@@ -201,13 +231,21 @@
                 android:layout_marginRight="60dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="2"
-                android:text="Button" />
+                android:backgroundTint="#34BC03"
+                android:text="Button"
+                app:cornerRadius="20dp"
+                app:strokeColor="#0DFF34"
+                app:strokeWidth="3dp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/your_record"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3" />
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="@string/Title"
+                android:textColor="#FF9800"
+                android:textSize="40dp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -133,7 +134,7 @@ public class Levels_activity extends AppCompatActivity {
     }
 
     private void update(){
-        for (int i = 0; i < level_acces.length; i++){
+        for (int i = 0; i < level_acces.length-1; i++){
             Button current_button = level_buttons.get(i);
             current_button.setOnClickListener(Levels);
             level_acces[i] = pref.getBoolean("level_" + (i + 1), false);
@@ -141,8 +142,13 @@ public class Levels_activity extends AppCompatActivity {
                 current_button.setClickable(false);
                 current_button.setBackgroundColor(Color.GRAY);
             } else {
-                current_button.setBackgroundColor(Color.BLUE);
+                current_button.setBackgroundColor(getResources().getColor(R.color.level_active, null));
             }
+        }
+        Button ten = level_buttons.get(level_buttons.size()-1);
+        ten.setOnClickListener(Levels);
+        if (pref.getBoolean("level_10", false)){
+            ten.setBackgroundColor(Color.RED);
         }
 
         Button level_inf = findViewById(R.id.button_inf);
@@ -150,7 +156,11 @@ public class Levels_activity extends AppCompatActivity {
             level_inf.setClickable(false);
             level_inf.setBackgroundColor(Color.GRAY);
         } else {
-            level_inf.setBackgroundColor(Color.BLUE);
+            level_inf.setBackgroundColor(getResources().getColor(R.color.level_inf, null));
         }
+
+        TextView record = findViewById(R.id.your_record);
+        String text = getResources().getString(R.string.your_record) + " " + pref.getInt("record", 0);
+        record.setText(text);
     }
 }

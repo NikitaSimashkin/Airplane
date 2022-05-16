@@ -23,5 +23,6 @@
     <string name="rating">Рейтинг</string>
     <string name="nickname">Никнейм</string>
     <string name="points">Набрано очков</string>
+    <string name="your_record">Ваш рекорд: </string>
 
 </resources>

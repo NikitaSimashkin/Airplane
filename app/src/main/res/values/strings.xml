@@ -21,6 +21,7 @@
     <string name="rating">Рейтинг</string>
     <string name="nickname">Никнейм</string>
     <string name="points">Очки</string>
+    <string name="your_record">Ваш рекорд: </string>
 
     <string-array name="ships">
         <item>Корабль №1</item>
