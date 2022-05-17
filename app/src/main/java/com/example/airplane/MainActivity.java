@@ -162,36 +162,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player = pref.getString(nickname, "");
-                if (!player.equals(""))
-                    options.dismiss();
-            }
+        close.setOnClickListener(v -> {
+            player = pref.getString(nickname, "");
+            if (!player.equals(""))
+                options.dismiss();
         });
 
         /*
         difficult - 0 easy; 1 - normal; 2 - hard
          */
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor edit = pref.edit();
-                String nick = name.getText().toString();
-                if (!nick.equals("") && (easy.isChecked() || normal.isChecked() || hard.isChecked())){
-                    edit.putString(nickname, nick);
-                    int difficult;
-                    if (easy.isChecked())
-                        difficult = 0;
-                    else if (normal.isChecked())
-                        difficult = 1;
-                    else
-                        difficult = 2;
-                    edit.putInt(diff, difficult);
-                    edit.apply();
-                    options.dismiss();
-                }
+        accept.setOnClickListener(v -> {
+            SharedPreferences.Editor edit = pref.edit();
+            String nick = name.getText().toString();
+            if (!nick.equals("") && (easy.isChecked() || normal.isChecked() || hard.isChecked())){
+                edit.putString(nickname, nick);
+                int difficult;
+                if (easy.isChecked())
+                    difficult = 0;
+                else if (normal.isChecked())
+                    difficult = 1;
+                else
+                    difficult = 2;
+                edit.putInt(diff, difficult);
+                edit.apply();
+                options.dismiss();
             }
         });
     }

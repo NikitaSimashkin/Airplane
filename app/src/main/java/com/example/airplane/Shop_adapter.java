@@ -39,18 +39,10 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
     private int[] colors; // хранит цвета
     private int[] closed = new int[3];
 
-    private boolean flag = true, level10;
+    private boolean level10;
 
     public int[] get_colors(){
         return colors;
-    }
-
-    public ArrayList<String> get_names(){
-        return names;
-    }
-
-    public ArrayList<Bitmap> get_pictures(){
-        return pictures;
     }
 
     public void set_handler(Handler handler){
@@ -59,7 +51,6 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
 
     public Shop_adapter(Context context) {
         this.context = context;
-        this.handler = handler;
 
         String[] nnn = context.getResources().getStringArray(R.array.ships);
 
@@ -170,46 +161,42 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
         item.id = current_item;
 
         current_item++;
-            item.skin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    item.closed = closed[0] == item.id || closed[1] == item.id || closed[2] == item.id;
-                    if (!item.closed) {
-                        int one, count;
-                        String type;
-                        if (item.id < ship) {
-                            one = 0;
-                            count = ship;
-                            type = MainActivity.SHIP;
-                        } else if (item.id < bullet) {
-                            one = ship;
-                            count = bullet - ship;
-                            type = MainActivity.BULLET;
-                        } else {
-                            one = bullet;
-                            count = base - bullet;
-                            type = MainActivity.BASE;
-                        }
-                        for (int i = one; i < count + one; i++) {
-                            boolean temp = !(closed[0] == i || closed[1] == i || closed[2] == i);
-                            if (temp)
-                                colors[i] = R.color.shop_not_selected;
-                        }
-                        item.set_color(R.color.shop_selected);
-                        pref.edit().putString(type, sp_names.get(item.id)).apply();
-                        colors[item.id] = R.color.shop_selected;
-                        int last = current_item;
-                        current_item = one;
-                        handler.sendMessage(Message.obtain(handler, 0, one, count));
-                        current_item = last;
+            item.skin.setOnClickListener(v -> {
+                item.closed = closed[0] == item.id || closed[1] == item.id || closed[2] == item.id;
+                if (!item.closed) {
+                    int one, count;
+                    String type;
+                    if (item.id < ship) {
+                        one = 0;
+                        count = ship;
+                        type = MainActivity.SHIP;
+                    } else if (item.id < bullet) {
+                        one = ship;
+                        count = bullet - ship;
+                        type = MainActivity.BULLET;
+                    } else {
+                        one = bullet;
+                        count = base - bullet;
+                        type = MainActivity.BASE;
                     }
+                    for (int i = one; i < count + one; i++) {
+                        boolean temp = !(closed[0] == i || closed[1] == i || closed[2] == i);
+                        if (temp)
+                            colors[i] = R.color.shop_not_selected;
+                    }
+                    item.set_color(R.color.shop_selected);
+                    pref.edit().putString(type, sp_names.get(item.id)).apply();
+                    colors[item.id] = R.color.shop_selected;
+                    int last = current_item;
+                    current_item = one;
+                    handler.sendMessage(Message.obtain(handler, 0, one, count));
+                    current_item = last;
                 }
             });
 
         return item;
     }
 
-    private boolean first_update = false;
     @Override
     public void onBindViewHolder(@NonNull Item holder, int position) {
         holder.id = holder.getAdapterPosition();

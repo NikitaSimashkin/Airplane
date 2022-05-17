@@ -42,19 +42,17 @@ public class Shop extends AppCompatActivity {
         Handler handler = new Handler(looper){
             @Override
             public void handleMessage(@NonNull Message msg) {
-                switch(msg.what){
-                    case 0:
-                        int[] colors = adapter.get_colors();
-                        for (int i = 0; i < msg.arg2; i++) {
-                            if (colors[msg.arg1 + i] != -1) {
-                                Shop_adapter.Item item = (Shop_adapter.Item) rv.findViewHolderForAdapterPosition(msg.arg1 + i);
-                                if (item != null)
-                                    item.set_color(colors[msg.arg1 + i]);
-                                else
-                                    adapter.notifyItemChanged(msg.arg1 + i);
-                            }
+                if (msg.what == 0) {
+                    int[] colors = adapter.get_colors();
+                    for (int i = 0; i < msg.arg2; i++) {
+                        if (colors[msg.arg1 + i] != -1) {
+                            Shop_adapter.Item item = (Shop_adapter.Item) rv.findViewHolderForAdapterPosition(msg.arg1 + i);
+                            if (item != null)
+                                item.set_color(colors[msg.arg1 + i]);
+                            else
+                                adapter.notifyItemChanged(msg.arg1 + i);
                         }
-                        break;
+                    }
                 }
             }
         };
