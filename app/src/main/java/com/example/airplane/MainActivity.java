@@ -68,16 +68,16 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        { //обработчик кнопки, который вызывает вторую активити playactivity
-            Button play_button = (Button) findViewById(R.id.play_button);
-            play_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(MainActivity.this, Levels_activity.class);
-                    startActivity(i);
-                }
-            });
-        }
+        // обработчик кнопки, который вызывает вторую активити с уровнями
+        Button play_button = findViewById(R.id.play_button);
+        play_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, Levels_activity.class);
+                startActivity(i);
+            }
+        });
+
 
         options = new Dialog(this);
         options.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
@@ -264,12 +264,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         };
 
         mDataBase.addListenerForSingleValueEvent(valueEventListener);
-
     }
 }
