@@ -129,9 +129,9 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
         colors = new int[size];
 
         String
-                ship_selected = pref.getString("ship", ""),
-                base_selected = pref.getString("base", ""),
-                bullet_selected = pref.getString("bullet", "");
+                ship_selected = pref.getString(MainActivity.SHIP, ""),
+                base_selected = pref.getString(MainActivity.BASE, ""),
+                bullet_selected = pref.getString(MainActivity.BULLET, "");
 
         for (int i = 0; i < size; i++){
             String current = sp_names.get(i);
@@ -180,15 +180,15 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
                         if (item.id < ship) {
                             one = 0;
                             count = ship;
-                            type = "ship";
+                            type = MainActivity.SHIP;
                         } else if (item.id < bullet) {
                             one = ship;
                             count = bullet - ship;
-                            type = "bullet";
+                            type = MainActivity.BULLET;
                         } else {
                             one = bullet;
                             count = base - bullet;
-                            type = "base";
+                            type = MainActivity.BASE;
                         }
                         for (int i = one; i < count + one; i++) {
                             boolean temp = !(closed[0] == i || closed[1] == i || closed[2] == i);

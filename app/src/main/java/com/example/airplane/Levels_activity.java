@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Levels_activity extends AppCompatActivity {
     private final ArrayList<Button> level_buttons = new ArrayList<>();
     private final boolean[] level_acces = new boolean[10];
-    private View.OnClickListener Levels;
+    private View.OnClickListener on_click;
     private SharedPreferences pref;
 
     @Override
@@ -34,82 +34,68 @@ public class Levels_activity extends AppCompatActivity {
         setContentView(R.layout.activity_levels);
 
         // КНОПКИ
-        {
-            Levels = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                switch (v.getId()){
-                    case R.id.one:
-                        Levels(1);
-                        break;
-                    case R.id.two:
-                        Levels(2);
-                        break;
-                    case R.id.three:
-                        Levels(3);
-                        break;
-                    case R.id.four:
-                        Levels(4);
-                        break;
-                    case R.id.five:
-                        Levels(5);
-                        break;
-                    case R.id.six:
-                        Levels(6);
-                        break;
-                    case R.id.seven:
-                        Levels(7);
-                        break;
-                    case R.id.eight:
-                        Levels(8);
-                        break;
-                    case R.id.nine:
-                        Levels(9);
-                        break;
-                    case R.id.ten:
-                        Levels(10);
-                        break;
-                    }
-                }
-            };
 
-            level_buttons.add(findViewById(R.id.one));
-            level_buttons.add(findViewById(R.id.two));
-            level_buttons.add(findViewById(R.id.three));
-            level_buttons.add(findViewById(R.id.four));
-            level_buttons.add(findViewById(R.id.five));
-            level_buttons.add(findViewById(R.id.six));
-            level_buttons.add(findViewById(R.id.seven));
-            level_buttons.add(findViewById(R.id.eight));
-            level_buttons.add(findViewById(R.id.nine));
-            level_buttons.add(findViewById(R.id.ten));
+        on_click = v -> {
+        switch (v.getId()){
+            case R.id.one:
+                Levels(1);
+                break;
+            case R.id.two:
+                Levels(2);
+                break;
+            case R.id.three:
+                Levels(3);
+                break;
+            case R.id.four:
+                Levels(4);
+                break;
+            case R.id.five:
+                Levels(5);
+                break;
+            case R.id.six:
+                Levels(6);
+                break;
+            case R.id.seven:
+                Levels(7);
+                break;
+            case R.id.eight:
+                Levels(8);
+                break;
+            case R.id.nine:
+                Levels(9);
+                break;
+            case R.id.ten:
+                Levels(10);
+                break;
+            }
+        };
 
-            Button level_inf = findViewById(R.id.button_inf);
+        level_buttons.add(findViewById(R.id.one));
+        level_buttons.add(findViewById(R.id.two));
+        level_buttons.add(findViewById(R.id.three));
+        level_buttons.add(findViewById(R.id.four));
+        level_buttons.add(findViewById(R.id.five));
+        level_buttons.add(findViewById(R.id.six));
+        level_buttons.add(findViewById(R.id.seven));
+        level_buttons.add(findViewById(R.id.eight));
+        level_buttons.add(findViewById(R.id.nine));
+        level_buttons.add(findViewById(R.id.ten));
 
-            level_inf.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Levels(99);
-                }
-            });
+        Button level_inf = findViewById(R.id.button_inf);
 
-            pref = getSharedPreferences("Main", MODE_PRIVATE);
-            pref.edit().putBoolean("level_1", true).apply();
+        level_inf.setOnClickListener(v -> Levels(99));
 
-            update();
-        }
+        pref = getSharedPreferences("Main", MODE_PRIVATE);
+        pref.edit().putBoolean("level_1", true).apply();
+
+        update();
+
     }
 
     private void Levels(int number){
-        if (number != 99) {
-            Intent i = new Intent(Levels_activity.this, PlayActivity.class);
-            i.putExtra("number", number);
-            startActivity(i);
-        } else {
-            Intent i = new Intent(Levels_activity.this, PlayActivity.class);
-            i.putExtra("number", number);
-            startActivity(i);
-        }
+        Intent i = new Intent(Levels_activity.this, PlayActivity.class);
+        i.putExtra("number", number);
+        startActivity(i);
     }
 
 
@@ -136,7 +122,7 @@ public class Levels_activity extends AppCompatActivity {
     private void update(){
         for (int i = 0; i < level_acces.length-1; i++){
             Button current_button = level_buttons.get(i);
-            current_button.setOnClickListener(Levels);
+            current_button.setOnClickListener(on_click);
             level_acces[i] = pref.getBoolean("level_" + (i + 1), false);
             if (!level_acces[i]){
                 current_button.setClickable(false);
@@ -146,8 +132,11 @@ public class Levels_activity extends AppCompatActivity {
             }
         }
         Button ten = level_buttons.get(level_buttons.size()-1);
-        ten.setOnClickListener(Levels);
-        if (pref.getBoolean("level_10", false)){
+        ten.setOnClickListener(on_click);
+        if (!pref.getBoolean("level_10", false)){
+            ten.setClickable(false);
+            ten.setBackgroundColor(Color.GRAY);
+        } else {
             ten.setBackgroundColor(Color.RED);
         }
 

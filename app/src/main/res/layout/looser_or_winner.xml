@@ -61,24 +61,30 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:backgroundTint="@color/blue_pressed"
                     android:insetLeft="30dp"
                     android:insetTop="10dp"
                     android:insetRight="10dp"
                     android:insetBottom="20dp"
                     android:text="@string/menu"
-                    app:cornerRadius="10dp" />
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="2dp" />
 
                 <Button
                     android:id="@+id/retry"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:backgroundTint="@color/blue_pressed"
                     android:insetLeft="20dp"
                     android:insetTop="10dp"
                     android:insetRight="20dp"
                     android:insetBottom="20dp"
                     android:text="@string/retru"
-                    app:cornerRadius="10dp" />
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="2dp" />
 
                 <Button
                     android:id="@+id/next"
@@ -92,7 +98,9 @@
                     android:insetRight="30dp"
                     android:insetBottom="20dp"
                     android:text="@string/next"
-                    app:cornerRadius="10dp" />
+                    app:cornerRadius="10dp"
+                    app:strokeColor="@color/black"
+                    app:strokeWidth="2dp"/>
 
             </LinearLayout>
 

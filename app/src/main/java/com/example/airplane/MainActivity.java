@@ -38,14 +38,14 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences pref;
-    public static final String nickname = "Name", diff = "difficult", PLAYERS = "Players";
+    public static final String nickname = "Name", diff = "difficult", PLAYERS = "Players", SHIP = "ship",
+    BULLET = "bullet", BASE = "base";
     public static final int rate_table_kolvo = 20;
 
     private Dialog options, table;
-    private ImageButton close;
     private String player;
     private EditText name;
-    private Player[] list_info = new Player[MainActivity.rate_table_kolvo];
+    private final Player[] list_info = new Player[MainActivity.rate_table_kolvo];
     private Table_adapter adapter;
     private ImageView imageStart;
 
@@ -70,15 +70,39 @@ public class MainActivity extends AppCompatActivity {
 
         // обработчик кнопки, который вызывает вторую активити с уровнями
         Button play_button = findViewById(R.id.play_button);
-        play_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Levels_activity.class);
-                startActivity(i);
-            }
+        play_button.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, Levels_activity.class);
+            startActivity(i);
         });
 
+        // окно магазина
+        Button shop = findViewById(R.id.shop);
+        shop.setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, Shop.class);
+            startActivity(i);
+        });
 
+        // таблица лидеров
+        Button rate_table = findViewById(R.id.rate_table);
+        rate_table.setOnClickListener(v -> {
+            if (table == null)
+                table = create_rate_table();
+            get_info();
+            table.show();
+        });
+
+        create_option_dialog();
+
+        if (pref.getString("ship", "").equals("")){
+            SharedPreferences.Editor edit = pref.edit();
+            edit.putString(MainActivity.SHIP, "default_ship");
+            edit.putString(MainActivity.BULLET, "default_bullet");
+            edit.putString(MainActivity.BASE, "default_base");
+            edit.apply();
+        }
+    }
+
+    protected void create_option_dialog() {
         options = new Dialog(this);
         options.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
         options.setCancelable(false); // нельзя закрыть окно кнопкой назад
@@ -91,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             options.show();
         }
 
-        close = options.findViewById(R.id.close);
+        ImageButton close = options.findViewById(R.id.close);
         ImageButton accept = options.findViewById(R.id.accept);
         imageStart = options.findViewById(R.id.image_start);
         ImageButton opt = findViewById(R.id.options);
@@ -102,45 +126,39 @@ public class MainActivity extends AppCompatActivity {
         RadioButton normal = options.findViewById(R.id.normal);
         RadioButton hard = options.findViewById(R.id.hard);
 
-        View.OnClickListener change_image = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(v.getId()){
-                    case R.id.easy:
-                        imageStart.setImageBitmap(ImageResource.ALIEN.getBitmap(getApplicationContext()));
-                        break;
-                    case R.id.normal:
-                        imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(getApplicationContext()));
-                        break;
-                    case R.id.hard:
-                        imageStart.setImageBitmap(ImageResource.BOSS.getBitmap(getApplicationContext()));
-                }
+        View.OnClickListener change_image = v -> {
+            switch(v.getId()){
+                case R.id.easy:
+                    imageStart.setImageBitmap(ImageResource.ALIEN.getBitmap(getApplicationContext()));
+                    break;
+                case R.id.normal:
+                    imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(getApplicationContext()));
+                    break;
+                case R.id.hard:
+                    imageStart.setImageBitmap(ImageResource.BOSS.getBitmap(getApplicationContext()));
             }
         };
         easy.setOnClickListener(change_image);
         normal.setOnClickListener(change_image);
         hard.setOnClickListener(change_image);
 
-        opt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                options.show();
-                name.setText(pref.getString(nickname, ""));
-                int difficult = pref.getInt(diff, 0);
-                switch (difficult){
-                    case 0:
-                        easy.setChecked(true);
-                        imageStart.setImageBitmap(ImageResource.ALIEN.getBitmap(getApplicationContext()));
-                        break;
-                    case 1:
-                        normal.setChecked(true);
-                        imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(getApplicationContext()));
-                        break;
-                    case 2:
-                        hard.setChecked(true);
-                        imageStart.setImageBitmap(ImageResource.BOSS.getBitmap(getApplicationContext()));
-                        break;
-                }
+        opt.setOnClickListener(v -> {
+            options.show();
+            name.setText(pref.getString(nickname, ""));
+            int difficult = pref.getInt(diff, 0);
+            switch (difficult){
+                case 0:
+                    easy.setChecked(true);
+                    imageStart.setImageBitmap(ImageResource.ALIEN.getBitmap(getApplicationContext()));
+                    break;
+                case 1:
+                    normal.setChecked(true);
+                    imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(getApplicationContext()));
+                    break;
+                case 2:
+                    hard.setChecked(true);
+                    imageStart.setImageBitmap(ImageResource.BOSS.getBitmap(getApplicationContext()));
+                    break;
             }
         });
 
@@ -148,9 +166,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 player = pref.getString(nickname, "");
-//                SharedPreferences.Editor edit = pref.edit();
-//                edit.clear();
-//                edit.apply();
                 if (!player.equals(""))
                     options.dismiss();
             }
@@ -179,40 +194,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        if (pref.getString("ship", "").equals("")){
-            SharedPreferences.Editor edit = pref.edit();
-            edit.putString("ship", "default_ship");
-            edit.putString("bullet", "default_bullet");
-            edit.putString("base", "default_base");
-            edit.apply();
-        }
-
-        Button shop = findViewById(R.id.shop);
-        final int[] i = {0};
-        shop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Shop.class);
-                startActivity(i);
-            }
-        });
-
-        Button rate_table = findViewById(R.id.rate_table);
-
-        rate_table.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (table == null)
-                    table = create_rate_table();
-                get_info();
-                table.show();
-            }
-        });
-
     }
 
-    public Dialog create_rate_table(){
+    protected Dialog create_rate_table(){
 
         Dialog t = new Dialog(this);
         t.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
@@ -221,12 +205,9 @@ public class MainActivity extends AppCompatActivity {
         t.setContentView(R.layout.rate_table);
 
         ImageButton close_table = t.findViewById(R.id.close_table);
-        close_table.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isFinishing())
-                    t.dismiss();
-            }
+        close_table.setOnClickListener(v -> {
+            if (!isFinishing())
+                t.dismiss();
         });
         RecyclerView rv = t.findViewById(R.id.rating);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -242,22 +223,19 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             rv.setAdapter(adapter);
         }
-
         return t;
     }
 
-    private void get_info(){
+    protected void get_info(){
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int i = 0;
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
                     Player player = ds.getValue(Player.class);
                     if (player != null){
                         list_info[player.getNumber()] = player;
                     }
-                    i++;
                 }
                 adapter.change(list_info);
                 adapter.notifyDataSetChanged();

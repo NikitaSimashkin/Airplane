@@ -37,15 +37,9 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -54,7 +48,6 @@ public class PlayActivity extends AppCompatActivity {
     private DrawThread drawThread;
     private Dialog loose_or_win, start;
     private TextView start_text;
-    private ImageView helper;
     private int step = 1; // для диалогового начального окна
     private String[] start_phrases; // стартовые фразы
 
@@ -76,18 +69,13 @@ public class PlayActivity extends AppCompatActivity {
     private Button next;
     private ImageButton many_bullets, turret, megabullet, green, yellow, blue, red, size;
     private ProgressBar hp_samolet, hp_base;
-    private TextView textView, points;
+    private TextView boss_text, points;
 
     private View background_win_or_loose;
 
     private  SpaceshipControllerFragment button_fragment;
     private BlankFragment text_fragment;
     private  FragmentManager fragmentManager;
-
-    @Override
-    public void finish() {
-        super.finish();
-    }
 
     @Override
     protected void onStart() {
@@ -99,32 +87,223 @@ public class PlayActivity extends AppCompatActivity {
         context = getApplicationContext();
         number = getIntent().getExtras().getInt("number");
 
+//        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
+//        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Intent i = new Intent(PlayActivity.this, Levels_activity.class);
+//                startActivity(i);
+//            }
+//        });
+
+        fragments();
+
+        create_helper_dialog();
+
+        create_loose_or_win_dialog();
+
+        init_tints_for_buttons();
+
+        points = findViewById(R.id.points);
+        Looper looper = Looper.myLooper();
+        handler = new Handler(looper) {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 0: // проиграл или выиграл
+                        drawThread.interrupt();
+                        win_or_loose_dialog(msg.arg1, msg.arg2);
+                        break;
+                    case 1:
+                        switch(msg.arg1) {
+                            case 0:
+                                hp_samolet.setProgress(msg.arg2);
+                                break;
+                            case 1:
+                                hp_base.setProgress(msg.arg2);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        start_options();
+                        break;
+                    case 3:
+                        update_abilities(msg.arg1);
+                        break;
+                    case 4:
+                        FragmentTransaction t = fragmentManager.beginTransaction();
+                        t.hide(button_fragment);
+                        t.show(text_fragment);
+                        t.commit();
+                        break;
+                    case 5:
+                        FragmentTransaction t1 = fragmentManager.beginTransaction();
+                        t1.hide(text_fragment);
+                        t1.show(button_fragment);
+                        t1.commit();
+                        break;
+                    case 6: // arg1 - номер фразы
+                        boss_text.setText(start_phrases[msg.arg1]);
+                        if (msg.arg1 == 2){
+                            boss_text.setTextColor(getResources().getColor(R.color.helper, null));
+                        } else {
+                            boss_text.setTextColor(getResources().getColor(R.color.boss, null));
+                        }
+                        break;
+                    case 7:
+                        points.setText(Integer.toString(msg.arg1));
+                        break;
+                    case 8:
+                        change_base();
+                        break;
+                }
+            }
+        };
+
+        create_surface_view();
+
+        create_abilities();
+
+    }
+
+    private void init_tints_for_buttons() {
+        green_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.green_pressed);
+        green_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.green_not_pressed);
+        red_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.red_pressed);
+        red_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.red_not_pressed);
+        yellow_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.yellow_pressed);
+        yellow_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.yellow_not_pressed);
+        blue_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_pressed);
+        blue_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_not_pressed);
+    }
+
+    private void create_abilities() {
+
+        // 0 - большой; 1 - нормальный; 2 - маленький
+
+        size = findViewById(R.id.size_button);
+        size.setOnClickListener(v -> {
+            int k = size.getHeight()/10;
+            switch(current_size){
+                case 0:
+                    current_size = 2;
+                    size.setPadding(4*k,4*k,4*k,4*k);
+                    break;
+                case 1:
+                    current_size = 0;
+                    size.setPadding(2*k, 2*k, 2*k, 2*k);
+                    break;
+                case 2:
+                    current_size = 1;
+                    size.setPadding(3*k, 3*k, 3*k, 3*k);
+                    break;
+            }
+            drawThread.set_bullet_size(current_size);
+        });
+
+        turret = findViewById(R.id.turret);
+        turret.setOnClickListener(v -> {
+            drawThread.create_turret();
+            drawThread.set_last_udpate_time(System.currentTimeMillis());
+            turret.setVisibility(View.INVISIBLE);
+            megabullet.setVisibility(View.INVISIBLE);
+            many_bullets.setVisibility(View.INVISIBLE);
+        });
+
+        many_bullets = findViewById(R.id.many_bullets);
+        many_bullets.setOnClickListener(v -> {
+            drawThread.create_many_bullet();
+            drawThread.set_last_udpate_time(System.currentTimeMillis());
+            turret.setVisibility(View.INVISIBLE);
+            megabullet.setVisibility(View.INVISIBLE);
+            many_bullets.setVisibility(View.INVISIBLE);
+        });
+
+        megabullet = findViewById(R.id.megabullet);
+        megabullet.setOnClickListener(v -> {
+            drawThread.create_megabullet();
+            drawThread.set_last_udpate_time(System.currentTimeMillis());
+            turret.setVisibility(View.INVISIBLE);
+            megabullet.setVisibility(View.INVISIBLE);
+            many_bullets.setVisibility(View.INVISIBLE);
+        });
+    }
+
+    private void create_surface_view() {
+        play_field = findViewById(R.id.play_field); //поле для рисования
+        play_field.setZOrderOnTop (true); // Установить фон холста прозрачным
+        play_field.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+
+        play_field.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(@NonNull SurfaceHolder holder) {
+                width = play_field.getWidth();
+                height = play_field.getHeight();
+                drawThread = create_new_thread(width, height, number);
+                if (number != 10 && number != 99) {
+                    if (!isFinishing())
+                        start.show();
+                } else {
+                    drawThread.start();
+                }
+            }
+
+            @Override
+            public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+
+            }
+        });
+    }
+
+    private void create_loose_or_win_dialog() {
         loose_or_win = new Dialog(this);
         loose_or_win.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
         loose_or_win.setCancelable(false); // нельзя закрыто окно кнопкой назад
         loose_or_win.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         loose_or_win.setContentView(R.layout.looser_or_winner);
 
+        background_win_or_loose = loose_or_win.findViewById(R.id.frameLayout);
+        Button menu = loose_or_win.findViewById(R.id.menu);
+        Button retry = loose_or_win.findViewById(R.id.retry);
+        next = loose_or_win.findViewById(R.id.next);
+        next.setBackgroundColor(Color.BLUE);
+
+        retry.setOnClickListener(v -> {
+            drawThread = create_new_thread(width, height, number);
+            drawThread.start();
+            loose_or_win.hide();
+        });
+
+        menu.setOnClickListener(v -> {
+            loose_or_win.hide();
+            Intent i = new Intent(PlayActivity.this, MainActivity.class);
+            startActivity(i);
+        });
+
+        next.setOnClickListener(v -> {
+            number++;
+            drawThread = create_new_thread(width, height, number);
+            drawThread.start();
+            loose_or_win.hide();
+        });
+    }
+
+    private void create_helper_dialog() {
         start = new Dialog(this);
         start.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
         start.setCancelable(false); // нельзя закрыто окно кнопкой назад
-        start.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Window start_window = start.getWindow();
+        start_window.setBackgroundDrawableResource(android.R.color.transparent);
         start.setContentView(R.layout.start_dialog);
-        start.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        start.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        start_window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        start_window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         start_text = start.findViewById(R.id.helper_text);
-        helper = start.findViewById(R.id.helper);
-
-        button_fragment = new SpaceshipControllerFragment();
-        text_fragment = new BlankFragment();
-        fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (number == 10){
-            fragmentTransaction.add(R.id.container, text_fragment);
-            fragmentTransaction.hide(text_fragment);
-        }
-        fragmentTransaction.add(R.id.container, button_fragment);
-        fragmentTransaction.commit();
+        ImageView helper = start.findViewById(R.id.helper);
 
         Resources res = getResources();
         switch (number){
@@ -195,201 +374,19 @@ public class PlayActivity extends AppCompatActivity {
                 step++;
             }
         });
+    }
 
-
-        background_win_or_loose = loose_or_win.findViewById(R.id.frameLayout);
-        Button menu = loose_or_win.findViewById(R.id.menu);
-        Button retry = loose_or_win.findViewById(R.id.retry);
-        next = loose_or_win.findViewById(R.id.next);
-        next.setBackgroundColor(Color.BLUE);
-
-        green_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.green_pressed);
-        green_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.green_not_pressed);
-        red_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.red_pressed);
-        red_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.red_not_pressed);
-        yellow_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.yellow_pressed);
-        yellow_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.yellow_not_pressed);
-        blue_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_pressed);
-        blue_not_pressed = getTintedDrawable(context, R.drawable.circle_button, R.color.blue_not_pressed);
-
-        size = findViewById(R.id.size_button);
-        points = findViewById(R.id.points);
-
-        // Looper.prepare();
-        Looper looper = Looper.myLooper();
-        handler = new Handler(looper) {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what){
-                    case 0: // проиграл или выиграл
-                        drawThread.interrupt();
-                        win_or_loose_dialog(msg.arg1, msg.arg2);
-                        break;
-                    case 1:
-                        switch(msg.arg1) {
-                            case 0:
-                                hp_samolet.setProgress(msg.arg2);
-                                break;
-                            case 1:
-                                hp_base.setProgress(msg.arg2);
-                                break;
-                        }
-                        break;
-                    case 2:
-                        start_options();
-                        break;
-                    case 3:
-                        update_abilities(msg.arg1);
-                        break;
-                    case 4:
-                        FragmentTransaction t = fragmentManager.beginTransaction();
-                        t.hide(button_fragment);
-                        t.show(text_fragment);
-                        t.commit();
-                        break;
-                    case 5:
-                        FragmentTransaction t1 = fragmentManager.beginTransaction();
-                        t1.hide(text_fragment);
-                        t1.show(button_fragment);
-                        t1.commit();
-                        break;
-                    case 6: // arg1 - номер фразы
-                        textView.setText(start_phrases[msg.arg1]);
-                        if (msg.arg1 == 2){
-                            textView.setTextColor(getResources().getColor(R.color.helper, null));
-                        } else {
-                            textView.setTextColor(getResources().getColor(R.color.boss, null));
-                        }
-                        break;
-                    case 7:
-                        points.setText(Integer.toString(msg.arg1));
-                        break;
-                    case 8:
-                        change_base();
-                        break;
-                }
-            }
-        };
-
-        play_field = findViewById(R.id.play_field); //поле для рисования
-        play_field.setZOrderOnTop (true); // Установить фон холста прозрачным
-        play_field.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-
-        play_field.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(@NonNull SurfaceHolder holder) {
-                width = play_field.getWidth();
-                height = play_field.getHeight();
-                drawThread = create_new_thread(width, height, number);
-                if (number != 10 && number != 99) {
-                    if (!isFinishing())
-                        start.show();
-                } else {
-                    drawThread.start();
-                }
-            }
-
-            @Override
-            public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
-
-            }
-        });
-
-        retry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawThread = create_new_thread(width, height, number);
-                drawThread.start();
-                loose_or_win.hide();
-            }
-        });
-
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loose_or_win.hide();
-                Intent i = new Intent(PlayActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
-
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawThread = create_new_thread(width, height, number+1);
-                number++;
-                drawThread.start();
-                loose_or_win.hide();
-            }
-        });
-
-        turret = findViewById(R.id.turret);
-
-        turret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawThread.create_turret();
-                drawThread.set_last_udpate_time(System.currentTimeMillis());
-                turret.setVisibility(View.INVISIBLE);
-                megabullet.setVisibility(View.INVISIBLE);
-                many_bullets.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        // 0 - большой; 1 - нормальный; 2 - маленький
-
-        size.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int k = size.getHeight()/10;
-                switch(current_size){
-                    case 0:
-                        current_size = 2;
-                        size.setPadding(4*k,4*k,4*k,4*k);
-                        break;
-                    case 1:
-                        current_size = 0;
-                        size.setPadding(2*k, 2*k, 2*k, 2*k);
-                        break;
-                    case 2:
-                        current_size = 1;
-                        size.setPadding(3*k, 3*k, 3*k, 3*k);
-                        break;
-                }
-                drawThread.set_bullet_size(current_size);
-            }
-        });
-
-        many_bullets = findViewById(R.id.many_bullets);
-        megabullet = findViewById(R.id.megabullet);
-
-        many_bullets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawThread.create_many_bullet();
-                drawThread.set_last_udpate_time(System.currentTimeMillis());
-                turret.setVisibility(View.INVISIBLE);
-                megabullet.setVisibility(View.INVISIBLE);
-                many_bullets.setVisibility(View.INVISIBLE);
-            }
-        });
-
-        megabullet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawThread.create_megabullet();
-                drawThread.set_last_udpate_time(System.currentTimeMillis());
-                turret.setVisibility(View.INVISIBLE);
-                megabullet.setVisibility(View.INVISIBLE);
-                many_bullets.setVisibility(View.INVISIBLE);
-            }
-        });
-
+    private void fragments() {
+        button_fragment = new SpaceshipControllerFragment();
+        text_fragment = new BlankFragment();
+        fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (number == 10){
+            fragmentTransaction.add(R.id.container, text_fragment);
+            fragmentTransaction.hide(text_fragment);
+        }
+        fragmentTransaction.add(R.id.container, button_fragment);
+        fragmentTransaction.commit();
     }
 
     private void change_base() {
@@ -415,7 +412,7 @@ public class PlayActivity extends AppCompatActivity {
                 HashMap<String, Object> players = (HashMap<String, Object>) dataSnapshot.getValue();
                 HashMap<String, Object> update = new HashMap<>();
                 int k = 0;
-                for (Map.Entry<String, Object> entry : players. entrySet()){
+                for (Map.Entry<String, Object> entry : players.entrySet()){
                     Player current = dataSnapshot.child(entry.getKey()).getValue(Player.class);
                     if (current.getPoints() < points){
                         current.addNumber(1);
@@ -427,9 +424,11 @@ public class PlayActivity extends AppCompatActivity {
                         }
                     }
                 }
-                MainActivity.mDataBase.push().setValue(
-                        new Player(getSharedPreferences("Main", MODE_PRIVATE).getString(MainActivity.nickname, ""),
-                                MainActivity.mDataBase.getKey(), MainActivity.rate_table_kolvo-k, points));
+                if (k != 0) {
+                    MainActivity.mDataBase.push().setValue(
+                            new Player(getSharedPreferences("Main", MODE_PRIVATE).getString(MainActivity.nickname, ""),
+                                    MainActivity.mDataBase.getKey(), MainActivity.rate_table_kolvo - k, points));
+                }
                 if (update.size() != 0){
                     MainActivity.mDataBase.updateChildren(update);
                 }
@@ -464,7 +463,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public DrawThread create_new_thread(int width, int height, int number){
-        return new DrawThread(play_field.getHolder(), getApplicationContext(), width, height, handler, number);
+        return new DrawThread(play_field.getHolder(), context, width, height, handler, number);
     }
 
     public void win_or_loose_dialog(int win_or_loose, int points){
@@ -490,11 +489,11 @@ public class PlayActivity extends AppCompatActivity {
                 if (number == 10){
                     next.setBackgroundColor(Color.GRAY);
                     next.setClickable(false);
-                    edit.putBoolean("level_inf", true);
+                    edit.putBoolean("level_inf", true).apply();
                 } else {
-                    edit.putBoolean("level_" + (number + 1), true);
+                    edit.putBoolean("level_" + (number + 1), true).apply();
                 }
-                edit.apply();
+
                 background_win_or_loose.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_win, null));
                 if (!isFinishing())
                     loose_or_win.show();
@@ -521,43 +520,40 @@ public class PlayActivity extends AppCompatActivity {
         blue.setBackground(blue_not_pressed);
         yellow.setBackground(yellow_not_pressed);
 
-        View.OnClickListener Colors_b = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch(v.getId()){
-                    case R.id.green:
-                        drawThread.change_bullet_color(1);
-                        green.setImageDrawable(green_pressed);
-                        red.setImageDrawable(red_not_pressed);
-                        yellow.setImageDrawable(yellow_not_pressed);
-                        blue.setImageDrawable(blue_not_pressed);
-                        size.setImageBitmap(Params.Bullets[0]);
-                        break;
-                    case R.id.red:
-                        drawThread.change_bullet_color(2);
-                        green.setImageDrawable(green_not_pressed);
-                        red.setImageDrawable(red_pressed);
-                        yellow.setImageDrawable(yellow_not_pressed);
-                        blue.setImageDrawable(blue_not_pressed);
-                        size.setImageBitmap(Params.Bullets[1]);
-                        break;
-                    case R.id.yellow:
-                        drawThread.change_bullet_color(3);
-                        green.setImageDrawable(green_not_pressed);
-                        red.setImageDrawable(red_not_pressed);
-                        yellow.setImageDrawable(yellow_pressed);
-                        blue.setImageDrawable(blue_not_pressed);
-                        size.setImageBitmap(Params.Bullets[2]);
-                        break;
-                    case R.id.blue:
-                        drawThread.change_bullet_color(4);
-                        green.setImageDrawable(green_not_pressed);
-                        red.setImageDrawable(red_not_pressed);
-                        yellow.setImageDrawable(yellow_not_pressed);
-                        blue.setImageDrawable(blue_pressed);
-                        size.setImageBitmap(Params.Bullets[3]);
-                        break;
-                }
+        View.OnClickListener Colors_b = v -> {
+            switch(v.getId()){
+                case R.id.green:
+                    drawThread.change_bullet_color(1);
+                    green.setImageDrawable(green_pressed);
+                    red.setImageDrawable(red_not_pressed);
+                    yellow.setImageDrawable(yellow_not_pressed);
+                    blue.setImageDrawable(blue_not_pressed);
+                    size.setImageBitmap(Params.Bullets[0]);
+                    break;
+                case R.id.red:
+                    drawThread.change_bullet_color(2);
+                    green.setImageDrawable(green_not_pressed);
+                    red.setImageDrawable(red_pressed);
+                    yellow.setImageDrawable(yellow_not_pressed);
+                    blue.setImageDrawable(blue_not_pressed);
+                    size.setImageBitmap(Params.Bullets[1]);
+                    break;
+                case R.id.yellow:
+                    drawThread.change_bullet_color(3);
+                    green.setImageDrawable(green_not_pressed);
+                    red.setImageDrawable(red_not_pressed);
+                    yellow.setImageDrawable(yellow_pressed);
+                    blue.setImageDrawable(blue_not_pressed);
+                    size.setImageBitmap(Params.Bullets[2]);
+                    break;
+                case R.id.blue:
+                    drawThread.change_bullet_color(4);
+                    green.setImageDrawable(green_not_pressed);
+                    red.setImageDrawable(red_not_pressed);
+                    yellow.setImageDrawable(yellow_not_pressed);
+                    blue.setImageDrawable(blue_pressed);
+                    size.setImageBitmap(Params.Bullets[3]);
+                    break;
             }
         };
 
@@ -567,66 +563,56 @@ public class PlayActivity extends AppCompatActivity {
         yellow.setOnClickListener(Colors_b);
         blue.setOnClickListener(Colors_b);
 
-        ImageButton up_button = (ImageButton) findViewById(R.id.up_button);
-        ImageButton down_button = (ImageButton) findViewById(R.id.down_button);
-        ImageButton shot = (ImageButton) findViewById(R.id.shot2);
+        ImageButton up_button = findViewById(R.id.up_button);
+        ImageButton down_button = findViewById(R.id.down_button);
+        ImageButton shot = findViewById(R.id.shot2);
 
-        down_button.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        drawThread.get_Samolet().set_updown(true, 1);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        drawThread.get_Samolet().set_updown(false, 1);
-                        break;
-                }
-                return true;
+        down_button.setOnTouchListener((v, event) -> {
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    drawThread.get_Samolet().set_updown(true, 1);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    drawThread.get_Samolet().set_updown(false, 1);
+                    break;
             }
+            return true;
         });
 
-        up_button.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        drawThread.get_Samolet().set_updown(true, -1);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        drawThread.get_Samolet().set_updown(false, -1);
-                        break;
-                }
-                return true;
+        up_button.setOnTouchListener((v, event) -> {
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    drawThread.get_Samolet().set_updown(true, -1);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    drawThread.get_Samolet().set_updown(false, -1);
+                    break;
             }
+            return true;
         });
 
 
-        shot.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        drawThread.create_bullets();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        break;
-                }
-                return true;
+        shot.setOnTouchListener((v, event) -> {
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    drawThread.create_bullets();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    break;
             }
+            return true;
         });
 
-        textView = findViewById(R.id.boss);
+        boss_text = findViewById(R.id.boss);
         hp_samolet = findViewById(R.id.samolet_hp);
         hp_base = findViewById(R.id.base_hp);
 
-        next.setBackgroundColor(Color.BLUE); // TODO: не забыть изменить
+        next.setBackgroundColor(Color.BLUE);
         next.setClickable(true);
         drawThread.change_bullet_color(1);
         if (number == 1)
             size.setVisibility(View.INVISIBLE);
 
-        System.out.println(getSharedPreferences("Main", MODE_PRIVATE).getString("ship", ""));
         hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
         hp_base.setProgress(drawThread.get_base().get_hp());
         many_bullets.setVisibility(View.INVISIBLE);
@@ -649,7 +635,6 @@ public class PlayActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        //Looper.myLooper().quitSafely();
         loose_or_win.dismiss();
         start.dismiss();
         drawThread.interrupt();

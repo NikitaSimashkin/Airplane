@@ -48,7 +48,7 @@ public class Samolet extends Sprite {
         this.up_or_down = up_or_down;
     }
 
-    public void buttons(){ //умножаем на 1 если вниз, на -1 если вверх
+    public void up_or_down(){ //умножаем на 1 если вниз, на -1 если вверх
         if (updown){
             update_koord(speed * up_or_down, speed * up_or_down);
         }
@@ -104,14 +104,14 @@ public class Samolet extends Sprite {
                 bullet_list.add(new Bullet(new double[]{up, left, down, right}, context, color, size));
                 number_bullet++;
                 if (number_bullet == n) {
-                    Samolet.this.turret_exist = false;
-                    Samolet.this.turret = null;
+                    set_death();
+                    return;
                 }
                 last_bullet = System.currentTimeMillis();
             }
         }
 
-        public void set_death() { // возвращает тру или фолс в зависимости от того жива турель или нет
+        public void set_death() {
                 Samolet.this.turret_exist = false;
                 Samolet.this.turret = null;
         }
