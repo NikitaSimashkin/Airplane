@@ -12,6 +12,7 @@ import com.example.airplane.Sprites.Sprite;
 import java.util.List;
 
 public class Bullet_enemy extends Enemy{
+
     public Bullet_enemy(Bullet bullet, Context context) {
         super(Params.Bullets[bullet.getColor()-1], bullet.getUp(), bullet.getLeft(), bullet.getDown(), bullet.getRight(), context,
                 Params.bullet_stats[bullet.get_size()*3],
@@ -38,7 +39,8 @@ public class Bullet_enemy extends Enemy{
     public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
         if (hp < 10_000)
             super.collision(two, enemy_list);
-        if (!alive)
+        if (!alive) {
             enemy_list.remove(this);
+        }
     }
 }

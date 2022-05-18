@@ -14,23 +14,8 @@ public class Sprite {
     protected Bitmap bitmap; //картинка
     protected double up, down, left, right; //координаты квадрата где сейчас картинка()
     protected static final double height = DrawThread.get_height(), width = DrawThread.get_width();
-    protected long last_changed = System.currentTimeMillis();
 
     protected Context context;
-
-    public void set_koord(double up, double down, double left, double right){ //меняем координаты
-            this.up = up;
-            this.down = down;
-            this.left = left;
-            this.right = right;
-            last_changed = System.currentTimeMillis();
-    }
-
-    public void set_koord(double left, double right){ //меняем координаты
-        this.left = left;
-        this.right = right;
-        last_changed = System.currentTimeMillis();
-    }
 
     public Rect create_rect(){ //формируем область куда будем вставлять картинку
         return new Rect((int)left, (int)up, (int)right, (int)down);

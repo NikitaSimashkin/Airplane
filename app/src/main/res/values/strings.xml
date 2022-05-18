@@ -22,6 +22,10 @@
     <string name="nickname">Никнейм</string>
     <string name="points">Очки</string>
     <string name="your_record">Ваш рекорд: </string>
+    <string name="level_on_pause">Уровень на паузе</string>
+    <string name="progress_dont_save">При закрытии уровня прогресс\nне сохранится!</string>
+    <string name="continue_b">Продолжить</string>
+    <string name="break_b">Выйти</string>
 
     <string-array name="ships">
         <item>Корабль №1</item>
@@ -80,7 +84,7 @@
     </string-array>
 
     <string-array name="start_7">
-        <item>Видимо, я ошибка с советом, хорошо хоть все обошлось.</item>
+        <item>Видимо, я ошибся с советом, хорошо хоть все обошлось.</item>
         <item>Тебе не кажется что нам на корабль нужно еще кого-нибудь взять? Я предлагаю кота.</item>
         <item>Если увидишь - обязательно возьми его к себе, главное не убивай!</item>
     </string-array>

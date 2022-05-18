@@ -24,5 +24,9 @@
     <string name="nickname">Никнейм</string>
     <string name="points">Набрано очков</string>
     <string name="your_record">Ваш рекорд: </string>
+    <string name="level_on_pause">Уровень на паузе</string>
+    <string name="progress_dont_save">При закрытии уровня прогресс не сохранится!</string>
+    <string name="continue_b">Продолжить</string>
+    <string name="break_b">Выйти</string>
 
 </resources>

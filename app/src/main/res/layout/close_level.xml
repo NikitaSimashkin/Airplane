@@ -25,29 +25,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@drawable/dialog_loose"
+            android:background="@drawable/delete"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/black_ops_one"
-                android:gravity="center"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
 
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/level_on_pause"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                android:textColor="#FF9800"
-                android:textSize="30sp"
+                android:textColor="@color/teal_200"
                 app:autoSizeTextType="uniform" />
 
             <TextView
                 android:id="@+id/text_2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:textColor="#FFFF9800"
+                android:padding="10dp"
+                android:text="@string/progress_dont_save"
+                android:textColor="@color/red_pressed"
                 app:autoSizeTextType="uniform" />
 
             <LinearLayout
@@ -60,28 +68,13 @@
                     android:id="@+id/continue_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/blue_pressed"
+                    android:layout_weight="2"
+                    android:backgroundTint="#06AC06"
                     android:insetLeft="30dp"
                     android:insetTop="10dp"
                     android:insetRight="10dp"
                     android:insetBottom="20dp"
-                    android:text="@string/menu"
-                    app:cornerRadius="10dp"
-                    app:strokeColor="@color/black"
-                    app:strokeWidth="2dp" />
-
-                <Button
-                    android:id="@+id/retry"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/blue_pressed"
-                    android:insetLeft="20dp"
-                    android:insetTop="10dp"
-                    android:insetRight="20dp"
-                    android:insetBottom="20dp"
-                    android:text="@string/retru"
+                    android:text="@string/continue_b"
                     app:cornerRadius="10dp"
                     app:strokeColor="@color/black"
                     app:strokeWidth="2dp" />
@@ -91,16 +84,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/cardview_dark_background"
+                    android:backgroundTint="#BC0404"
                     android:clickable="false"
                     android:insetLeft="10dp"
                     android:insetTop="10dp"
                     android:insetRight="30dp"
                     android:insetBottom="20dp"
-                    android:text="@string/next"
+                    android:text="@string/break_b"
                     app:cornerRadius="10dp"
                     app:strokeColor="@color/black"
-                    app:strokeWidth="2dp"/>
+                    app:strokeWidth="2dp" />
 
             </LinearLayout>
 

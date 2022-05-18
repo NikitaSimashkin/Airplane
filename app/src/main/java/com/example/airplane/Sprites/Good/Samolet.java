@@ -32,10 +32,6 @@ public class Samolet extends Sprite {
         return turret;
     }
 
-    public void create_turret(){
-
-    }
-
     public void update_koord(double a, double b){ //метод меняет координаты самолета
         if (!(up + a < height/32 || down + b > 31*height/32)) { //это условие проверяет выход за границы
             up = up + a;
@@ -82,8 +78,8 @@ public class Samolet extends Sprite {
             Samolet.this.turret = Turret.this;
             switch (size) {
                 case 0:
-                    n = 5;
                     time_bullet = Params.time_bullet_big;
+                    n = 5;
                     break;
                 case 1:
                     time_bullet = Params.time_bullet_normal;

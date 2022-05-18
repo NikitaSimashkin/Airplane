@@ -24,6 +24,7 @@ public class Enemy_turret extends Enemy{
                 0, 0, 100000000, 5);
         this.enemyList = enemyList;
         last = System.currentTimeMillis();
+        points = Params.p_turret;
     }
 
     @Override

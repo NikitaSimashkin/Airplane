@@ -48,6 +48,10 @@ public class Enemy extends Sprite {
     public long getTime_death() {
         return time_death;
     }
+    public void addTime_death(long time_death) {
+        this.time_death += time_death;
+    }
+
     public boolean get_alive() {
         return alive;
     }
@@ -89,7 +93,4 @@ public class Enemy extends Sprite {
         }
     }
 
-    public int get_points(){
-        return points;
-    }
 }

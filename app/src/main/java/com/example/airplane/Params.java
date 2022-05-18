@@ -18,7 +18,7 @@ public class Params {
     public final static int big_meteor_damage = 10000, big_meteor_speed = 1500, big_meteor_hp = 4000;
     public final static int alien_damage = 300, alien_speed = 800, alien_hp = 300;
     public final static int alien_two_damage = 400, alien_two_speed = 700, alien_two_hp = 100, alien_two_hp_two = 300;
-    public final static int packman_damage = 0, packman_speed = 700, packman_hp = 300;
+    public final static int packman_damage = 0, packman_speed = 700, packman_hp = 300, meteor_time = 5000;
     public final static int bird_damage = 200, bird_speed = 400, bird_hp = 80;
     public final static int sun_damage = 600, sun_speed = 600, sun_hp = 600;
     public final static int megasun_damage = 10000, megasun_speed = 1200, megasun_hp = 1200;
@@ -127,6 +127,6 @@ public class Params {
     public static void change_difficult(){
         start_hp_multiplier *= 1.05;
         start_speed_multiplier *= 1.05;
-        start_damage_multiplier *= 1.05;
+        start_damage_multiplier /= 1.05;
     }
 }

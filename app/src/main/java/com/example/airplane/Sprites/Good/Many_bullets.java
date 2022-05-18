@@ -27,8 +27,8 @@ public class Many_bullets{
         drawThread.change_bullet_time(1000);
         switch (size){
             case 0:
-                n = 3;
                 time_bullet = Params.time_bullet_big;
+                n = 3;
                 break;
             case 1:
                 time_bullet = Params.time_bullet_normal;

@@ -27,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +48,7 @@ import java.util.Objects;
 public class PlayActivity extends AppCompatActivity {
 
     private DrawThread drawThread;
-    private Dialog loose_or_win, start;
+    private Dialog loose_or_win, start, close_level;
     private TextView start_text;
     private int step = 1; // для диалогового начального окна
     private String[] start_phrases; // стартовые фразы
@@ -77,6 +79,8 @@ public class PlayActivity extends AppCompatActivity {
     private BlankFragment text_fragment;
     private  FragmentManager fragmentManager;
 
+    public final static Object obj = "";
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -87,14 +91,21 @@ public class PlayActivity extends AppCompatActivity {
         context = getApplicationContext();
         number = getIntent().getExtras().getInt("number");
 
-//        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
-//        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                Intent i = new Intent(PlayActivity.this, Levels_activity.class);
-//                startActivity(i);
-//            }
-//        });
+        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
+        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!loose_or_win.isShowing() && !start.isShowing()){
+                    if (close_level == null){
+                        create_close_dialog();
+                    }
+                    if (!close_level.isShowing()) {
+                        close_level.show();
+                        drawThread.set_pause(true);
+                    }
+                }
+            }
+        });
 
         fragments();
 
@@ -164,6 +175,28 @@ public class PlayActivity extends AppCompatActivity {
 
         create_abilities();
 
+    }
+
+    private void create_close_dialog() {
+        close_level = new Dialog(this);
+        close_level.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        close_level.setCancelable(false);
+        close_level.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        close_level.setContentView(R.layout.close_level);
+
+        Button continue_b = close_level.findViewById(R.id.continue_button),
+                break_b = close_level.findViewById(R.id.break_button);
+
+        continue_b.setOnClickListener(v -> {
+            drawThread.set_pause(false);
+            close_level.dismiss();
+        });
+
+        break_b.setOnClickListener(v -> {
+            drawThread.interrupt();
+            close_level.dismiss();
+            finish();
+        });
     }
 
     private void init_tints_for_buttons() {
@@ -239,11 +272,11 @@ public class PlayActivity extends AppCompatActivity {
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
                 width = play_field.getWidth();
                 height = play_field.getHeight();
-                drawThread = create_new_thread(width, height, number);
                 if (number != 10 && number != 99) {
                     if (!isFinishing())
                         start.show();
                 } else {
+                    drawThread = create_new_thread(width, height, number);
                     drawThread.start();
                 }
             }
@@ -268,9 +301,9 @@ public class PlayActivity extends AppCompatActivity {
         loose_or_win.setContentView(R.layout.looser_or_winner);
 
         background_win_or_loose = loose_or_win.findViewById(R.id.frameLayout);
-        Button menu = loose_or_win.findViewById(R.id.menu);
+        Button menu = loose_or_win.findViewById(R.id.continue_button);
         Button retry = loose_or_win.findViewById(R.id.retry);
-        next = loose_or_win.findViewById(R.id.next);
+        next = loose_or_win.findViewById(R.id.break_button);
         next.setBackgroundColor(Color.BLUE);
 
         retry.setOnClickListener(v -> {
@@ -281,7 +314,7 @@ public class PlayActivity extends AppCompatActivity {
 
         menu.setOnClickListener(v -> {
             loose_or_win.hide();
-            Intent i = new Intent(PlayActivity.this, MainActivity.class);
+            Intent i = new Intent(PlayActivity.this, Levels_activity.class);
             startActivity(i);
         });
 
@@ -369,6 +402,9 @@ public class PlayActivity extends AppCompatActivity {
                 }
                 else if (step == start_phrases.length){
                     start.hide();
+                    drawThread = create_new_thread(width, height, number);
+                    if (number != 1)
+                        size.setVisibility(View.VISIBLE);
                     drawThread.start();
                 }
                 step++;
@@ -443,13 +479,13 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void update_abilities(int last_ability_time) {
-        if (last_ability_time >= Params.time_manybullets && number > 2){
+        if (last_ability_time + 100 >= Params.time_manybullets && number > 2){
             many_bullets.setVisibility(View.VISIBLE);
         }
-        if (last_ability_time >= Params.time_turret && number > 3){
+        if (last_ability_time + 100 >= Params.time_turret && number > 3){
             turret.setVisibility(View.VISIBLE);
         }
-        if (last_ability_time >= Params.time_megabullet && number > 4){
+        if (last_ability_time + 100 >= Params.time_megabullet && number > 4){
             megabullet.setVisibility(View.VISIBLE);
         }
     }
@@ -473,8 +509,8 @@ public class PlayActivity extends AppCompatActivity {
                 next.setClickable(false);
                 background_win_or_loose.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_loose, null));
                 if (number == 99){
-                    TextView one = loose_or_win.findViewById(R.id.points_1);
-                    TextView two = loose_or_win.findViewById(R.id.points_2);
+                    TextView one = loose_or_win.findViewById(R.id.text_1);
+                    TextView two = loose_or_win.findViewById(R.id.text_2);
                     one.setText(getResources().getString(R.string.inf_loose));
                     two.setText(Integer.toString(points));
                     add_to_table(points);

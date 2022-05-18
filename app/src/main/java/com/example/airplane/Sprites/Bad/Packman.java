@@ -8,7 +8,8 @@ import com.example.airplane.Params;
 import java.util.List;
 
 public class Packman extends Enemy {
-    private long meteor_time = 5000, last_time;
+    private long  last_time;
+    private double meteor_time = Params.meteor_time*Params.get_start_time();
     private List<Enemy> enemy_list;
 
     public Packman(double line_v, double line_h, Context context, List<Enemy> enemy_list) {

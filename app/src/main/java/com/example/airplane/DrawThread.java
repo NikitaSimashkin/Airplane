@@ -46,7 +46,6 @@ public class DrawThread extends Thread{
 
     private long time = System.currentTimeMillis();
     private long time_bullet_last = System.currentTimeMillis();
-    private long last_frame = System.currentTimeMillis();
 
     protected List<Enemy> enemy_list = new ArrayList<>();
     protected List<Bullet> bullet_list = new ArrayList<>();
@@ -57,6 +56,10 @@ public class DrawThread extends Thread{
     private final double start_time;
     private Canvas canvas;
     private Paint clearPaint;
+
+    private boolean pause = false;
+    private long pause_time = 0;
+    private ArrayList<Enemy> time_death_enemy = new ArrayList<>();
 
     public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
         super();
@@ -91,6 +94,28 @@ public class DrawThread extends Thread{
         start_time = Params.get_start_time();
         clearPaint = new Paint(); //очистка холста
         clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+    }
+
+    public void set_pause(boolean pause){
+        this.pause = pause;
+        if (pause){
+            pause_time = System.currentTimeMillis();
+            for (int i = 0; i < enemy_list.size(); i++){
+                Enemy current = enemy_list.get(i);
+                if (!current.get_alive()){
+                    time_death_enemy.add(current);
+                }
+            }
+        } else {
+            long time_add = System.currentTimeMillis()-pause_time;
+            time += time_add;
+            time_bullet_last += time_add;
+            last_update_time += time_add;
+            last_ability_time += time_add;
+            for (int i = 0; i < time_death_enemy.size(); i++){
+                time_death_enemy.get(i).addTime_death(time_add);
+            }
+        }
     }
 
     public static void add_points(int p){
@@ -469,6 +494,7 @@ public class DrawThread extends Thread{
     @Override
     public void interrupt() {
         super.interrupt();
+        pause = true;
         enemy_list.clear();
         bullet_list.clear();
     }
@@ -509,19 +535,16 @@ public class DrawThread extends Thread{
 
     @Override
     public void run() {
-        while (!isInterrupted()){ //сначала он проводит все вычисления, а потом уже все рисует в одном методе
-           // if (System.currentTimeMillis() - last_frame > 11) {
-              //  try {
-             //       last_frame = System.currentTimeMillis();
-                    level();
-                    update_samolet(); //обновляет координаты самолета
-                    update_bullets(); //обновляет координаты пуль
-                    update_enemy(); //отрисовывает всех врагов
-                    draw_all();
-              //  } catch (Exception e){
-              ////      handler.sendMessage(Message.obtain(handler,0,100, 0));
-               // }
+        while (!isInterrupted()) { //сначала он проводит все вычисления, а потом уже все рисует в одном методе
+          while (!pause) {
+              level();
+              update_samolet(); //обновляет координаты самолета
+              update_bullets(); //обновляет координаты пуль
+              update_enemy(); //отрисовывает всех врагов
+              draw_all();
+          }
         }
+
     }
 
     private int count = 0; // переменные для уровней
@@ -600,28 +623,35 @@ public class DrawThread extends Thread{
                 mobs = create_level(50,0,0,0,0,0,0,0,0,2);
                 break;
             case 2: // 70
-                //mobs = create_level(3,0,0,0,0,0,0,0,0,0);
+                //mobs = create_level(4,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(40,30,0,0,0,0,0,0,0,3);
                 break;
             case 3: // 100
+                //mobs = create_level(5,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(50,30,20,0,0,0,0,0,0,4);
                 break;
             case 4: // 130
+                //mobs = create_level(6,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(60,35,20,15,0,0,0,0,0,5);
                 break;
             case 5: // 150
+                //mobs = create_level(7,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(55,35,25,15,20,0,0,0,0,6);
                 break;
             case 6: // 180
+                //mobs = create_level(8,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(65,35,25,20,25,10,0,0,0,7);
                 break;
             case 7: // 200
+                //mobs = create_level(9,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(65,30,20,25,40,15,5,0,0,8);
                 break;
             case 8: // 220
+                //mobs = create_level(10,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(70,35,30,25,30,18,7,5,0,9);
                 break;
             case 9: // 250
+                //mobs = create_level(11,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(80,45,30,20,30,20,10,10,5,10);
                 break;
             case 10:

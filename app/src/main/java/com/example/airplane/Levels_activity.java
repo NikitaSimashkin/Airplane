@@ -1,5 +1,7 @@
 package com.example.airplane;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -33,7 +35,14 @@ public class Levels_activity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_levels);
 
-        // КНОПКИ
+        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
+        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent i = new Intent(Levels_activity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
 
         on_click = v -> {
         switch (v.getId()){
