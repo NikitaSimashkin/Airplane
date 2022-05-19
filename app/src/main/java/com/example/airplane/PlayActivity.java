@@ -96,32 +96,34 @@ public class PlayActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        loose_or_win.dismiss();
-        start.dismiss();
-        if (close_level != null)
-            close_level.dismiss();
-        stop = true;
+        if (!start.isShowing())
+            stop = true;
         super.onStop();
     }
 
     @Override
     protected void onPause() {
-        drawThread.set_pause(true);
-        pause = true;
+        if (!start.isShowing()) {
+            drawThread.set_pause(true);
+            pause = true;
+        }
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        if (pause && stop){
-            if (!loose_or_win.isShowing() && !start.isShowing()) {
-                if (close_level == null) {
-                    create_close_dialog();
+        if (!start.isShowing()) {
+            if (pause && stop) {
+                start.dismiss();
+                if (!loose_or_win.isShowing() && !start.isShowing()) {
+                    if (close_level == null) {
+                        create_close_dialog();
+                    }
+                    close_level.show();
                 }
-                close_level.show();
+                pause = false;
+                stop = false;
             }
-            pause = false;
-            stop = false;
         }
         super.onResume();
     }
