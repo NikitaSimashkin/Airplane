@@ -37,11 +37,15 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
+import com.example.airplane.Sprites.Bad.Enemy;
+import com.example.airplane.Sprites.Good.Bullet;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -79,102 +83,57 @@ public class PlayActivity extends AppCompatActivity {
     private BlankFragment text_fragment;
     private  FragmentManager fragmentManager;
 
-    public final static Object obj = "";
+    protected List<Enemy> enemy_list = new ArrayList<>();
+    protected List<Bullet> bullet_list = new ArrayList<>();
+    private ArrayList<Enemy> time_death_enemy = new ArrayList<>();
+
+    private boolean stop = false, pause = false;
 
     @Override
     protected void onStart() {
         super.onStart();
-        new Params(getApplicationContext());
-        Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
-        setContentView(R.layout.playactivity);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        context = getApplicationContext();
-        number = getIntent().getExtras().getInt("number");
+    }
 
-        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
-        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (!loose_or_win.isShowing() && !start.isShowing()){
-                    if (close_level == null){
-                        create_close_dialog();
-                    }
-                    if (!close_level.isShowing()) {
-                        close_level.show();
-                        drawThread.set_pause(true);
-                    }
+    @Override
+    protected void onStop() {
+        loose_or_win.dismiss();
+        start.dismiss();
+        if (close_level != null)
+            close_level.dismiss();
+        stop = true;
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        drawThread.set_pause(true);
+        pause = true;
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if (pause && stop){
+            if (!loose_or_win.isShowing() && !start.isShowing()) {
+                if (close_level == null) {
+                    create_close_dialog();
                 }
+                close_level.show();
             }
-        });
+            pause = false;
+            stop = false;
+        }
+        super.onResume();
+    }
 
-        fragments();
-
-        create_helper_dialog();
-
-        create_loose_or_win_dialog();
-
-        init_tints_for_buttons();
-
-        points = findViewById(R.id.points);
-        Looper looper = Looper.myLooper();
-        handler = new Handler(looper) {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what){
-                    case 0: // проиграл или выиграл
-                        drawThread.interrupt();
-                        win_or_loose_dialog(msg.arg1, msg.arg2);
-                        break;
-                    case 1:
-                        switch(msg.arg1) {
-                            case 0:
-                                hp_samolet.setProgress(msg.arg2);
-                                break;
-                            case 1:
-                                hp_base.setProgress(msg.arg2);
-                                break;
-                        }
-                        break;
-                    case 2:
-                        start_options();
-                        break;
-                    case 3:
-                        update_abilities(msg.arg1);
-                        break;
-                    case 4:
-                        FragmentTransaction t = fragmentManager.beginTransaction();
-                        t.hide(button_fragment);
-                        t.show(text_fragment);
-                        t.commit();
-                        break;
-                    case 5:
-                        FragmentTransaction t1 = fragmentManager.beginTransaction();
-                        t1.hide(text_fragment);
-                        t1.show(button_fragment);
-                        t1.commit();
-                        break;
-                    case 6: // arg1 - номер фразы
-                        boss_text.setText(start_phrases[msg.arg1]);
-                        if (msg.arg1 == 2){
-                            boss_text.setTextColor(getResources().getColor(R.color.helper, null));
-                        } else {
-                            boss_text.setTextColor(getResources().getColor(R.color.boss, null));
-                        }
-                        break;
-                    case 7:
-                        points.setText(Integer.toString(msg.arg1));
-                        break;
-                    case 8:
-                        change_base();
-                        break;
-                }
-            }
-        };
-
-        create_surface_view();
-
-        create_abilities();
-
+    @Override
+    protected void onDestroy() {
+        loose_or_win.dismiss();
+        start.dismiss();
+        if (close_level != null && close_level.isShowing())
+            close_level.dismiss();
+        drawThread.interrupt();
+        super.onDestroy();
     }
 
     private void create_close_dialog() {
@@ -272,13 +231,14 @@ public class PlayActivity extends AppCompatActivity {
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
                 width = play_field.getWidth();
                 height = play_field.getHeight();
-                if (number != 10 && number != 99) {
-                    if (!isFinishing())
-                        start.show();
-                } else {
-                    drawThread = create_new_thread(width, height, number);
-                    drawThread.start();
-                }
+                //if (pause && stop)
+                    if (number != 10 && number != 99) {
+                        if (!isFinishing())
+                            start.show();
+                    } else {
+                        drawThread = create_new_thread(width, height, number);
+                        drawThread.start();
+                    }
             }
 
             @Override
@@ -499,7 +459,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public DrawThread create_new_thread(int width, int height, int number){
-        return new DrawThread(play_field.getHolder(), context, width, height, handler, number);
+        return new DrawThread(play_field.getHolder(), context, width, height, handler, number, false);
     }
 
     public void win_or_loose_dialog(int win_or_loose, int points){
@@ -669,30 +629,101 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        loose_or_win.dismiss();
-        start.dismiss();
-        drawThread.interrupt();
-        super.onStop();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        loose_or_win.dismiss();
-        start.dismiss();
-        drawThread.interrupt();
-        super.onDestroy();
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new Params(getApplicationContext());
+        Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
+        setContentView(R.layout.playactivity);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        context = getApplicationContext();
+        number = getIntent().getExtras().getInt("number");
+
+        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
+        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!loose_or_win.isShowing() && !start.isShowing()) {
+                    if (close_level == null) {
+                        create_close_dialog();
+                    }
+                    if (!close_level.isShowing()) {
+                        close_level.show();
+                        drawThread.set_pause(true);
+                    }
+                }
+            }
+        });
+
+
+        fragments();
+
+        create_helper_dialog();
+
+        create_loose_or_win_dialog();
+
+        init_tints_for_buttons();
+
+        points = findViewById(R.id.points);
+        Looper looper = Looper.myLooper();
+        handler = new Handler(looper) {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 0: // проиграл или выиграл
+                        drawThread.interrupt();
+                        win_or_loose_dialog(msg.arg1, msg.arg2);
+                        break;
+                    case 1:
+                        switch (msg.arg1) {
+                            case 0:
+                                hp_samolet.setProgress(msg.arg2);
+                                break;
+                            case 1:
+                                hp_base.setProgress(msg.arg2);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        start_options();
+                        break;
+                    case 3:
+                        update_abilities(msg.arg1);
+                        break;
+                    case 4:
+                        FragmentTransaction t = fragmentManager.beginTransaction();
+                        t.hide(button_fragment);
+                        t.show(text_fragment);
+                        t.commit();
+                        break;
+                    case 5:
+                        FragmentTransaction t1 = fragmentManager.beginTransaction();
+                        t1.hide(text_fragment);
+                        t1.show(button_fragment);
+                        t1.commit();
+                        break;
+                    case 6: // arg1 - номер фразы
+                        boss_text.setText(start_phrases[msg.arg1]);
+                        if (msg.arg1 == 2) {
+                            boss_text.setTextColor(getResources().getColor(R.color.helper, null));
+                        } else {
+                            boss_text.setTextColor(getResources().getColor(R.color.boss, null));
+                        }
+                        break;
+                    case 7:
+                        points.setText(Integer.toString(msg.arg1));
+                        break;
+                    case 8:
+                        change_base();
+                        break;
+                }
+            }
+        };
+
+        create_surface_view();
+
+        create_abilities();
     }
 
 }

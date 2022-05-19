@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.SurfaceHolder;
 
+import androidx.annotation.NonNull;
+
 import com.example.airplane.Sprites.Bad.Alien;
 import com.example.airplane.Sprites.Bad.Alien_two;
 import com.example.airplane.Sprites.Bad.Bird;
@@ -31,16 +33,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DrawThread extends Thread{
-    private final SurfaceHolder surfaceHolder;
-    private final Context context;
+    private SurfaceHolder surfaceHolder;
+    private Context context;
     private static Handler handler;
     private int time_bullet = Params.time_bullet_normal;
-    private final int number; //номер уровня
+    private int number; //номер уровня
 
     private static double width, height;
 
     private Samolet samolet;
-    private final Base base;
+    private Base base;
 
     private Many_bullets many_bullets;
 
@@ -53,7 +55,7 @@ public class DrawThread extends Thread{
     private int enemys, bullet_color = 1, size = 1; // bullet_color - цвет, size - размер пули
 
     private static int points;
-    private final double start_time;
+    private double start_time;
     private Canvas canvas;
     private Paint clearPaint;
 
@@ -61,7 +63,38 @@ public class DrawThread extends Thread{
     private long pause_time = 0;
     private ArrayList<Enemy> time_death_enemy = new ArrayList<>();
 
-    public DrawThread (SurfaceHolder surfaceHolder, Context context, int width, int height, Handler handler, int number){
+   public List<Enemy> get_enemy(){
+       return enemy_list;
+   }
+
+   public void set_enemy(List<Enemy> enemy_list){
+       this.enemy_list = enemy_list;
+   }
+
+    public List<Bullet> get_bullet(){
+        return bullet_list;
+    }
+
+    public void set_bullet(List<Bullet> bullet_list){
+        this.bullet_list = bullet_list;
+    }
+
+    public ArrayList<Enemy> get_time_enemy(){
+       return time_death_enemy;
+    }
+
+    public void set_time_enemy(ArrayList<Enemy> time_death_enemy){
+       this.time_death_enemy = time_death_enemy;
+    }
+
+    @NonNull
+    @Override
+    protected DrawThread clone() throws CloneNotSupportedException {
+        return (DrawThread) super.clone();
+    }
+
+    public DrawThread (SurfaceHolder surfaceHolder, Context context,
+                       int width, int height, Handler handler, int number, boolean update){
         super();
         this.surfaceHolder = surfaceHolder;
         this.context = context;
@@ -97,8 +130,7 @@ public class DrawThread extends Thread{
     }
 
     public void set_pause(boolean pause){
-        this.pause = pause;
-        if (pause){
+        if (pause && !this.pause){
             pause_time = System.currentTimeMillis();
             for (int i = 0; i < enemy_list.size(); i++){
                 Enemy current = enemy_list.get(i);
@@ -106,7 +138,7 @@ public class DrawThread extends Thread{
                     time_death_enemy.add(current);
                 }
             }
-        } else {
+        } else if (!pause && this.pause){
             long time_add = System.currentTimeMillis()-pause_time;
             time += time_add;
             time_bullet_last += time_add;
@@ -115,7 +147,9 @@ public class DrawThread extends Thread{
             for (int i = 0; i < time_death_enemy.size(); i++){
                 time_death_enemy.get(i).addTime_death(time_add);
             }
+            canvas = null;
         }
+        this.pause = pause;
     }
 
     public static void add_points(int p){
@@ -495,8 +529,8 @@ public class DrawThread extends Thread{
     public void interrupt() {
         super.interrupt();
         pause = true;
-        enemy_list.clear();
-        bullet_list.clear();
+//        enemy_list.clear();
+//        bullet_list.clear();
     }
 
     public void draw_all(){
@@ -504,32 +538,33 @@ public class DrawThread extends Thread{
         try {
             canvas = surfaceHolder.lockCanvas();
 
-            canvas.drawRect(0, 0, (int)width, (int)height, clearPaint);
+            if (canvas != null) {
+                canvas.drawRect(0, 0, (int) width, (int) height, clearPaint);
 
-            for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
-                Enemy enemy = enemy_list.get(i);
-                if (enemy.getTime_death() == 0 || System.currentTimeMillis() - enemy.getTime_death() <= 2000) {
-                    enemy.draw(canvas, null);
-                } else {
-                    enemy_list.remove(i);
-                    i--;
+                for (int i = 0; i < enemy_list.size(); i++) { //отрисовываем врагов
+                    Enemy enemy = enemy_list.get(i);
+                    if (enemy.getTime_death() == 0 || System.currentTimeMillis() - enemy.getTime_death() <= 2000) {
+                        enemy.draw(canvas, null);
+                    } else {
+                        enemy_list.remove(i);
+                        i--;
+                    }
                 }
-            }
-            for (int i = 0; i < bullet_list.size(); i++) { //отрисовываем пули
-                bullet_list.get(i).draw(canvas, null);
-            }
+                for (int i = 0; i < bullet_list.size(); i++) { //отрисовываем пули
+                    bullet_list.get(i).draw(canvas, null);
+                }
 
-            if (samolet.turret_exist()) // рисуем турель
+                if (samolet.turret_exist()) // рисуем турель
                 {
                     samolet.get_turret().draw(canvas, null);
                 }
-            samolet.draw(canvas, null); //рисуем самолет
+                samolet.draw(canvas, null); //рисуем самолет
 
-            surfaceHolder.unlockCanvasAndPost(canvas);
+                surfaceHolder.unlockCanvasAndPost(canvas);
+            }
         }
-        catch (NullPointerException e){
-            enemy_list.clear();
-            bullet_list.clear();
+        catch (NullPointerException | IllegalAccessError e){
+            System.out.println("error");
         }
     }
 
