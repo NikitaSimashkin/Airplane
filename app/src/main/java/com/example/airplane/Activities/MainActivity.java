@@ -1,4 +1,4 @@
-package com.example.airplane;
+package com.example.airplane.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.example.airplane.ImageResource;
+import com.example.airplane.Player;
+import com.example.airplane.R;
+import com.example.airplane.Adapters.Table_adapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -90,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             edit.putString(MainActivity.BASE, "default_base");
             edit.apply();
         }
-
+        
     }
 
     protected void create_option_dialog() {

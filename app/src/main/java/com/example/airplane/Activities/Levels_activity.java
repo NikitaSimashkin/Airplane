@@ -1,4 +1,4 @@
-package com.example.airplane;
+package com.example.airplane.Activities;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.airplane.R;
 
 import java.util.ArrayList;
 import java.util.Objects;

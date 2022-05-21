@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
+import com.example.airplane.Activities.MainActivity;
+
 public class Params {
     public final static int samolet_speed = 90, samolet_hp = 1000;
     public final static int base_hp = 2000;

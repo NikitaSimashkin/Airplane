@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back_shop"
-    tools:context=".Levels_activity">
+    tools:context=".Activities.Levels_activity">
 
     <LinearLayout
         android:id="@+id/linearLayout3"

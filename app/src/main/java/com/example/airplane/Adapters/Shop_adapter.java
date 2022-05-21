@@ -1,13 +1,11 @@
-package com.example.airplane;
+package com.example.airplane.Adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
-import android.text.BoringLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +16,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.airplane.Activities.MainActivity;
+import com.example.airplane.ImageResource;
+import com.example.airplane.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
 
@@ -209,7 +210,7 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
         return number_items;
     }
 
-    class Item extends RecyclerView.ViewHolder{
+    public class Item extends RecyclerView.ViewHolder{
         LinearLayout layout, skin;
         ImageView item_picture, break_;
         TextView name;

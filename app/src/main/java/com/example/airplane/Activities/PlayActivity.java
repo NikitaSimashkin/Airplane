@@ -1,10 +1,9 @@
-package com.example.airplane;
+package com.example.airplane.Activities;
 
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -37,15 +36,17 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
-import com.example.airplane.Sprites.Bad.Enemy;
-import com.example.airplane.Sprites.Good.Bullet;
+import com.example.airplane.Fragments.TextFragment;
+import com.example.airplane.DrawThread;
+import com.example.airplane.Params;
+import com.example.airplane.Player;
+import com.example.airplane.R;
+import com.example.airplane.Fragments.SpaceshipControllerFragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -79,15 +80,12 @@ public class PlayActivity extends AppCompatActivity {
 
     private View background_win_or_loose;
 
-    private  SpaceshipControllerFragment button_fragment;
-    private BlankFragment text_fragment;
+    private SpaceshipControllerFragment button_fragment;
+    private TextFragment text_fragment;
     private  FragmentManager fragmentManager;
 
-    protected List<Enemy> enemy_list = new ArrayList<>();
-    protected List<Bullet> bullet_list = new ArrayList<>();
-    private ArrayList<Enemy> time_death_enemy = new ArrayList<>();
-
     private boolean stop = false, pause = false;
+    private static boolean drawThreadAlreadyExist;
 
     @Override
     protected void onStart() {
@@ -112,7 +110,7 @@ public class PlayActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if (!start.isShowing()) {
+        if (start != null && !start.isShowing()) {
             if (pause && stop) {
                 start.dismiss();
                 if (!loose_or_win.isShowing() && !start.isShowing()) {
@@ -132,7 +130,7 @@ public class PlayActivity extends AppCompatActivity {
     protected void onDestroy() {
         loose_or_win.dismiss();
         start.dismiss();
-        if (close_level != null && close_level.isShowing())
+        if (close_level != null)
             close_level.dismiss();
         drawThread.interrupt();
         super.onDestroy();
@@ -231,16 +229,18 @@ public class PlayActivity extends AppCompatActivity {
         play_field.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
-                width = play_field.getWidth();
-                height = play_field.getHeight();
-                //if (pause && stop)
+                if (!PlayActivity.drawThreadAlreadyExist) {
+                    width = play_field.getWidth();
+                    height = play_field.getHeight();
                     if (number != 10 && number != 99) {
-                        if (!isFinishing())
+                        if (!isFinishing()) {
                             start.show();
+                        }
                     } else {
                         drawThread = create_new_thread(width, height, number);
                         drawThread.start();
                     }
+                }
             }
 
             @Override
@@ -269,26 +269,38 @@ public class PlayActivity extends AppCompatActivity {
         next.setBackgroundColor(Color.BLUE);
 
         retry.setOnClickListener(v -> {
-            drawThread = create_new_thread(width, height, number);
-            drawThread.start();
             loose_or_win.hide();
+            update = true;
+            create_helper_dialog();
+            if (number != 10){
+                start.show();
+            } else {
+                drawThread = create_new_thread(width, height, number);
+                drawThread.start();
+            }
         });
 
         menu.setOnClickListener(v -> {
             loose_or_win.hide();
-            Intent i = new Intent(PlayActivity.this, Levels_activity.class);
-            startActivity(i);
+            finish();
         });
 
         next.setOnClickListener(v -> {
             number++;
-            drawThread = create_new_thread(width, height, number);
-            drawThread.start();
             loose_or_win.hide();
+            update = true;
+            create_helper_dialog();
+            if (number != 10){
+                start.show();
+            } else {
+                drawThread = create_new_thread(width, height, number);
+                drawThread.start();
+            }
         });
     }
 
     private void create_helper_dialog() {
+        step = 1;
         start = new Dialog(this);
         start.requestWindowFeature(Window.FEATURE_NO_TITLE); // убираем заголовок
         start.setCancelable(false); // нельзя закрыто окно кнопкой назад
@@ -354,37 +366,36 @@ public class PlayActivity extends AppCompatActivity {
             start_text.setText(start_phrases[0]);
 
         ConstraintLayout start_dialog_layout = start.findViewById(R.id.start_dialog_layout);
-        start_dialog_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (step < start_phrases.length){
-                    start_text.setText(start_phrases[step]);
-                    if (number == 1)
-                        start_text.setMaxLines(10);
-                }
-                else if (step == start_phrases.length){
-                    start.hide();
-                    drawThread = create_new_thread(width, height, number);
-                    if (number != 1)
-                        size.setVisibility(View.VISIBLE);
-                    drawThread.start();
-                }
-                step++;
+        start_dialog_layout.setOnClickListener(v -> {
+            if (step < start_phrases.length){
+                start_text.setText(start_phrases[step]);
+                if (number == 1)
+                    start_text.setMaxLines(10);
             }
+            else if (step == start_phrases.length){
+                start.hide();
+
+                drawThread = create_new_thread(width, height, number);
+                drawThread.start();
+            }
+            step++;
         });
+
     }
 
     private void fragments() {
         button_fragment = new SpaceshipControllerFragment();
-        text_fragment = new BlankFragment();
+        text_fragment = new TextFragment();
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (number == 10){
+        if (!update) {
+            fragmentTransaction.add(R.id.container, button_fragment);
+            fragmentTransaction.commit();
+        }
+        if (number == 10) {
             fragmentTransaction.add(R.id.container, text_fragment);
             fragmentTransaction.hide(text_fragment);
         }
-        fragmentTransaction.add(R.id.container, button_fragment);
-        fragmentTransaction.commit();
     }
 
     private void change_base() {
@@ -461,7 +472,11 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     public DrawThread create_new_thread(int width, int height, int number){
-        return new DrawThread(play_field.getHolder(), context, width, height, handler, number, false);
+        if (!PlayActivity.drawThreadAlreadyExist)
+            return new DrawThread(play_field.getHolder(), context, width, height, handler, number);
+        else {
+            throw new NullPointerException();
+        }
     }
 
     public void win_or_loose_dialog(int win_or_loose, int points){
@@ -610,6 +625,8 @@ public class PlayActivity extends AppCompatActivity {
         drawThread.change_bullet_color(1);
         if (number == 1)
             size.setVisibility(View.INVISIBLE);
+        else
+            size.setVisibility(View.VISIBLE);
 
         hp_samolet.setProgress(drawThread.get_Samolet().get_hp());
         hp_base.setProgress(drawThread.get_base().get_hp());
@@ -629,9 +646,14 @@ public class PlayActivity extends AppCompatActivity {
         } else {
             points.setText(Integer.toString(0));
         }
+
     }
 
+    public static void setDrawThreadAlreadyExist(boolean drawThreadAlreadyExist) {
+        PlayActivity.drawThreadAlreadyExist = drawThreadAlreadyExist;
+    }
 
+    private boolean update = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -657,13 +679,6 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        fragments();
-
-        create_helper_dialog();
-
-        create_loose_or_win_dialog();
 
         init_tints_for_buttons();
 
@@ -719,13 +734,22 @@ public class PlayActivity extends AppCompatActivity {
                     case 8:
                         change_base();
                         break;
+                    case 9:
+                        if (update){
+                            create_loose_or_win_dialog();
+                            fragments();
+                        }
+                        break;
                 }
             }
         };
 
-        create_surface_view();
-
+        create_loose_or_win_dialog();
+        create_helper_dialog();
+        fragments();
         create_abilities();
+        create_surface_view();
+        PlayActivity.drawThreadAlreadyExist = false;
     }
 
 }

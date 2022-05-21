@@ -24,7 +24,16 @@ public class Boss extends Enemy{
     private boolean back = true;
     List<Byte> enemys;
     private int count;
-    private int step = 0, number = 1;
+
+    public int getStep() {
+        return step;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    private int step, number;
     private Handler handler;
 
     private boolean bullet_is_created = false, meteor_is_created = false, turret_is_created = false;
@@ -37,6 +46,7 @@ public class Boss extends Enemy{
         this.enemyList = enemyList;
         this.bulletList = bulletList;
         this.handler = handler;
+        step = 0; number = 1;
         Boss.elain_in_center = false;
         Boss.time_center_one = 0;
         Boss.meteor_flag = false;
@@ -158,8 +168,7 @@ public class Boss extends Enemy{
                 if (number == 5)
                     handler.sendMessage(Message.obtain(handler,6,7 ,0));
 
-        }
-        else {
+        } else {
             if (flag) {
                 center_switch(number);
                 flag = false;
@@ -191,6 +200,16 @@ public class Boss extends Enemy{
         time_center_one = System.currentTimeMillis();
     }
 
+    public void addTime_one(long time_one) {
+       // if (this.time_one != 0)
+            this.time_one += time_one;
+    }
+
+    public static void addTime_center_one(long time_center_one) {
+        if (Boss.time_center_one != 0)
+            Boss.time_center_one += time_center_one;
+    }
+
     private static long time_center_one;
     public void center_action(){
         switch(number){
@@ -205,7 +224,9 @@ public class Boss extends Enemy{
                                 context, 1, 2) {
                             @Override
                             public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
-                                enemy_list.remove(this);
+                                if (two instanceof Elain){
+                                    enemy_list.remove(this);
+                                }
                             }
 
                             @Override

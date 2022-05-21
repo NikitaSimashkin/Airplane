@@ -1,4 +1,4 @@
-package com.example.airplane;
+package com.example.airplane.Fragments;
 
 import android.os.Bundle;
 
@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class BlankFragment extends Fragment {
+import com.example.airplane.R;
 
-    public BlankFragment() {
+public class TextFragment extends Fragment {
+
+    public TextFragment() {
         // Required empty public constructor
     }
 

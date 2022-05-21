@@ -1,4 +1,6 @@
-package com.example.airplane;
+package com.example.airplane.Sprites.Good;
+
+import com.example.airplane.Params;
 
 // TODO: не забыть реализовать этот класс
 public class Base{

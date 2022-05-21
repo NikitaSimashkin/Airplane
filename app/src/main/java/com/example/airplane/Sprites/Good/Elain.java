@@ -38,7 +38,7 @@ public class Elain extends Bullet{
             super.update_koord();
             time = System.currentTimeMillis();
         }
-        else if (step < 6 &&System.currentTimeMillis() - time > time_change){
+        else if (step < 6 && System.currentTimeMillis() - time > time_change){
             bitmap = animation[step];
             step++;
             time = System.currentTimeMillis();
@@ -49,6 +49,16 @@ public class Elain extends Bullet{
             bullet_list.remove(this);
             Elain.alive = false;
         }
+    }
+
+    public void addTime(long time){
+        if (this.time != 0)
+            this.time += time;
+    }
+
+    public void addTime_death(long time){
+        if (this.time_death != 0)
+            this.time_death += time;
     }
 
     @Override

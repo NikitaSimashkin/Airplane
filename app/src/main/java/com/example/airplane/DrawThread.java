@@ -9,16 +9,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.SurfaceHolder;
 
-import androidx.annotation.NonNull;
-
+import com.example.airplane.Activities.PlayActivity;
 import com.example.airplane.Sprites.Bad.Alien;
 import com.example.airplane.Sprites.Bad.Alien_two;
 import com.example.airplane.Sprites.Bad.Bird;
 import com.example.airplane.Sprites.Bad.Boss;
+import com.example.airplane.Sprites.Good.Base;
 import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Bad.Cat;
 import com.example.airplane.Sprites.Bad.Enemy;
 import com.example.airplane.Sprites.Bad.Heart;
+import com.example.airplane.Sprites.Good.Elain;
 import com.example.airplane.Sprites.Good.Many_bullets;
 import com.example.airplane.Sprites.Good.MegaBullet;
 import com.example.airplane.Sprites.Bad.Megasun;
@@ -63,39 +64,10 @@ public class DrawThread extends Thread{
     private long pause_time = 0;
     private ArrayList<Enemy> time_death_enemy = new ArrayList<>();
 
-   public List<Enemy> get_enemy(){
-       return enemy_list;
-   }
-
-   public void set_enemy(List<Enemy> enemy_list){
-       this.enemy_list = enemy_list;
-   }
-
-    public List<Bullet> get_bullet(){
-        return bullet_list;
-    }
-
-    public void set_bullet(List<Bullet> bullet_list){
-        this.bullet_list = bullet_list;
-    }
-
-    public ArrayList<Enemy> get_time_enemy(){
-       return time_death_enemy;
-    }
-
-    public void set_time_enemy(ArrayList<Enemy> time_death_enemy){
-       this.time_death_enemy = time_death_enemy;
-    }
-
-    @NonNull
-    @Override
-    protected DrawThread clone() throws CloneNotSupportedException {
-        return (DrawThread) super.clone();
-    }
-
-    public DrawThread (SurfaceHolder surfaceHolder, Context context,
-                       int width, int height, Handler handler, int number, boolean update){
+    public DrawThread(SurfaceHolder surfaceHolder, Context context,
+                      int width, int height, Handler handler, int number){
         super();
+        PlayActivity.setDrawThreadAlreadyExist(true);
         this.surfaceHolder = surfaceHolder;
         this.context = context;
         DrawThread.handler = handler;
@@ -103,6 +75,7 @@ public class DrawThread extends Thread{
         DrawThread.width = width;
         DrawThread.height = height;
         Many_bullets.alive = false;
+        handler.sendMessage(Message.obtain(handler, 9, 0, 0));
         handler.sendMessage(Message.obtain(handler, 2, 0, 0));
         handler.sendMessage(Message.obtain(handler, 8, 0, 0));
 
@@ -144,8 +117,25 @@ public class DrawThread extends Thread{
             time_bullet_last += time_add;
             last_update_time += time_add;
             last_ability_time += time_add;
-            for (int i = 0; i < time_death_enemy.size(); i++){
+            for (int i = 0; i < time_death_enemy.size(); i++) {
                 time_death_enemy.get(i).addTime_death(time_add);
+            }
+            if (number == 10){
+                for (int i = 0; i < enemy_list.size(); i++){
+                    Enemy cur = enemy_list.get(i);
+                    if (cur instanceof Boss){
+                        ((Boss) cur).addTime_one(time_add);
+                        Boss.addTime_center_one(time_add);
+                        break;
+                    }
+                }
+                for (int i = 0; i < bullet_list.size(); i++){
+                    Bullet cur = bullet_list.get(i);
+                    if (cur instanceof Elain){
+                        ((Elain) cur).addTime(time_add);
+                        ((Elain) cur).addTime_death(time_add);
+                    }
+                }
             }
             canvas = null;
         }
@@ -481,11 +471,11 @@ public class DrawThread extends Thread{
         return false;
     }
 
-
     public void update_enemy() {
         for (int i = 0; i < enemy_list.size(); i++){
             Enemy enemy = enemy_list.get(i);
             enemy.update_koord(); //обновляет координаты
+
             if (Enemy.check_two(samolet, enemy, new double[]{(width/100), (height/150), -(width/100),
                     -(height/150), (width/100), 0, -(width/100), 0}))  //проверяет столкновение с самолетом или стеной
             {
@@ -498,7 +488,8 @@ public class DrawThread extends Thread{
                     handler.sendMessage(Message.obtain(handler, 0, 0, points));
             }
             else if (samolet.turret_exist() && Enemy.check_two(samolet.get_turret(), enemy, new double[]{(width/100), (height/150), -(width/100),
-                    -(height/150), (width/100), 0, -(width/100), 0}) && !(enemy instanceof Heart)){ //если турель есть, то проверяем столкновение с ней
+                    -(height/150), (width/100), 0, -(width/100), 0}) && !(enemy instanceof Heart))
+            { //если турель есть, то проверяем столкновение с ней
                         samolet.get_turret().set_death();
                 }
             else if(enemy.get_koord()[1] <= 0){
@@ -529,13 +520,12 @@ public class DrawThread extends Thread{
     public void interrupt() {
         super.interrupt();
         pause = true;
-//        enemy_list.clear();
-//        bullet_list.clear();
+        PlayActivity.setDrawThreadAlreadyExist(false);
     }
 
     public void draw_all(){
 
-        try {
+     //   try {
             canvas = surfaceHolder.lockCanvas();
 
             if (canvas != null) {
@@ -562,10 +552,10 @@ public class DrawThread extends Thread{
 
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
-        }
-        catch (NullPointerException | IllegalAccessError e){
-            System.out.println("error");
-        }
+     //   }
+      //  catch (NullPointerException | IllegalAccessError e){
+            //System.out.println("error");
+       // }
     }
 
     @Override
@@ -691,6 +681,7 @@ public class DrawThread extends Thread{
                 break;
             case 10:
                 mobs.add((byte)(11));
+                //mobs.add((byte)(3));
                 break;
             case 99:
                 mobs = create_level(80,45,30,20,30,20,10,10,5,10);
