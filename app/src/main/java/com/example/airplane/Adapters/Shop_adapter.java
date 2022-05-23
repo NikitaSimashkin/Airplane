@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.airplane.Activities.MainActivity;
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.R;
 
 import java.util.ArrayList;
@@ -163,6 +164,7 @@ public class Shop_adapter extends RecyclerView.Adapter<Shop_adapter.Item>{
 
         current_item++;
             item.skin.setOnClickListener(v -> {
+                MusicResorces.soundPool.play(MusicResorces.chose, 1, 1, 0, 0, 1);
                 item.closed = closed[0] == item.id || closed[1] == item.id || closed[2] == item.id;
                 if (!item.closed) {
                     int one, count;

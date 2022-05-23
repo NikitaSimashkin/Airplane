@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 
@@ -21,6 +22,7 @@ public class Megasun extends Enemy {
 
     @Override
     public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
+        MusicResorces.play(MusicResorces.enemy_damage);
         super.collision(two, enemy_list);
         if (!alive){
             enemy_list.add(new Sun(height/32, (-width+left), context));

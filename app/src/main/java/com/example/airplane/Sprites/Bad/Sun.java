@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 
@@ -28,6 +29,7 @@ public class Sun extends Enemy {
     public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
         if (color == two.getColor() || two.getColor() == 5){
             change_hp(-2*two.get_damage());
+            MusicResorces.play(MusicResorces.enemy_damage);
         }
         else{
             enemy_list.add(new Bullet_enemy(two, context));

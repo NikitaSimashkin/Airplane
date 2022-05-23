@@ -10,17 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Airplane">
         <activity
-            android:name=".Activities.Shop"
+            android:name=".Activities.ShopActivity"
             android:exported="false"
-            android:screenOrientation="landscape"
-            android:noHistory="true"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Activities.Levels_activity"
             android:exported="false"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,10 +33,7 @@
             android:name=".Activities.PlayActivity"
             android:label="PlayActivity"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".TestActivity"
-            android:label="TestActivity"
-            android:screenOrientation="landscape" />
+
 
         <meta-data
             android:name="preloaded_fonts"

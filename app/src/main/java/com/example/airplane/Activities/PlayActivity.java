@@ -38,6 +38,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.example.airplane.Fragments.TextFragment;
 import com.example.airplane.DrawThread;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Player;
 import com.example.airplane.R;
@@ -101,6 +102,7 @@ public class PlayActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        MusicResorces.battle_s.pause();
         if (!start.isShowing()) {
             drawThread.set_pause(true);
             pause = true;
@@ -132,6 +134,9 @@ public class PlayActivity extends AppCompatActivity {
         start.dismiss();
         if (close_level != null)
             close_level.dismiss();
+
+        MusicResorces.start_menu();
+
         drawThread.interrupt();
         super.onDestroy();
     }
@@ -147,11 +152,14 @@ public class PlayActivity extends AppCompatActivity {
                 break_b = close_level.findViewById(R.id.break_button);
 
         continue_b.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             drawThread.set_pause(false);
+            MusicResorces.battle_s.start();
             close_level.dismiss();
         });
 
         break_b.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             drawThread.interrupt();
             close_level.dismiss();
             finish();
@@ -269,6 +277,7 @@ public class PlayActivity extends AppCompatActivity {
         next.setBackgroundColor(Color.BLUE);
 
         retry.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             loose_or_win.hide();
             update = true;
             create_helper_dialog();
@@ -281,11 +290,13 @@ public class PlayActivity extends AppCompatActivity {
         });
 
         menu.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             loose_or_win.hide();
             finish();
         });
 
         next.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             number++;
             loose_or_win.hide();
             update = true;
@@ -657,6 +668,12 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MusicResorces.menu_s.pause();
+        MusicResorces.setMenu_start(false);
+        MusicResorces.battle_s.seekTo(0);
+        MusicResorces.play_loop(MusicResorces.battle_s);
+
         new Params(getApplicationContext());
         Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
         setContentView(R.layout.playactivity);
@@ -675,6 +692,7 @@ public class PlayActivity extends AppCompatActivity {
                     if (!close_level.isShowing()) {
                         close_level.show();
                         drawThread.set_pause(true);
+                        MusicResorces.battle_s.pause();
                     }
                 }
             }

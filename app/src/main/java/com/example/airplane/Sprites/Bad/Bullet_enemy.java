@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Sprite;
@@ -37,8 +38,10 @@ public class Bullet_enemy extends Enemy{
     // так как у пули нет картинки смерти, то необходимо переопределить метод столкновения
     @Override
     public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
-        if (hp < 10_000)
+        if (hp < 10_000) {
+            MusicResorces.play(MusicResorces.enemy_damage);
             super.collision(two, enemy_list);
+        }
         if (!alive) {
             enemy_list.remove(this);
         }

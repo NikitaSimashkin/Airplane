@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Good.MegaBullet;
@@ -31,6 +32,7 @@ public class Enemy_turret extends Enemy{
     public void update_koord() {
         if (System.currentTimeMillis() - last > time_bullet){
             enemyList.add(new Bullet_enemy(new double[]{up,left,down,right}, context, 2, (int)((Math.random()*4)+1)));
+            MusicResorces.play(MusicResorces.bullet_s[2]);
             number++;
             if (number == max_number){
                 enemyList.remove(this);

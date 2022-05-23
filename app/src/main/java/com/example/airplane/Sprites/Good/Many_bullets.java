@@ -3,6 +3,7 @@ package com.example.airplane.Sprites.Good;
 import android.content.Context;
 
 import com.example.airplane.DrawThread;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 
 import java.util.List;
@@ -44,6 +45,7 @@ public class Many_bullets{
 
     public void create_bullets(){
         if (System.currentTimeMillis() - last_bullet > time_bullet){
+            MusicResorces.play(MusicResorces.bullet_s[size]);
             bullet_list.add(new Bullet(drawThread.get_Samolet().get_koord(), context, color, size));
             counter++;
             last_bullet = System.currentTimeMillis();

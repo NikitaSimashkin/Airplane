@@ -150,6 +150,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:scaleType="centerInside"
+                    android:soundEffectsEnabled="false"
                     android:src="@drawable/cancel" />
 
                 <ImageButton
@@ -162,6 +163,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:scaleType="centerInside"
+                    android:soundEffectsEnabled="false"
                     android:src="@drawable/ok" />
             </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.example.airplane.Sprites.Good;
 import android.content.Context;
 
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Sprite;
 
@@ -97,6 +98,7 @@ public class Samolet extends Sprite {
 
         public void create_bullet() {
             if (System.currentTimeMillis() - last_bullet > time_bullet) {
+                MusicResorces.play(MusicResorces.bullet_s[size]);
                 bullet_list.add(new Bullet(new double[]{up, left, down, right}, context, color, size));
                 number_bullet++;
                 if (number_bullet == n) {

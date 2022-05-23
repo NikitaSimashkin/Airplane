@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Player;
 import com.example.airplane.R;
 import com.example.airplane.Adapters.Table_adapter;
@@ -45,13 +47,22 @@ public class MainActivity extends AppCompatActivity {
 
     public static final DatabaseReference mDataBase = FirebaseDatabase.getInstance("https://spacewar-8bb7b-default-rtdb.firebaseio.com/").getReference(PLAYERS);
 
+    private boolean close = true;
+
     @Override
     protected void onResume() {
+        if (close){
+            MusicResorces.menu_s.start();
+        }
+        close = true;
         super.onResume();
     }
 
     @Override
     protected void onPause() {
+        if (close){
+            MusicResorces.menu_s.pause();
+        }
         super.onPause();
     }
 
@@ -62,23 +73,34 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        MusicResorces.createMusicResources(getApplicationContext());
+
+        MusicResorces.start_menu();
+
         // обработчик кнопки, который вызывает вторую активити с уровнями
         Button play_button = findViewById(R.id.play_button);
         play_button.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             Intent i = new Intent(MainActivity.this, Levels_activity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            close = false;
             startActivity(i);
         });
 
         // окно магазина
         Button shop = findViewById(R.id.shop);
         shop.setOnClickListener(v -> {
-            Intent i = new Intent(MainActivity.this, Shop.class);
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
+            Intent i = new Intent(MainActivity.this, ShopActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            close = false;
             startActivity(i);
         });
 
         // таблица лидеров
         Button rate_table = findViewById(R.id.rate_table);
         rate_table.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             if (table == null)
                 table = create_rate_table();
             get_info();
@@ -138,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
         hard.setOnClickListener(change_image);
 
         opt.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             options.show();
             name.setText(pref.getString(nickname, ""));
             int difficult = pref.getInt(diff, 0);
@@ -158,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         close.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             player = pref.getString(nickname, "");
             if (!player.equals(""))
                 options.dismiss();
@@ -167,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         difficult - 0 easy; 1 - normal; 2 - hard
          */
         accept.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             SharedPreferences.Editor edit = pref.edit();
             String nick = name.getText().toString();
             if (!nick.equals("") && (easy.isChecked() || normal.isChecked() || hard.isChecked())){
@@ -195,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton close_table = t.findViewById(R.id.close_table);
         close_table.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             if (!isFinishing())
                 t.dismiss();
         });
@@ -235,5 +261,20 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mDataBase.addListenerForSingleValueEvent(valueEventListener);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

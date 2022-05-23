@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.airplane.MusicResorces;
 import com.example.airplane.R;
 
 import java.util.ArrayList;
@@ -23,9 +24,14 @@ public class Levels_activity extends AppCompatActivity {
     private final boolean[] level_acces = new boolean[10];
     private View.OnClickListener on_click;
     private SharedPreferences pref;
+    private boolean close = true;
 
     @Override
     protected void onResume() {
+        if (close){
+            MusicResorces.menu_s.start();
+        }
+        close = true;
         super.onResume();
         update();
     }
@@ -42,43 +48,46 @@ public class Levels_activity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 Intent i = new Intent(Levels_activity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                close = false;
                 startActivity(i);
             }
         });
 
         on_click = v -> {
-        switch (v.getId()){
-            case R.id.one:
-                Levels(1);
-                break;
-            case R.id.two:
-                Levels(2);
-                break;
-            case R.id.three:
-                Levels(3);
-                break;
-            case R.id.four:
-                Levels(4);
-                break;
-            case R.id.five:
-                Levels(5);
-                break;
-            case R.id.six:
-                Levels(6);
-                break;
-            case R.id.seven:
-                Levels(7);
-                break;
-            case R.id.eight:
-                Levels(8);
-                break;
-            case R.id.nine:
-                Levels(9);
-                break;
-            case R.id.ten:
-                Levels(10);
-                break;
-            }
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
+            switch (v.getId()){
+                case R.id.one:
+                    Levels(1);
+                    break;
+                case R.id.two:
+                    Levels(2);
+                    break;
+                case R.id.three:
+                    Levels(3);
+                    break;
+                case R.id.four:
+                    Levels(4);
+                    break;
+                case R.id.five:
+                    Levels(5);
+                    break;
+                case R.id.six:
+                    Levels(6);
+                    break;
+                case R.id.seven:
+                    Levels(7);
+                    break;
+                case R.id.eight:
+                    Levels(8);
+                    break;
+                case R.id.nine:
+                    Levels(9);
+                    break;
+                case R.id.ten:
+                    Levels(10);
+                    break;
+                }
         };
 
         level_buttons.add(findViewById(R.id.one));
@@ -94,7 +103,9 @@ public class Levels_activity extends AppCompatActivity {
 
         Button level_inf = findViewById(R.id.button_inf);
 
-        level_inf.setOnClickListener(v -> Levels(99));
+        level_inf.setOnClickListener(v -> {
+            MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
+            Levels(99);});
 
         pref = getSharedPreferences("Main", MODE_PRIVATE);
         pref.edit().putBoolean("level_1", true).apply();
@@ -106,6 +117,7 @@ public class Levels_activity extends AppCompatActivity {
     private void Levels(int number){
         Intent i = new Intent(Levels_activity.this, PlayActivity.class);
         i.putExtra("number", number);
+        close = false;
         startActivity(i);
     }
 
@@ -127,6 +139,9 @@ public class Levels_activity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        if (close){
+            MusicResorces.menu_s.pause();
+        }
         super.onPause();
     }
 

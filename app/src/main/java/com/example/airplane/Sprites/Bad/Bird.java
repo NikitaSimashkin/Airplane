@@ -3,6 +3,7 @@ package com.example.airplane.Sprites.Bad;
 import android.content.Context;
 
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Sprite;
@@ -45,6 +46,7 @@ public class Bird extends Enemy {
                 }
             }
         } else{
+            MusicResorces.play(MusicResorces.enemy_damage);
             change_hp(-2 * two.get_damage());
         }
     }

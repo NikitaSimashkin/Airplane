@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.example.airplane.DrawThread;
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Sprite;
@@ -91,6 +92,7 @@ public class Enemy extends Sprite {
         else {
             change_hp(-two.get_damage());
         }
+        MusicResorces.play(MusicResorces.enemy_damage);
     }
 
 }

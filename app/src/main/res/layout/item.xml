@@ -20,17 +20,19 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/ramka">
+        android:background="@drawable/ramka"
+        android:soundEffectsEnabled="false">
 
         <LinearLayout
             android:id="@+id/skin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:soundEffectsEnabled="false">
 
             <ImageView
                 android:id="@+id/item_picture"

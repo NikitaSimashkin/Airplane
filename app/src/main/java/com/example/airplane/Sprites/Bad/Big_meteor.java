@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.airplane.ImageResource;
+import com.example.airplane.MusicResorces;
 import com.example.airplane.Params;
 import com.example.airplane.Sprites.Good.Bullet;
 import com.example.airplane.Sprites.Good.MegaBullet;
@@ -45,7 +46,9 @@ public class Big_meteor extends Enemy{
 
     @Override
     public void collision(@NonNull Bullet two, List<Enemy> enemy_list) {
-        if (!(two instanceof MegaBullet))
+        if (!(two instanceof MegaBullet)) {
             super.collision(two, enemy_list);
+            MusicResorces.play(MusicResorces.enemy_damage);
+        }
     }
 }

@@ -261,6 +261,7 @@ public class DrawThread extends Thread{
 
     public void create_bullets() {
         if (System.currentTimeMillis() - time_bullet_last >= time_bullet*Params.start_timebullet_m) {
+            MusicResorces.play(MusicResorces.bullet_s[size]);
             bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_color, size));
             time_bullet_last = System.currentTimeMillis();
         }
@@ -430,6 +431,7 @@ public class DrawThread extends Thread{
 
     public boolean create_megabullet(){
         bullet_list.add(new MegaBullet(samolet.get_koord(), context));
+        MusicResorces.play(MusicResorces.bullet_s[0]);
         return true;
     }
 
@@ -482,10 +484,14 @@ public class DrawThread extends Thread{
                 samolet.change_hp(-enemy.get_damage());
                 enemy_list.remove(i);
                 i--;
-                if (samolet.get_hp() > 0) // снимаем хп у самолета
+                if (samolet.get_hp() > 0) { // снимаем хп у самолета
                     handler.sendMessage(Message.obtain(handler, 1, 0, samolet.get_hp()));
-                else
+                    MusicResorces.play(MusicResorces.player_damage);
+                }
+                else {
                     handler.sendMessage(Message.obtain(handler, 0, 0, points));
+                    MusicResorces.play_max(MusicResorces.player_death);
+                }
             }
             else if (samolet.turret_exist() && Enemy.check_two(samolet.get_turret(), enemy, new double[]{(width/100), (height/150), -(width/100),
                     -(height/150), (width/100), 0, -(width/100), 0}) && !(enemy instanceof Heart))
@@ -496,10 +502,14 @@ public class DrawThread extends Thread{
                 base.change_hp(-enemy.get_damage());
                 enemy_list.remove(i);
                 i--;
-                if (base.get_hp() > 0)
+                if (base.get_hp() > 0) {
                     handler.sendMessage(Message.obtain(handler, 1, 1, base.get_hp()));
-                else
-                    handler.sendMessage(Message.obtain(handler,0,0, points));
+                    MusicResorces.play(MusicResorces.base_damage);
+                }
+                else {
+                    handler.sendMessage(Message.obtain(handler, 0, 0, points));
+                    MusicResorces.play_max(MusicResorces.player_death);
+                }
             }
 
             else { // столкновение с пулей
