@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Airplane</string>
-    <string name="Title" translatable="false">Привет, мир</string>
-    <string name="play" translatable="false">Играть</string>
-    <string name="lose" translatable="false"></string>>
-    <string name="name" translatable="false">Имя:</string>>
-    <string name="menu" translatable="false">МЕНЮ</string>>
-    <string name="retru" translatable="false">ЗАНОВО</string>>
-    <string name="next" translatable="false">ДАЛЬШЕ</string>>
-    <string name="infinity_text" translatable="false">БЕСКОНЕЧНЫЙ \n РЕЖИМ</string>
+
+    <string name="play">Играть</string>
+    <string name="name">Имя:</string>>
+    <string name="menu">МЕНЮ</string>>
+    <string name="retru">ЗАНОВО</string>>
+    <string name="next">ДАЛЬШЕ</string>>
+    <string name="infinity_text">БЕСКОНЕЧНЫЙ \n РЕЖИМ</string>
     <string name="your_name">Ваше имя</string>
     <string name="difficult">Сложность:</string>
     <string name="easy">Легкая</string>
@@ -28,5 +26,6 @@
     <string name="progress_dont_save">При закрытии уровня прогресс не сохранится!</string>
     <string name="continue_b">Продолжить</string>
     <string name="break_b">Выйти</string>
+    <string name="app_name">Galaxion</string>
 
 </resources>

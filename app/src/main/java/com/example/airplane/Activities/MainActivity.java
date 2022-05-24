@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
             edit.putString(MainActivity.BASE, "default_base");
             edit.apply();
         }
-        
     }
 
     protected void create_option_dialog() {

@@ -261,7 +261,7 @@ public class DrawThread extends Thread{
 
     public void create_bullets() {
         if (System.currentTimeMillis() - time_bullet_last >= time_bullet*Params.start_timebullet_m) {
-            MusicResorces.play(MusicResorces.bullet_s[size]);
+            MusicResorces.play_min(MusicResorces.bullet_s[size]);
             bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_color, size));
             time_bullet_last = System.currentTimeMillis();
         }
@@ -486,7 +486,7 @@ public class DrawThread extends Thread{
                 i--;
                 if (samolet.get_hp() > 0) { // снимаем хп у самолета
                     handler.sendMessage(Message.obtain(handler, 1, 0, samolet.get_hp()));
-                    MusicResorces.play(MusicResorces.player_damage);
+                    MusicResorces.play_min(MusicResorces.player_damage);
                 }
                 else {
                     handler.sendMessage(Message.obtain(handler, 0, 0, points));
@@ -504,7 +504,7 @@ public class DrawThread extends Thread{
                 i--;
                 if (base.get_hp() > 0) {
                     handler.sendMessage(Message.obtain(handler, 1, 1, base.get_hp()));
-                    MusicResorces.play(MusicResorces.base_damage);
+                    MusicResorces.play_min(MusicResorces.base_damage);
                 }
                 else {
                     handler.sendMessage(Message.obtain(handler, 0, 0, points));

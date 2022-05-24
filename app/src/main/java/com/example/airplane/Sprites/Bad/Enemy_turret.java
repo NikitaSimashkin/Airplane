@@ -32,7 +32,7 @@ public class Enemy_turret extends Enemy{
     public void update_koord() {
         if (System.currentTimeMillis() - last > time_bullet){
             enemyList.add(new Bullet_enemy(new double[]{up,left,down,right}, context, 2, (int)((Math.random()*4)+1)));
-            MusicResorces.play(MusicResorces.bullet_s[2]);
+            MusicResorces.play_min(MusicResorces.bullet_s[2]);
             number++;
             if (number == max_number){
                 enemyList.remove(this);

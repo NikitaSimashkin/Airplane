@@ -1,48 +1,47 @@
 <resources>
-    <string name="app_name">Airplane</string>
-    <string name="Title">Привет, мир</string>
-    <string name="play">Играть</string>
-    <string name="name">Имя:</string>>
-    <string name="menu">МЕНЮ</string>>
-    <string name="retru">ЗАНОВО</string>>
-    <string name="next">ДАЛЬШЕ</string>>
-    <string name="infinity_text">БЕСКОНЕЧНЫЙ \n РЕЖИМ</string>
-    <string name="difficult">Сложность:</string>
-    <string name="easy">Легкая</string>
-    <string name="normal">Средняя</string>
-    <string name="hard">Высокая</string>
-    <string name="your_name">Ваше имя</string>
-    <string name="shop">Магазин</string>
-    <string name="shop2">Магазин скинов</string>
-    <string name="rate_table">Таблица лидеров</string>
-    <string name="closed">Пройдите игру, чтобы открыть этот скин</string>
-    <string name="inf_loose">Набрано очков:</string>
-    <string name="rate">Таблица лидеров</string>
-    <string name="rating">Рейтинг</string>
-    <string name="nickname">Никнейм</string>
-    <string name="points">Очки</string>
-    <string name="your_record">Ваш рекорд: </string>
-    <string name="level_on_pause">Уровень на паузе</string>
-    <string name="progress_dont_save">При закрытии уровня прогресс\nне сохранится!</string>
-    <string name="continue_b">Продолжить</string>
-    <string name="break_b">Выйти</string>
+    <string name="app_name">Galaxion</string>
+    <string name="play">Play</string>
+    <string name="name">Name:</string>>
+    <string name="menu">MENU</string>>
+    <string name="retru">RETRY</string>>
+    <string name="next">NEXT</string>>
+    <string name="infinity_text">INFINITY \n MODE</string>
+    <string name="difficult">Difficulty:</string>
+    <string name="easy">Easy</string>
+    <string name="normal">Normal</string>
+    <string name="hard">Hard</string>
+    <string name="your_name">Your name</string>
+    <string name="shop">Shop</string>
+    <string name="shop2">Skin shop</string>
+    <string name="rate_table">Leaderboard</string>
+    <string name="closed">Complete the game to unlock this skin</string>
+    <string name="inf_loose">Points scored:</string>
+    <string name="rate">Leaderboard</string>
+    <string name="rating">Rating</string>
+    <string name="nickname">Nickname</string>
+    <string name="points">Points</string>
+    <string name="your_record">Your record: </string>
+    <string name="level_on_pause">Level on pause</string>
+    <string name="progress_dont_save">When you close a level, the progress will not be saved!</string>
+    <string name="continue_b">Continue</string>
+    <string name="break_b">Exit</string>
 
     <string-array name="ships">
-        <item>Корабль №1</item>
-        <item>Корабль №2</item>
-        <item>Пакман</item>
+        <item>Spaceship №1</item>
+        <item>Spaceship №2</item>
+        <item>Packman</item>
     </string-array>
 
     <string-array name="bullets">
-        <item>Шары</item>
-        <item>Ромбы</item>
-        <item>Метеориты</item>
+        <item>Balls</item>
+        <item>Diamonds</item>
+        <item>Meteors</item>
     </string-array>
 
     <string-array name="bases">
-        <item>Красная база</item>
-        <item>Синяя база</item>
-        <item>Золотая база</item>
+        <item>Red base</item>
+        <item>Blue base</item>
+        <item>Gold base</item>
     </string-array>
 
     <string-array name="start_1">

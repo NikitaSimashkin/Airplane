@@ -3,13 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien.xml" value="0.147" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_blue.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_death.xml" value="0.147" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_red.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_two.xml" value="0.151" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_two_blue.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_two_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_two_red.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_two_yellow.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/alien_yellow.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/angry_alien_without_cap.xml" value="0.147" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/angry_alien_without_cap_blue.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/angry_alien_without_cap_green_yellow.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/angry_alien_without_cap_red.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/arrow_up.xml" value="0.1" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/bird.xml" value="0.131" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/bird_blue.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/bird_death.xml" value="0.131" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/bird_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/bird_red.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/bird_yellow.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/boss.xml" value="0.185" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/breaking_heart.xml" value="0.131" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/bullet_blue.xml" value="0.131" />
@@ -19,17 +34,28 @@
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/bullet_yellow.xml" value="0.131" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_death.xml" value="0.131" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_one.xml" value="0.151" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_one_blue.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_one_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_one_red.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_two.xml" value="0.131" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_two_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_two_red.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/cat_two_yellow.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/circle_button.xml" value="0.147" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/corners.xml" value="0.147" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/death_packman.xml" value="0.131" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/enemy_megabullet.xml" value="0.185" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/enemy_turret.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/frame.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/heart.xml" value="0.151" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/ic_prishelets.xml" value="0.147" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/many_bullet.xml" value="0.131" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/megabullet.xml" value="0.185" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/megasun.xml" value="0.147" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/megasun_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/megasun_red.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/megasun_yellow.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/meteor_big.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/meteor_blue.xml" value="0.147" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/meteor_bug.xml" value="0.185" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/meteor_death.xml" value="0.147" />
@@ -37,20 +63,35 @@
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/meteor_red.xml" value="0.147" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/meteor_yellow.xml" value="0.147" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/packman.xml" value="0.131" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/packman_blue.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/packman_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/packman_red.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/progressbar.xml" value="0.1" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/romb_blue.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/romb_green.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/romb_red.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/romb_yellow.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/sun.xml" value="0.131" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/sun_blue.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/sun_death.xml" value="0.131" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/sun_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/sun_red.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/sun_yellow.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/test_animation.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/turret.xml" value="0.131" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/white_packman.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow.xml" value="0.131" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_death.xml" value="0.131" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two.xml" value="0.131" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_blue.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_red.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_two.xml" value="0.185" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_two_blue.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_two_green.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_two_red.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_two_yellow.xml" value="0.111" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/drawable/yellow_two_yellow.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/font/archivo_black.xml" value="0.2722222222222222" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/font/barriecito.xml" value="0.2722222222222222" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/font/black_ops_one.xml" value="0.2722222222222222" />
@@ -61,7 +102,7 @@
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/customprogressbar.xml" value="0.1" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/fragment_blank.xml" value="0.25" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/fragment_lose.xml" value="0.264" />
-        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/fragment_spaceship_controller.xml" value="0.4" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/fragment_spaceship_controller.xml" value="0.2" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/gradient.xml" value="0.25" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/item.xml" value="0.264" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/looser.xml" value="0.264" />
@@ -74,6 +115,7 @@
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/start_dialog.xml" value="0.4" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/test_activity.xml" value="0.536" />
         <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/layout/winner.xml" value="0.25" />
+        <entry key="..\:/Users/nikit/Desktop/123/Airplane/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.111" />
         <entry key="..\:/Users/nikit/Desktop/Android/Airplane/app/src/main/res/layout/activity_main.xml" value="0.2" />
       </map>
     </option>

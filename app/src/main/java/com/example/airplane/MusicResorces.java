@@ -21,7 +21,6 @@ public class MusicResorces {
     private MusicResorces(Context context){
         menu_s = MediaPlayer.create(context, R.raw.menu);
         battle_s = MediaPlayer.create(context, R.raw.battle);
-       // battle_s.setVolume(0.8f, 0.8f);
 
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -45,11 +44,6 @@ public class MusicResorces {
         bullet_s[1] = middle;
         bullet_s[2] = high;
 
-    }
-
-    public static void play_one(MediaPlayer mediaPlayer){
-        mediaPlayer.seekTo(0);
-        mediaPlayer.start();
     }
 
     public static void createMusicResources(Context context) {
@@ -81,5 +75,9 @@ public class MusicResorces {
 
     public static void setMenu_start(boolean menu_start) {
         MusicResorces.menu_start = menu_start;
+    }
+
+    public static void play_min(int id){
+        MusicResorces.soundPool.play(id, 0.5f, 0.5f, 1, 0, 1);
     }
 }
