@@ -18,10 +18,10 @@ public class Params {
 
     public final static int meteor_damage = 200, meteor_speed = 1000, meteor_hp = 200;
     public final static int big_meteor_damage = 10000, big_meteor_speed = 1500, big_meteor_hp = 4000;
-    public final static int alien_damage = 300, alien_speed = 800, alien_hp = 300;
-    public final static int alien_two_damage = 400, alien_two_speed = 700, alien_two_hp = 100, alien_two_hp_two = 300;
+    public final static int alien_damage = 300, alien_speed = 800, alien_hp = 400;
+    public final static int alien_two_damage = 400, alien_two_speed = 700, alien_two_hp = 100, alien_two_hp_two = 400;
     public final static int packman_damage = 0, packman_speed = 700, packman_hp = 300, meteor_time = 5000;
-    public final static int bird_damage = 200, bird_speed = 400, bird_hp = 80;
+    public final static int bird_damage = 200, bird_speed = 600, bird_hp = 80;
     public final static int sun_damage = 600, sun_speed = 800, sun_hp = 600;
     public final static int megasun_damage = 10000, megasun_speed = 1200, megasun_hp = 1200;
     public final static int cat_damage = 800, cat_speed = 1000, cat_hp = 1, cat_speed_two = 500, cat_hp_two = 800;
@@ -44,9 +44,9 @@ public class Params {
     public final static double turret_multiplier_bullet = 2, many_bullets_multiplier = 0.5, turret_multiplier_bullet_enemy = 4;
 
     public final static int number_bullet_enemy_turret = 15;
-    public final static double start_hp_multiplier_default = 1.5, start_speed_multiplier_default = 0.8,
-            start_damage_multiplier_default = 1, start_time_multiplier_default = 1.5;
-    public final static double start_speedbullet_m = 1, start_damagebullet_m = 1, start_timebullet_m = 1;
+    public final static double start_hp_multiplier_default = 1.3, start_speed_multiplier_default = 0.66,
+            start_damage_multiplier_default = 0.7, start_time_multiplier_default = 1.15;
+    public final static double start_speedbullet_m = 0.6, start_damagebullet_m = 1, start_timebullet_m = 0.5;
 
     public final static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000; // не забыть поменят в string.xml
 
@@ -56,6 +56,8 @@ public class Params {
 
     public static final int p_meteor = 10, p_alien = 14, p_alien_two = 16, p_bird = 16, p_packman = 18, p_sun = 21, p_megasun = 25,
                             p_cat = 30, p_yellow = 30, p_big_meteor = 40, p_turret = 40;
+
+    public final static boolean change_color = true;
 
     public Params(Context context){
         Meteors[0] = ImageResource.METEOR_GREEN.getBitmap(context);

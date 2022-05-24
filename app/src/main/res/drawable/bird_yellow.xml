@@ -6,36 +6,24 @@
   <path
       android:pathData="M256.5,9c11.617,11.8 -41.741,59.816 -27.5,110 28.507,100.454 275.622,116.654 274,136.5 -1.638,20.041 -252.848,-4.983 -294,85.5 -28.309,62.244 62.907,145.277 47.5,161C235.938,522.984 9.962,441.917 10,255.5 10.038,69.1 236.008,-11.819 256.5,9Z"
       android:strokeWidth="1"
-      android:fillColor="#55646E"
+      android:fillColor="#FFFF00"
       android:fillType="evenOdd"
       android:strokeColor="#000"/>
   <path
       android:fillColor="#FF000000"
-      android:pathData="M115.037,316.473c32.507,0.979 56.895,-32.132 54.278,-35.685 -2.125,-2.887 -23.426,15.367 -52.784,14.869 -29.535,-0.5 -50.443,-19.77 -52.784,-16.852C60.926,282.321 83.172,315.514 115.037,316.473Z"
+      android:pathData="M167,105c13.807,0 25,27.534 25,61.5S180.807,228 167,228s-25,-27.534 -25,-61.5S153.193,105 167,105Z"
       android:strokeWidth="1"
       android:fillType="evenOdd"
       android:strokeColor="#000"/>
   <path
       android:fillColor="#FF000000"
-      android:pathData="M122.412,145.155l6.935,7.205 -80,77 -6.935,-7.205Z"
+      android:pathData="M100,105c13.807,0 25,27.534 25,61.5S113.807,228 100,228s-25,-27.534 -25,-61.5S86.193,105 100,105Z"
       android:strokeWidth="1"
       android:fillType="evenOdd"
       android:strokeColor="#000"/>
   <path
       android:fillColor="#FF000000"
-      android:pathData="M209.412,145.155l6.935,7.205 -80,77 -6.935,-7.205Z"
-      android:strokeWidth="1"
-      android:fillType="evenOdd"
-      android:strokeColor="#000"/>
-  <path
-      android:fillColor="#FF000000"
-      android:pathData="M129.653,140.36l6.935,-7.205 80,77 -6.935,7.205Z"
-      android:strokeWidth="1"
-      android:fillType="evenOdd"
-      android:strokeColor="#000"/>
-  <path
-      android:fillColor="#FF000000"
-      android:pathData="M42.653,152.36l6.935,-7.205 80,77 -6.935,7.205Z"
+      android:pathData="M126.5,278c32.64,-0.987 57.127,32.416 54.5,36 -2.134,2.912 -23.522,-15.5 -53,-15 -29.656,0.506 -50.649,19.944 -53,17C72.168,312.454 94.5,278.968 126.5,278Z"
       android:strokeWidth="1"
       android:fillType="evenOdd"
       android:strokeColor="#000"/>

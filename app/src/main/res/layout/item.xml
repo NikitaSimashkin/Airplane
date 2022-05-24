@@ -42,7 +42,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="4"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/alien" />
+                app:srcCompat="@drawable/alien_green" />
 
             <TextView
                 android:id="@+id/name_s"

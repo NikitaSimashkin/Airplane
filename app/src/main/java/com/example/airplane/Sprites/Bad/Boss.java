@@ -301,31 +301,33 @@ public class Boss extends Enemy{
     }
 
     public static boolean create_birds(List<Enemy> enemyList, Context context){
-        enemyList.add(new Bird(1* Sprite.height/32, 0, context));
-        enemyList.add(new Bird(3*height/32, 0, context));
-        enemyList.add(new Bird(5*height/32, 0, context));
-        enemyList.add(new Bird(7*height/32, 0, context));
-        enemyList.add(new Bird(9*height/32, 0, context));
-        enemyList.add(new Bird(11*height/32, 0, context));
-        enemyList.add(new Bird(13*height/32, 0, context));
-        enemyList.add(new Bird(15*height/32, 0, context));
-        enemyList.add(new Bird(17*height/32, 0, context));
-        enemyList.add(new Bird(19*height/32, 0, context));
-        enemyList.add(new Bird(21*height/32, 0, context));
-        enemyList.add(new Bird(23*height/32, 0, context));
-        enemyList.add(new Bird(25*height/32, 0, context));
-        enemyList.add(new Bird(27*height/32, 0, context));
-        enemyList.add(new Bird(29*height/32, 0, context));
+        int c = (int)(Math.random()*4) + 1;
+        enemyList.add(new Bird(1* Sprite.height/32, 0, context, c));
+        enemyList.add(new Bird(3*height/32, 0, context, c));
+        enemyList.add(new Bird(5*height/32, 0, context, c));
+        enemyList.add(new Bird(7*height/32, 0, context, c));
+        enemyList.add(new Bird(9*height/32, 0, context, c));
+        enemyList.add(new Bird(11*height/32, 0, context, c));
+        enemyList.add(new Bird(13*height/32, 0, context, c));
+        enemyList.add(new Bird(15*height/32, 0, context, c));
+        enemyList.add(new Bird(17*height/32, 0, context, c));
+        enemyList.add(new Bird(19*height/32, 0, context, c));
+        enemyList.add(new Bird(21*height/32, 0, context, c));
+        enemyList.add(new Bird(23*height/32, 0, context, c));
+        enemyList.add(new Bird(25*height/32, 0, context, c));
+        enemyList.add(new Bird(27*height/32, 0, context, c));
+        enemyList.add(new Bird(29*height/32, 0, context, c));
         return true;
     }
 
     public static boolean create_packmans(List<Enemy> enemyList, Context context){
-        enemyList.add(new Packman(1*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(6*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(11*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(16*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(21*height/32, 0, context, enemyList));
-        enemyList.add(new Packman(26*height/32, 0, context, enemyList));
+        int c = (int)(Math.random()*4) + 1;
+        enemyList.add(new Packman(1*height/32, 0, context, enemyList, c));
+        enemyList.add(new Packman(6*height/32, 0, context, enemyList, c));
+        enemyList.add(new Packman(11*height/32, 0, context, enemyList, c));
+        enemyList.add(new Packman(16*height/32, 0, context, enemyList, c));
+        enemyList.add(new Packman(21*height/32, 0, context, enemyList, c));
+        enemyList.add(new Packman(26*height/32, 0, context, enemyList, c));
         return true;
     }
 
@@ -335,16 +337,17 @@ public class Boss extends Enemy{
     }
 
     public static boolean create_bird_and_sun(List<Enemy> enemyList, Context context){
-        enemyList.add(new Bird(1* Sprite.height/32, 0, context));
-        enemyList.add(new Bird(7*height/32, 0, context));
-        enemyList.add(new Bird(13*height/32, 0, context));
-        enemyList.add(new Bird(19*height/32, 0, context));
-        enemyList.add(new Bird(25*height/32, 0, context));
-        enemyList.add(new Sun(1*height/32, 0, context));
-        enemyList.add(new Sun(7*height/32, 0, context));
-        enemyList.add(new Sun(13*height/32, 0, context));
-        enemyList.add(new Sun(19*height/32, 0, context));
-        enemyList.add(new Sun(25*height/32, 0, context));
+        int c = (int)(Math.random()*4) + 1;
+        enemyList.add(new Bird(1* Sprite.height/32, 0, context, c));
+        enemyList.add(new Bird(7*height/32, 0, context, c));
+        enemyList.add(new Bird(13*height/32, 0, context, c));
+        enemyList.add(new Bird(19*height/32, 0, context, c));
+        enemyList.add(new Bird(25*height/32, 0, context, c));
+        enemyList.add(new Sun(1*height/32, 0, context, 5 - c));
+        enemyList.add(new Sun(7*height/32, 0, context, 5 - c));
+        enemyList.add(new Sun(13*height/32, 0, context, 5 - c));
+        enemyList.add(new Sun(19*height/32, 0, context, 5 - c));
+        enemyList.add(new Sun(25*height/32, 0, context, 5 - c));
         return true;
     }
 

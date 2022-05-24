@@ -21,7 +21,7 @@ public class MusicResorces {
     private MusicResorces(Context context){
         menu_s = MediaPlayer.create(context, R.raw.menu);
         battle_s = MediaPlayer.create(context, R.raw.battle);
-        battle_s.setVolume(0.8f, 0.8f);
+       // battle_s.setVolume(0.8f, 0.8f);
 
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -37,9 +37,9 @@ public class MusicResorces {
         middle = soundPool.load(context, R.raw.standart_attack, 1);
 
         player_death = soundPool.load(context, R.raw.player_death, 1);
-        player_damage = soundPool.load(context, R.raw.player_damage2, 1);
+        player_damage = soundPool.load(context, R.raw.enemy_damage, 1);
         base_damage = soundPool.load(context, R.raw.player_damage, 1);
-        enemy_damage = soundPool.load(context, R.raw.enemy_damage, 1);
+        enemy_damage = soundPool.load(context, R.raw.player_damage2, 1);
 
         bullet_s[0] = low;
         bullet_s[1] = middle;

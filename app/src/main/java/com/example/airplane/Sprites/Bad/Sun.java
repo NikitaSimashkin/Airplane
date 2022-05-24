@@ -14,9 +14,50 @@ import java.util.List;
 public class Sun extends Enemy {
 
     public Sun(double line_v, double line_h, Context context) {
-        super(ImageResource.SUN, line_v, width + line_h, 6*height/32 + line_v,
+        super(ImageResource.SUN_RED, line_v, width + line_h, 6*height/32 + line_v,
                 width*12/11 + line_h, context, Params.sun_damage, Params.sun_speed, Params.sun_hp, 2);
         points = Params.p_sun;
+
+        if (Params.change_color){
+            color = (int)(Math.random()*4)+1;
+            switch (color){
+                case 1:
+                    bitmap = ImageResource.SUN_GREEN.getBitmap(context);
+                    break;
+                case 2:
+                    bitmap = ImageResource.SUN_RED.getBitmap(context);
+                    break;
+                case 3:
+                    bitmap = ImageResource.SUN_YELLOW.getBitmap(context);
+                    break;
+                case 4:
+                    bitmap = ImageResource.SUN_BLUE.getBitmap(context);
+                    break;
+            }
+        }
+    }
+
+    public Sun(double line_v, double line_h, Context context, int color) {
+        super(ImageResource.SUN_RED, line_v, width + line_h, 6*height/32 + line_v,
+                width*12/11 + line_h, context, Params.sun_damage, Params.sun_speed, Params.sun_hp, color);
+        points = Params.p_sun;
+
+        if (Params.change_color){
+            switch (color){
+                case 1:
+                    bitmap = ImageResource.SUN_GREEN.getBitmap(context);
+                    break;
+                case 2:
+                    bitmap = ImageResource.SUN_RED.getBitmap(context);
+                    break;
+                case 3:
+                    bitmap = ImageResource.SUN_YELLOW.getBitmap(context);
+                    break;
+                case 4:
+                    bitmap = ImageResource.SUN_BLUE.getBitmap(context);
+                    break;
+            }
+        }
     }
 
     @Override

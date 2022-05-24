@@ -146,10 +146,10 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener change_image = v -> {
             switch(v.getId()){
                 case R.id.easy:
-                    imageStart.setImageBitmap(ImageResource.ALIEN.getBitmap(getApplicationContext()));
+                    imageStart.setImageBitmap(ImageResource.ALIEN_GREEN.getBitmap(getApplicationContext()));
                     break;
                 case R.id.normal:
-                    imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(getApplicationContext()));
+                    imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP_GREEN.getBitmap(getApplicationContext()));
                     break;
                 case R.id.hard:
                     imageStart.setImageBitmap(ImageResource.BOSS.getBitmap(getApplicationContext()));
@@ -167,11 +167,11 @@ public class MainActivity extends AppCompatActivity {
             switch (difficult){
                 case 0:
                     easy.setChecked(true);
-                    imageStart.setImageBitmap(ImageResource.ALIEN.getBitmap(getApplicationContext()));
+                    imageStart.setImageBitmap(ImageResource.ALIEN_GREEN.getBitmap(getApplicationContext()));
                     break;
                 case 1:
                     normal.setChecked(true);
-                    imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP.getBitmap(getApplicationContext()));
+                    imageStart.setImageBitmap(ImageResource.ALIEN_TWO_WITHOUT_CAP_GREEN.getBitmap(getApplicationContext()));
                     break;
                 case 2:
                     hard.setChecked(true);
