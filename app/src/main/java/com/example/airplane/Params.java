@@ -44,9 +44,9 @@ public class Params {
     public final static double turret_multiplier_bullet = 2, many_bullets_multiplier = 0.5, turret_multiplier_bullet_enemy = 4;
 
     public final static int number_bullet_enemy_turret = 15;
-    public final static double start_hp_multiplier_default = 1.3, start_speed_multiplier_default = 0.66,
+    public final static double start_hp_multiplier_default = 1.3, start_speed_multiplier_default = 0.75,
             start_damage_multiplier_default = 0.7, start_time_multiplier_default = 1.15;
-    public final static double start_speedbullet_m = 0.6, start_damagebullet_m = 1, start_timebullet_m = 0.5;
+    public final static double start_speedbullet_m = 0.6, start_damagebullet_m = 1, start_timebullet_m = 0.45;
 
     public final static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000; // не забыть поменят в string.xml
 
@@ -92,10 +92,10 @@ public class Params {
 
         switch (pref.getInt(MainActivity.diff, 1)){ // 0 - легко - 1 - нормально 2 - сложно
             case 0:
-                start_hp_multiplier = 0.9 * start_hp_multiplier_default;
-                start_speed_multiplier = 1.1 * start_speed_multiplier_default;
-                start_damage_multiplier = 0.9 * start_damage_multiplier_default;
-                start_time_multiplier = 1.1 * start_time_multiplier_default;
+                start_hp_multiplier = 0.8 * start_hp_multiplier_default;
+                start_speed_multiplier = 1.2 * start_speed_multiplier_default;
+                start_damage_multiplier = 0.8 * start_damage_multiplier_default;
+                start_time_multiplier = 1.2 * start_time_multiplier_default;
                 break;
             case 1:
                 start_hp_multiplier = 1 * start_hp_multiplier_default;
@@ -104,10 +104,10 @@ public class Params {
                 start_time_multiplier = 1 * start_time_multiplier_default;
                 break;
             case 2:
-                start_hp_multiplier = 1.1 * start_hp_multiplier_default;
-                start_speed_multiplier = 0.9 * start_speed_multiplier_default;
-                start_damage_multiplier = 1.1 * start_damage_multiplier_default;
-                start_time_multiplier = 0.9 * start_time_multiplier_default;
+                start_hp_multiplier = 1.2 * start_hp_multiplier_default;
+                start_speed_multiplier = 0.8 * start_speed_multiplier_default;
+                start_damage_multiplier = 1.2 * start_damage_multiplier_default;
+                start_time_multiplier = 0.8 * start_time_multiplier_default;
                 break;
         }
     }
