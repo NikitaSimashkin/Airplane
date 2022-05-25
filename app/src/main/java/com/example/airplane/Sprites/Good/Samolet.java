@@ -80,15 +80,15 @@ public class Samolet extends Sprite {
             switch (size) {
                 case 0:
                     time_bullet = Params.time_bullet_big;
-                    n = 5;
+                    n = 10;
                     break;
                 case 1:
                     time_bullet = Params.time_bullet_normal;
-                    n = 10;
+                    n = 20;
                     break;
                 case 2:
                     time_bullet = Params.time_bullet_small;
-                    n = 20;
+                    n = 40;
                     break;
             }
             time_bullet *= (Params.turret_multiplier_bullet*Params.start_timebullet_m);

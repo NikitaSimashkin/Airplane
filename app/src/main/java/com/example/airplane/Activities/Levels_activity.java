@@ -37,22 +37,32 @@ public class Levels_activity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        Intent i = new Intent(Levels_activity.this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        close = false;
+        startActivity(i);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         Objects.requireNonNull(getSupportActionBar()).hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_levels);
 
-        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
-        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Intent i = new Intent(Levels_activity.this, MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                close = false;
-                startActivity(i);
-            }
-        });
+//        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
+//        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Intent i = new Intent(Levels_activity.this, MainActivity.class);
+//                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                close = false;
+//                startActivity(i);
+//            }
+//        });
 
         on_click = v -> {
             MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);

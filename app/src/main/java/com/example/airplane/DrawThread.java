@@ -491,6 +491,7 @@ public class DrawThread extends Thread{
                 else {
                     handler.sendMessage(Message.obtain(handler, 0, 0, points));
                     MusicResorces.play_max(MusicResorces.player_death);
+                    break;
                 }
             }
             else if (samolet.turret_exist() && Enemy.check_two(samolet.get_turret(), enemy, new double[]{(width/100), (height/150), -(width/100),
@@ -509,6 +510,7 @@ public class DrawThread extends Thread{
                 else {
                     handler.sendMessage(Message.obtain(handler, 0, 0, points));
                     MusicResorces.play_max(MusicResorces.player_death);
+                    break;
                 }
             }
 

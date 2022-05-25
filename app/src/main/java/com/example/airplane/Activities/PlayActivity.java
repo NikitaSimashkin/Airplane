@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
@@ -124,12 +125,15 @@ public class PlayActivity extends AppCompatActivity {
                 pause = false;
                 stop = false;
             }
+        } else {
+            MusicResorces.battle_s.start();
         }
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
+        System.out.println("destroy");
         loose_or_win.dismiss();
         start.dismiss();
         if (close_level != null)
@@ -139,6 +143,21 @@ public class PlayActivity extends AppCompatActivity {
 
         drawThread.interrupt();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!loose_or_win.isShowing() && !start.isShowing()) {
+           // System.out.println(123);
+            if (close_level == null) {
+                create_close_dialog();
+            }
+            if (!close_level.isShowing()) {
+                close_level.show();
+                drawThread.set_pause(true);
+                MusicResorces.battle_s.pause();
+            }
+        }
     }
 
     private void create_close_dialog() {
@@ -278,7 +297,7 @@ public class PlayActivity extends AppCompatActivity {
 
         retry.setOnClickListener(v -> {
             MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
-            loose_or_win.hide();
+            loose_or_win.dismiss();
             update = true;
             create_helper_dialog();
             if (number != 10){
@@ -291,14 +310,14 @@ public class PlayActivity extends AppCompatActivity {
 
         menu.setOnClickListener(v -> {
             MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
-            loose_or_win.hide();
+            loose_or_win.dismiss();
             finish();
         });
 
         next.setOnClickListener(v -> {
             MusicResorces.soundPool.play(MusicResorces.button_s1, 1, 1, 0, 0, 1);
             number++;
-            loose_or_win.hide();
+            loose_or_win.dismiss();
             update = true;
             create_helper_dialog();
             if (number != 10){
@@ -384,7 +403,8 @@ public class PlayActivity extends AppCompatActivity {
                     start_text.setMaxLines(10);
             }
             else if (step == start_phrases.length){
-                start.hide();
+                start.dismiss();
+                //System.out.println(start.isShowing());
 
                 drawThread = create_new_thread(width, height, number);
                 drawThread.start();
@@ -520,6 +540,7 @@ public class PlayActivity extends AppCompatActivity {
 
                 background_win_or_loose.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_win, null));
                 if (!isFinishing())
+                    System.out.println("Hello");
                     loose_or_win.show();
                 break;
         }
@@ -681,22 +702,22 @@ public class PlayActivity extends AppCompatActivity {
         context = getApplicationContext();
         number = getIntent().getExtras().getInt("number");
 
-        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
-        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (!loose_or_win.isShowing() && !start.isShowing()) {
-                    if (close_level == null) {
-                        create_close_dialog();
-                    }
-                    if (!close_level.isShowing()) {
-                        close_level.show();
-                        drawThread.set_pause(true);
-                        MusicResorces.battle_s.pause();
-                    }
-                }
-            }
-        });
+//        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
+//        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                if (!loose_or_win.isShowing() && !start.isShowing()) {
+//                    if (close_level == null) {
+//                        create_close_dialog();
+//                    }
+//                    if (!close_level.isShowing()) {
+//                        close_level.show();
+//                        drawThread.set_pause(true);
+//                        MusicResorces.battle_s.pause();
+//                    }
+//                }
+//            }
+//        });
 
         init_tints_for_buttons();
 

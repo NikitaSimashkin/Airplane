@@ -9,6 +9,7 @@
         android:roundIcon="@drawable/log02"
         android:supportsRtl="true"
         android:theme="@style/Theme.Airplane">
+
         <activity
             android:name=".Activities.ShopActivity"
             android:exported="false"
@@ -16,12 +17,10 @@
         <activity
             android:name=".Activities.Levels_activity"
             android:exported="false"
-            android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Activities.MainActivity"
             android:exported="true"
-            android:launchMode="singleTask"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +31,7 @@
         <activity
             android:name=".Activities.PlayActivity"
             android:label="PlayActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape" />
 
 

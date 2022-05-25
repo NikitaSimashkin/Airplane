@@ -11,7 +11,7 @@ import com.example.airplane.Activities.MainActivity;
 public class Params {
     public final static int samolet_speed = 90, samolet_hp = 1000;
     public final static int base_hp = 2000;
-    public final static int[] bullet_stats = new int[]{500, 450, 500, 200, 250, 200, 80, 150, 80};
+    public final static int[] bullet_stats = new int[]{400, 450, 400, 200, 250, 200, 80, 150, 80};
     public final static int megabullet_damage = 700;
     public final static int megabullet_enemy_damage = 999, megabullet_enemy_hp = 1000000000, megabullet_enemy_speed = 400;
     // дамаг - скорость - хп
@@ -32,10 +32,10 @@ public class Params {
 
     public final static int boss_damage = 1, boss_speed = 500, boss_hp = 1000000000;
 
-    public final static int time_bullet_small = 250, time_bullet_normal = 500, time_bullet_big = 1000,
+    public final static int time_bullet_small = 200, time_bullet_normal = 500, time_bullet_big = 1000,
             time_meteor = 1000, time_alien = 1000, time_alien_two = 1000,
             time_packman = 1500, time_sun = 2000, time_bird = 1000,
-            time_megasun = 3000, time_cat = 3000, time_yellow = 3000,
+            time_megasun = 3000, time_cat = 2000, time_yellow = 2500,
             time_heart = 1000;
 
     public final static int time_big_meteor = 5000, time_birds = 7000, time_packmans = 8000, time_birdsuns = 10000,
@@ -44,8 +44,8 @@ public class Params {
     public final static double turret_multiplier_bullet = 2, many_bullets_multiplier = 0.5, turret_multiplier_bullet_enemy = 4;
 
     public final static int number_bullet_enemy_turret = 15;
-    public final static double start_hp_multiplier_default = 1.3, start_speed_multiplier_default = 0.75,
-            start_damage_multiplier_default = 0.7, start_time_multiplier_default = 1.15;
+    public final static double start_hp_multiplier_default = 1.4, start_speed_multiplier_default = 0.60,
+            start_damage_multiplier_default = 0.7, start_time_multiplier_default = 1.03;
     public final static double start_speedbullet_m = 0.6, start_damagebullet_m = 1, start_timebullet_m = 0.45;
 
     public final static int time_turret = 45_000, time_megabullet = 60_000, time_manybullets = 30_000; // не забыть поменят в string.xml

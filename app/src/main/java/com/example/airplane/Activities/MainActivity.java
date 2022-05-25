@@ -67,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void finish() {
+        super.finish();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Objects.requireNonNull(getSupportActionBar()).hide(); //убирает title_bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);

@@ -23,6 +23,9 @@ public class Bullet extends Sprite {
                 koord_samolet[3]+(koord_samolet[3]-koord_samolet[1])/5, context);
         if (color != 5)
             change(color, size);
+        else {
+            this.color = 5;
+        }
     }
 
     protected Bullet(double up, double left, double down, double right, Context context) { // Отрисовка Элаина

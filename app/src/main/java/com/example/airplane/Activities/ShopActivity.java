@@ -27,6 +27,14 @@ public class ShopActivity extends AppCompatActivity {
     private boolean close = true;
 
     @Override
+    public void onBackPressed() {
+        Intent i = new Intent(ShopActivity.this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        close = false;
+        startActivity(i);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide(); //убирает title_bar
@@ -39,16 +47,16 @@ public class ShopActivity extends AppCompatActivity {
         rv.setLayoutManager(layoutManager);
         rv.setHasFixedSize(true);
 
-        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
-        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                Intent i = new Intent(ShopActivity.this, MainActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                close = false;
-                startActivity(i);
-            }
-        });
+//        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
+//        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                Intent i = new Intent(ShopActivity.this, MainActivity.class);
+//                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                close = false;
+//                startActivity(i);
+//            }
+//        });
 
         adapter = new Shop_adapter(this);
         rv.setAdapter(adapter);

@@ -18,6 +18,7 @@ public class Bullet_enemy extends Enemy{
         super(Params.Bullets[bullet.getColor()-1], bullet.getUp(), bullet.getLeft(), bullet.getDown(), bullet.getRight(), context,
                 Params.bullet_stats[bullet.get_size()*3],
                 Params.bullet_stats[bullet.get_size()*3 + 1], Params.bullet_stats[bullet.get_size()*3 + 2], bullet.getColor());
+
     }
 
     public Bullet_enemy(Context context, int a) { // для босса
