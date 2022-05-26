@@ -213,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
                 options.dismiss();
             }
         });
+
+        pref.edit().putBoolean("level_9", true).apply();
     }
 
     protected Dialog create_rate_table(){

@@ -688,7 +688,7 @@ public class DrawThread extends Thread{
                 mobs = create_level(70,35,30,25,30,18,7,5,0,9);
                 break;
             case 9: // 250
-                //mobs = create_level(11,0,0,0,0,0,0,0,0,0);
+                //mobs = create_level(1,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(80,45,30,20,30,20,10,10,5,10);
                 break;
             case 10:

@@ -29,7 +29,7 @@ public class Elain extends Bullet{
         animation[4] = ImageResource.ELAIN_6.getBitmap(context);
         animation[5] = ImageResource.ELAIN_7.getBitmap(context);
         speed = Params.bullet_stats[1];
-        alive = true;
+        Elain.alive = true;
     }
 
     @Override

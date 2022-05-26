@@ -88,6 +88,7 @@ public class PlayActivity extends AppCompatActivity {
 
     private boolean stop = false, pause = false;
     private static boolean drawThreadAlreadyExist;
+    public static boolean TextFragmentAlreadyAdded;
 
     @Override
     protected void onStart() {
@@ -133,7 +134,6 @@ public class PlayActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        System.out.println("destroy");
         loose_or_win.dismiss();
         start.dismiss();
         if (close_level != null)
@@ -148,7 +148,6 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (!loose_or_win.isShowing() && !start.isShowing()) {
-           // System.out.println(123);
             if (close_level == null) {
                 create_close_dialog();
             }
@@ -415,18 +414,27 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     private void fragments() {
-        button_fragment = new SpaceshipControllerFragment();
-        text_fragment = new TextFragment();
         fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (!update) {
+        if (update){
+            if (number == 10){
+                if (!PlayActivity.TextFragmentAlreadyAdded) {
+                    fragmentTransaction.add(R.id.container, text_fragment);
+                    fragmentTransaction.hide(text_fragment);
+                    PlayActivity.TextFragmentAlreadyAdded = true;
+                }
+            }
+        } else {
+            button_fragment = new SpaceshipControllerFragment();
+            text_fragment = new TextFragment();
+            if (number == 10){
+                fragmentTransaction.add(R.id.container, text_fragment);
+                fragmentTransaction.hide(text_fragment);
+                PlayActivity.TextFragmentAlreadyAdded = true;
+            }
             fragmentTransaction.add(R.id.container, button_fragment);
-            fragmentTransaction.commit();
         }
-        if (number == 10) {
-            fragmentTransaction.add(R.id.container, text_fragment);
-            fragmentTransaction.hide(text_fragment);
-        }
+        fragmentTransaction.commit();
     }
 
     private void change_base() {
@@ -540,7 +548,6 @@ public class PlayActivity extends AppCompatActivity {
 
                 background_win_or_loose.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.dialog_win, null));
                 if (!isFinishing())
-                    System.out.println("Hello");
                     loose_or_win.show();
                 break;
         }
@@ -648,7 +655,7 @@ public class PlayActivity extends AppCompatActivity {
             return true;
         });
 
-        boss_text = findViewById(R.id.boss);
+        //boss_text = findViewById(R.id.boss);
         hp_samolet = findViewById(R.id.samolet_hp);
         hp_base = findViewById(R.id.base_hp);
 
@@ -695,29 +702,12 @@ public class PlayActivity extends AppCompatActivity {
         MusicResorces.battle_s.seekTo(0);
         MusicResorces.play_loop(MusicResorces.battle_s);
 
-        new Params(getApplicationContext());
+        new Params(getApplicationContext(), number);
         Objects.requireNonNull(getSupportActionBar()).hide(); //убираем title
         setContentView(R.layout.playactivity);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         context = getApplicationContext();
         number = getIntent().getExtras().getInt("number");
-
-//        OnBackPressedDispatcher onBackPressedDispatcher = this.getOnBackPressedDispatcher();
-//        onBackPressedDispatcher.addCallback(new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                if (!loose_or_win.isShowing() && !start.isShowing()) {
-//                    if (close_level == null) {
-//                        create_close_dialog();
-//                    }
-//                    if (!close_level.isShowing()) {
-//                        close_level.show();
-//                        drawThread.set_pause(true);
-//                        MusicResorces.battle_s.pause();
-//                    }
-//                }
-//            }
-//        });
 
         init_tints_for_buttons();
 
@@ -748,18 +738,18 @@ public class PlayActivity extends AppCompatActivity {
                         update_abilities(msg.arg1);
                         break;
                     case 4:
-                        FragmentTransaction t = fragmentManager.beginTransaction();
-                        t.hide(button_fragment);
-                        t.show(text_fragment);
-                        t.commit();
+                       // FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().hide(button_fragment).show(text_fragment).commit();
                         break;
                     case 5:
-                        FragmentTransaction t1 = fragmentManager.beginTransaction();
-                        t1.hide(text_fragment);
-                        t1.show(button_fragment);
-                        t1.commit();
+                       // FragmentManager fragmentManager1 = getFragmentManager();
+                        fragmentManager.beginTransaction().hide(text_fragment).show(button_fragment).commit();
+                        //fragmentManager1.beginTransaction().replace(R.id.container, button_fragment).commit();
                         break;
                     case 6: // arg1 - номер фразы
+                        if (boss_text == null){
+                            boss_text = findViewById(R.id.boss);
+                        }
                         boss_text.setText(start_phrases[msg.arg1]);
                         if (msg.arg1 == 2) {
                             boss_text.setTextColor(getResources().getColor(R.color.helper, null));
@@ -783,12 +773,13 @@ public class PlayActivity extends AppCompatActivity {
             }
         };
 
+        PlayActivity.drawThreadAlreadyExist = false;
+        PlayActivity.TextFragmentAlreadyAdded = false;
         create_loose_or_win_dialog();
         create_helper_dialog();
         fragments();
         create_abilities();
         create_surface_view();
-        PlayActivity.drawThreadAlreadyExist = false;
     }
 
 }

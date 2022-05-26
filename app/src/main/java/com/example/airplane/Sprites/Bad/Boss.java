@@ -25,14 +25,6 @@ public class Boss extends Enemy{
     List<Byte> enemys;
     private int count;
 
-    public int getStep() {
-        return step;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
     private int step, number;
     private Handler handler;
 
@@ -51,6 +43,8 @@ public class Boss extends Enemy{
         Boss.time_center_one = 0;
         Boss.meteor_flag = false;
         Boss.turret_flag = false;
+        flag_f = false;
+        flag = true;
     }
 
     @Override
@@ -140,7 +134,7 @@ public class Boss extends Enemy{
         }
         count = enemys.size();
     }
-    private boolean flag = true, flag_f = false;
+    private boolean flag, flag_f;
     private boolean[] flags_number = new boolean[6];
     public void center(long time_center){ //босс выходит в центер и уходит назад, number - номер выхода
         if (left > Sprite.width/2 && back) {
@@ -238,10 +232,12 @@ public class Boss extends Enemy{
                         enemyList.add(bullet);
                         bullet_elain_is_created = true;
                     } else {
-                        if (System.currentTimeMillis() - time_center_one < 5000)
-                            handler.sendMessage(Message.obtain(handler,6,2,0));
-                        else
-                            handler.sendMessage(Message.obtain(handler,6,3,0));
+                        if (System.currentTimeMillis() - time_center_one < 5000) {
+                            handler.sendMessage(Message.obtain(handler, 6, 2, 0));
+                        }
+                        else {
+                            handler.sendMessage(Message.obtain(handler, 6, 3, 0));
+                        }
                     }
                 } else if (!Elain.get_alive()){
                     flags_number[1] = true;
