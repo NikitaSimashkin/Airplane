@@ -37,7 +37,7 @@ public class DrawThread extends Thread{
     private SurfaceHolder surfaceHolder;
     private Context context;
     private static Handler handler;
-    private int time_bullet = Params.time_bullet_normal;
+    private double time_bullet = Params.time_bullet_normal;
     private int number; //номер уровня
 
     private static double width, height;
@@ -243,20 +243,23 @@ public class DrawThread extends Thread{
     }
     public void set_bullet_size(int size) {
         this.size = size;
-        switch (size){
+        switch (size) {
             case 0:
-                time_bullet = Params.time_bullet_big;
+                time_bullet = Params.time_bullet_big * m;
                 break;
             case 1:
-                time_bullet = Params.time_bullet_normal;
+                time_bullet = Params.time_bullet_normal * m;
                 break;
             case 2:
-                time_bullet = Params.time_bullet_small;
+                time_bullet = Params.time_bullet_small * m;
                 break;
         }
     }
+
+    private double m = 1;
     public void change_bullet_time(double m) {
         time_bullet *= m;
+        this.m *= m;
     }
 
     public void setShot_button(boolean shot_button) {
