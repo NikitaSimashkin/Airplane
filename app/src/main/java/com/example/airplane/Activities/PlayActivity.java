@@ -647,9 +647,10 @@ public class PlayActivity extends AppCompatActivity {
         shot.setOnTouchListener((v, event) -> {
             switch (event.getAction()){
                 case MotionEvent.ACTION_DOWN:
-                    drawThread.create_bullets();
+                    drawThread.setShot_button(true);
                     break;
                 case MotionEvent.ACTION_UP:
+                    drawThread.setShot_button(false);
                     break;
             }
             return true;

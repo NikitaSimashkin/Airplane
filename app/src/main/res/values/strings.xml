@@ -25,6 +25,7 @@
     <string name="progress_dont_save">When you close a level, the progress will not be saved!</string>
     <string name="continue_b">Continue</string>
     <string name="break_b">Exit</string>
+    <string name="current_version" translatable="false">v 1.0.1</string>
 
     <string-array name="ships">
         <item>Spaceship №1</item>

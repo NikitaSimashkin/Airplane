@@ -259,11 +259,18 @@ public class DrawThread extends Thread{
         time_bullet *= m;
     }
 
+    public void setShot_button(boolean shot_button) {
+        this.shot_button = shot_button;
+    }
+
+    private boolean shot_button = false;
     public void create_bullets() {
-        if (System.currentTimeMillis() - time_bullet_last >= time_bullet*Params.start_timebullet_m) {
-            MusicResorces.play_min(MusicResorces.bullet_s[size]);
-            bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_color, size));
-            time_bullet_last = System.currentTimeMillis();
+        if (shot_button) {
+            if (System.currentTimeMillis() - time_bullet_last >= time_bullet * Params.start_timebullet_m) {
+                MusicResorces.play_min(MusicResorces.bullet_s[size]);
+                bullet_list.add(new Bullet(samolet.get_koord(), context, bullet_color, size));
+                time_bullet_last = System.currentTimeMillis();
+            }
         }
     }
 
@@ -575,6 +582,7 @@ public class DrawThread extends Thread{
         while (!isInterrupted()) { //сначала он проводит все вычисления, а потом уже все рисует в одном методе
           while (!pause) {
               level();
+              create_bullets();
               update_samolet(); //обновляет координаты самолета
               update_bullets(); //обновляет координаты пуль
               update_enemy(); //отрисовывает всех врагов
@@ -688,7 +696,7 @@ public class DrawThread extends Thread{
                 mobs = create_level(70,35,30,25,30,18,7,5,0,9);
                 break;
             case 9: // 250
-                //mobs = create_level(1,0,0,0,0,0,0,0,0,0);
+                //mobs = create_level(3,0,0,0,0,0,0,0,0,0);
                 mobs = create_level(80,45,30,20,30,20,10,10,5,10);
                 break;
             case 10:

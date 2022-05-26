@@ -65,14 +65,20 @@
                     android:textColor="@color/white"
                     android:textColorHint="#4F534F" />
 
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    style="@android:style/Widget.Holo.ImageButton"
+                <TextView
+                    android:id="@+id/textView3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/circle_button"
-                    android:clickable="false" />
+                    android:fontFamily="@font/arbutus"
+                    android:gravity="center|right"
+                    android:paddingLeft="10dp"
+                    android:text="@string/current_version"
+                    android:textColor="@color/in_table"
+                    app:autoSizeTextType="uniform" />
 
             </LinearLayout>
 

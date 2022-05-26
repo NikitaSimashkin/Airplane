@@ -32,7 +32,7 @@ public class Params {
 
     public final static int boss_damage = 1, boss_speed = 500, boss_hp = 1000000000;
 
-    public final static int time_bullet_small = 200, time_bullet_normal = 500, time_bullet_big = 1000,
+    public final static int time_bullet_small = 250, time_bullet_normal = 500, time_bullet_big = 1000,
             time_meteor = 1000, time_alien = 1000, time_alien_two = 1000,
             time_packman = 1500, time_sun = 2000, time_bird = 1000,
             time_megasun = 3000, time_cat = 2000, time_yellow = 2500,
@@ -104,10 +104,10 @@ public class Params {
                 start_time_multiplier = 1 * start_time_multiplier_default;
                 break;
             case 2:
-                start_hp_multiplier = 1.1 * start_hp_multiplier_default;
+                start_hp_multiplier = 1.15 * start_hp_multiplier_default;
                 start_speed_multiplier = 0.8 * start_speed_multiplier_default;
-                start_damage_multiplier = 1.1 * start_damage_multiplier_default;
-                start_time_multiplier = 0.9 * start_time_multiplier_default;
+                start_damage_multiplier = 1.15 * start_damage_multiplier_default;
+                start_time_multiplier = 0.85 * start_time_multiplier_default;
                 break;
         }
 
