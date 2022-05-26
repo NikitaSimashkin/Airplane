@@ -748,9 +748,7 @@ public class PlayActivity extends AppCompatActivity {
                         //fragmentManager1.beginTransaction().replace(R.id.container, button_fragment).commit();
                         break;
                     case 6: // arg1 - номер фразы
-                        if (boss_text == null){
-                            boss_text = findViewById(R.id.boss);
-                        }
+                        boss_text = findViewById(R.id.boss);
                         boss_text.setText(start_phrases[msg.arg1]);
                         if (msg.arg1 == 2) {
                             boss_text.setTextColor(getResources().getColor(R.color.helper, null));
